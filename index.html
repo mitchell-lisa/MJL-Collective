@@ -6,10 +6,11 @@
   <title>MJL Collective</title>
   <meta name="description" content="MJL Collective is a digital consulting studio. Build. Maintain. Grow.">
   <meta property="og:title" content="MJL Collective">
-  <meta property="og:description" content="Most people build your website and leave. I stay. Websites for local businesses, built, kept, and grown by one person.">
+  <meta property="og:description" content="Built once. Looked after for good. Websites for local businesses, built, kept, and grown by one person.">
   <meta property="og:url" content="https://mjlcollective.com">
   <meta property="og:type" content="website">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20fill='%23eceeec'/%3E%3Cpath%20d='M10%2052v-11h15v-11h15v-11h14v33z'%20fill='%231b1c1b'/%3E%3C/svg%3E">
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Archivo:wght@500;700;800&display=swap">
@@ -106,14 +107,12 @@
     }
     .step h3 { margin: 0 0 10px; font-family: var(--block); font-weight: 800; font-size: clamp(26px, 2.6vw, 32px); letter-spacing: -0.02em; line-height: 1; }
     .step p { margin: 0; color: var(--ink-2); font-size: 14px; max-width: 34ch; }
-    .stair { height: 24px; width: 112px; background: var(--ink); clip-path: polygon(0 100%, 0 66%, 33% 66%, 33% 33%, 66% 33%, 66% 0, 100% 0, 100% 100%); margin-top: 8px; }
     /* stacked, the three columns lose the staircase, so the steps themselves step:
-       each rule starts further in, and the stair glyph closes the run on the right */
+       each rule starts further in */
     @media (max-width: 859px) {
       .steps { margin-top: 36px; gap: 36px; }
       .step:nth-child(2) { margin-left: 34px; }
       .step:nth-child(3) { margin-left: 68px; }
-      .stair { margin: 36px 0 0 auto; }
     }
 
     /* ---------- contact ---------- */
@@ -149,7 +148,7 @@
     </div>
     <div class="hero-inner">
       <div class="wrap">
-        <h1>Most people build your website and leave. I stay.</h1>
+        <h1>Built once. Looked after for good.</h1>
         <div><a class="cta" href="#contact">Request a meeting</a></div>
       </div>
     </div>
@@ -231,7 +230,6 @@
             <p>Email campaigns, SMS blasts, and search visibility that keep your business in front of the customers already looking for it.</p>
           </div>
         </div>
-        <div class="stair" aria-hidden="true"></div>
       </div>
     </section>
 
