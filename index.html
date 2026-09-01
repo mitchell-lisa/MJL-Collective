@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MJL Collective</title>
+  <meta name="description" content="MJL Collective is a digital consulting studio. Build. Maintain. Grow.">
+  <meta property="og:title" content="MJL Collective">
+  <meta property="og:description" content="Websites for local businesses. Built, kept, and grown by one person.">
+  <meta property="og:url" content="https://mjlcollective.com">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20fill='%23eceeec'/%3E%3Cpath%20d='M10%2052v-11h15v-11h15v-11h14v33z'%20fill='%231b1c1b'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Archivo:wght@500;700;800&display=swap">
+  <style>
+    :root {
+      --cement: #eceeec;
+      --plaster: #f5f6f5;
+      --mortar: #cfd3d0;
+      --ink: #1b1c1b;
+      --ink-2: #4e504e;
+      --ink-3: #888b88;
+      --poured: #2a2c2a;
+      --sans: "Instrument Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      --block: "Archivo", "Helvetica Neue", Arial, sans-serif;
+      color-scheme: light;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    body {
+      margin: 0;
+      background: var(--plaster);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+    :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+    .wrap { max-width: 1320px; margin: 0 auto; padding-left: 5.5%; padding-right: 5.5%; }
+    @media (min-width: 1440px) { .wrap { padding-left: 48px; padding-right: 48px; } }
+
+    /* ---------- hero ---------- */
+    .hero { position: relative; overflow: hidden; background: var(--poured); min-height: 84vh; display: flex; flex-direction: column; }
+    .hero .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
+    .hero .shade { position: absolute; inset: 0; background: rgba(20, 21, 20, 0.5); }
+
+    .bar { position: relative; }
+    .bar .wrap { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-top: 26px; padding-bottom: 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.18); }
+    .bar .mark { width: 104px; }
+    .bar nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 34px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #fff;
+      /* the lockup carries COLLECTIVE below the MJL letterforms, so its optical centre
+         sits above its geometric one; lift the menu to meet the letterforms, not the box */
+      transform: translateY(-6px); }
+    .bar nav a { text-decoration: none; opacity: 0.82; }
+    .bar nav a:hover, .bar nav a:focus-visible { opacity: 1; }
+    @media (max-width: 640px) {
+      .bar .mark { width: 88px; }
+      .bar nav ul { gap: 18px; letter-spacing: 0.08em; }
+    }
+
+    .hero-inner { position: relative; margin-top: auto; }
+    .hero-inner .wrap { padding-top: 96px; padding-bottom: 72px; display: grid; grid-template-columns: 1fr; gap: 28px 48px; }
+    @media (min-width: 860px) { .hero-inner .wrap { grid-template-columns: 1.2fr 0.8fr; align-items: end; } }
+    .hero h1 { margin: 0; font-family: var(--block); font-weight: 500; font-size: clamp(26px, 3.4vw, 44px); line-height: 1.15; letter-spacing: -0.02em; color: #fff; max-width: 19ch; text-wrap: balance; }
+    .cta { display: inline-block; border: 1px solid currentColor; padding: 14px 24px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background 0.15s, color 0.15s; }
+    .hero .cta { color: #fff; }
+    .hero .cta:hover, .hero .cta:focus-visible { background: #fff; color: var(--ink); }
+
+    /* ---------- statement ---------- */
+    .statement .wrap { padding-top: 76px; padding-bottom: 76px; display: grid; grid-template-columns: 1fr; gap: 24px 48px; }
+    @media (min-width: 860px) { .statement .wrap { grid-template-columns: 1.4fr 1fr; } }
+    .statement h2 { margin: 0; font-weight: 400; font-size: clamp(24px, 3vw, 36px); line-height: 1.15; letter-spacing: -0.02em; max-width: 20ch; text-wrap: balance; }
+    .statement p { margin: 0; color: var(--ink-2); max-width: 46ch; align-self: end; }
+
+    /* ---------- work ---------- */
+    .work-head { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); border-top: 1px solid var(--mortar); padding-top: 18px; }
+    .wall { padding-top: 36px; padding-bottom: 84px; display: grid; grid-template-columns: 1fr; gap: 48px 32px; }
+    @media (min-width: 860px) { .wall { grid-template-columns: 1fr 1fr; } }
+    .wall figure { margin: 0; }
+    .tv-frame { padding: 6px; background: linear-gradient(145deg, #f6f7f5 0%, #c6c8c5 30%, #eef0ee 55%, #a9aba8 100%); box-shadow: 0 20px 45px rgba(27, 28, 27, 0.16), 0 3px 9px rgba(27, 28, 27, 0.1); }
+    .screen { aspect-ratio: 16 / 10; background: var(--plaster); position: relative; overflow: hidden; container-type: inline-size; }
+    .screen .ph { position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink-3); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; padding: 12px; }
+    .screen iframe { position: absolute; top: 0; left: 0; width: 1280px; height: 800px; border: 0; transform-origin: 0 0; transform: scale(calc(100cqw / 1280)); pointer-events: none; background: var(--plaster); }
+    .screen .cover { position: absolute; inset: 0; z-index: 2; }
+    .wall figcaption { margin-top: 14px; font-family: var(--block); font-weight: 700; font-size: 16px; }
+    .wall figcaption span { display: block; font-family: var(--sans); font-weight: 400; font-size: 13px; color: var(--ink-2); margin-top: 3px; max-width: 44ch; }
+
+    /* ---------- services ---------- */
+    .services-head h2 { margin: 0 0 12px; font-weight: 400; font-size: clamp(22px, 2.6vw, 32px); letter-spacing: -0.02em; line-height: 1.15; max-width: 22ch; text-wrap: balance; }
+    .services-head p { margin: 0; color: var(--ink-2); max-width: 52ch; }
+    .steps { display: grid; grid-template-columns: 1fr; gap: 20px 32px; margin-top: 44px; }
+    @media (min-width: 860px) { .steps { grid-template-columns: repeat(3, 1fr); align-items: end; } }
+    .step { border-top: 3px solid var(--ink); padding-top: 18px; }
+    @media (min-width: 860px) {
+      .step:nth-child(2) { padding-bottom: 36px; }
+      .step:nth-child(3) { padding-bottom: 72px; }
+    }
+    .step h3 { margin: 0 0 10px; font-family: var(--block); font-weight: 800; font-size: clamp(26px, 2.6vw, 32px); letter-spacing: -0.02em; line-height: 1; }
+    .step p { margin: 0; color: var(--ink-2); font-size: 14px; max-width: 34ch; }
+    .stair { height: 24px; width: 112px; background: var(--ink); clip-path: polygon(0 100%, 0 66%, 33% 66%, 33% 33%, 66% 33%, 66% 0, 100% 0, 100% 100%); margin-top: 8px; }
+
+    /* ---------- contact ---------- */
+    .meet .wrap { padding-top: 84px; padding-bottom: 92px; display: grid; grid-template-columns: 1fr; gap: 22px 48px; }
+    @media (min-width: 860px) { .meet .wrap { grid-template-columns: 1.1fr 0.9fr; align-items: end; } }
+    .meet h2 { margin: 0; font-weight: 400; font-size: clamp(22px, 2.6vw, 32px); letter-spacing: -0.02em; line-height: 1.15; max-width: 18ch; text-wrap: balance; }
+    .meet p { margin: 0 0 24px; color: var(--ink-2); max-width: 44ch; }
+    .meet .cta { color: var(--ink); }
+    .meet .cta:hover, .meet .cta:focus-visible { background: var(--ink); color: var(--plaster); }
+
+    /* ---------- footer ---------- */
+    .foot { background: var(--poured); color: rgba(255, 255, 255, 0.55); }
+    .foot .wrap { padding-top: 24px; padding-bottom: 28px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 12px; }
+    .foot img { width: 64px; opacity: 0.9; }
+    .foot a { color: inherit; }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <img class="bg" src="assets/glass.webp" alt="" aria-hidden="true">
+    <div class="shade"></div>
+    <div class="bar">
+      <div class="wrap">
+        <img class="mark" src="assets/mark-white.png" alt="MJL Collective">
+        <nav aria-label="Main">
+          <ul>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div class="hero-inner">
+      <div class="wrap">
+        <h1>Websites for local businesses. Built, kept, and grown by one person.</h1>
+        <div><a class="cta" href="#contact">Request a meeting</a></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="statement">
+      <div class="wrap">
+        <h2>I notice what a business could look like before its owner does. Then I build it.</h2>
+        <p>MJL Collective designs and builds the site, keeps it running, and keeps it in front of the customers already looking. When you reach out, you are talking to Mitchell.</p>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="wrap">
+        <div class="work-head">Selected work</div>
+        <div class="wall">
+          <figure>
+            <div class="tv-frame">
+              <div class="screen">
+                <div class="ph">Tiger Digital</div>
+                <iframe src="https://tigerdigital.marketing" loading="lazy" tabindex="-1" title="Tiger Digital live preview"></iframe>
+                <a class="cover" href="https://tigerdigital.marketing" target="_blank" rel="noopener" aria-label="Visit Tiger Digital"></a>
+              </div>
+            </div>
+            <figcaption>Tiger Digital<span>A complete rebrand and rebuild for a Moorestown marketing agency.</span></figcaption>
+          </figure>
+          <figure>
+            <div class="tv-frame">
+              <div class="screen">
+                <div class="ph">BlueThreadz</div>
+                <iframe src="https://bluethreadz.vercel.app" loading="lazy" tabindex="-1" title="BlueThreadz live preview"></iframe>
+                <a class="cover" href="https://bluethreadz.vercel.app" target="_blank" rel="noopener" aria-label="Visit BlueThreadz"></a>
+              </div>
+            </div>
+            <figcaption>BlueThreadz<span>Custom apparel and embroidery, rebuilt around a quote-first storefront.</span></figcaption>
+          </figure>
+          <figure>
+            <div class="tv-frame">
+              <div class="screen">
+                <div class="ph">Klemic Performance Method</div>
+                <iframe src="https://klemic-performance-method.vercel.app" loading="lazy" tabindex="-1" title="Klemic Performance Method live preview"></iframe>
+                <a class="cover" href="https://klemic-performance-method.vercel.app" target="_blank" rel="noopener" aria-label="Visit Klemic Performance Method"></a>
+              </div>
+            </div>
+            <figcaption>Klemic Performance Method<span>A sports performance program, rebuilt from the ground up.</span></figcaption>
+          </figure>
+          <figure>
+            <div class="tv-frame">
+              <div class="screen">
+                <div class="ph">Dorothy&rsquo;s Flower Shop</div>
+                <iframe src="https://dorothys-flower-shop.vercel.app" loading="lazy" tabindex="-1" title="Dorothy&rsquo;s Flower Shop live preview"></iframe>
+                <a class="cover" href="https://dorothys-flower-shop.vercel.app" target="_blank" rel="noopener" aria-label="Visit Dorothy&rsquo;s Flower Shop"></a>
+              </div>
+            </div>
+            <figcaption>Dorothy&rsquo;s Flower Shop<span>A fresh site for a neighborhood flower shop.</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="wrap">
+        <div class="services-head">
+          <h2>Three things, in the order they happen.</h2>
+          <p>Most people who build a site hand it over and leave. The work here is arranged the way it actually runs: build it, keep it, then grow it &mdash; each one standing on the one before.</p>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <h3>Build</h3>
+            <p>Websites designed and built for your business. Fast, modern, and made to turn visitors into customers.</p>
+          </div>
+          <div class="step">
+            <h3>Maintain</h3>
+            <p>Your site stays handled after launch: hosting, updates, content changes, and fixes, without you chasing anyone.</p>
+          </div>
+          <div class="step">
+            <h3>Grow</h3>
+            <p>Email campaigns, SMS blasts, and search visibility that keep your business in front of the customers already looking for it.</p>
+          </div>
+        </div>
+        <div class="stair" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <section id="contact" class="meet">
+      <div class="wrap">
+        <h2>Tell me about the business.</h2>
+        <div>
+          <p>Say what it does and where it is stuck. I will tell you what the site needs and what it costs, before anyone signs anything.</p>
+          <a class="cta" href="mailto:mitchelljordanlisa@gmail.com?subject=Request%20a%20meeting">Request a meeting</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <img src="assets/mark-white.png" alt="MJL Collective">
+      <span>MJL Collective LLC, Moorestown, New Jersey &middot; <a href="mailto:mitchelljordanlisa@gmail.com">mitchelljordanlisa@gmail.com</a></span>
+    </div>
+  </footer>
+
+</body>
+</html>
