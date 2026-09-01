@@ -124,10 +124,9 @@
     .meet .cta { color: var(--ink); }
     .meet .cta:hover, .meet .cta:focus-visible { background: var(--ink); color: var(--plaster); }
 
-    /* ---------- footer ---------- */
+    /* ---------- footer: the top bar again, closing the page ---------- */
     .foot { background: var(--poured); color: rgba(255, 255, 255, 0.55); }
-    .foot .wrap { padding-top: 24px; padding-bottom: 28px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 12px; }
-    .foot img { width: 64px; opacity: 0.9; }
+    .foot .legal { padding-top: 16px; padding-bottom: 26px; display: flex; justify-content: space-between; align-items: baseline; gap: 10px 24px; flex-wrap: wrap; font-size: 12px; }
     .foot a { color: inherit; }
   </style>
 </head>
@@ -248,9 +247,21 @@
   </main>
 
   <footer class="foot">
-    <div class="wrap">
-      <img src="assets/mark-white.png" alt="MJL Collective">
-      <span>MJL Collective LLC, Moorestown, New Jersey &middot; <a href="mailto:mitchelljordanlisa@gmail.com">mitchelljordanlisa@gmail.com</a></span>
+    <div class="bar">
+      <div class="wrap">
+        <img class="mark" src="assets/mark-white.png" alt="MJL Collective">
+        <nav aria-label="Footer">
+          <ul>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div class="wrap legal">
+      <span>MJL Collective LLC, Moorestown, New Jersey</span>
+      <a href="mailto:mitchelljordanlisa@gmail.com">mitchelljordanlisa@gmail.com</a>
     </div>
   </footer>
 
