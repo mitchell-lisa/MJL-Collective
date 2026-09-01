@@ -90,7 +90,7 @@
     .tv-frame { padding: 6px; background: linear-gradient(145deg, #f6f7f5 0%, #c6c8c5 30%, #eef0ee 55%, #a9aba8 100%); box-shadow: 0 20px 45px rgba(27, 28, 27, 0.16), 0 3px 9px rgba(27, 28, 27, 0.1); }
     .screen { aspect-ratio: 16 / 10; background: var(--plaster); position: relative; overflow: hidden; container-type: inline-size; }
     .screen .ph { position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink-3); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; padding: 12px; }
-    .screen iframe { position: absolute; top: 0; left: 0; width: 1280px; height: 800px; border: 0; transform-origin: 0 0; transform: scale(calc(100cqw / 1280)); pointer-events: none; background: var(--plaster); }
+    .screen iframe { position: absolute; top: 0; left: 0; width: 1280px; height: 800px; border: 0; transform-origin: 0 0; transform: scale(var(--s, calc(100cqw / 1280))); pointer-events: none; background: var(--plaster); }
     .screen .cover { position: absolute; inset: 0; z-index: 2; }
     .wall figcaption { margin-top: 14px; font-family: var(--block); font-weight: 700; font-size: 16px; }
 
@@ -164,7 +164,7 @@
             <div class="tv-frame">
               <div class="screen">
                 <div class="ph">Tiger Digital</div>
-                <iframe src="https://tigerdigital.marketing" loading="lazy" tabindex="-1" title="Tiger Digital live preview"></iframe>
+                <iframe width="1280" height="800" src="https://tigerdigital.marketing" loading="lazy" tabindex="-1" title="Tiger Digital live preview"></iframe>
                 <a class="cover" href="https://tigerdigital.marketing" target="_blank" rel="noopener" aria-label="Visit Tiger Digital"></a>
               </div>
             </div>
@@ -174,7 +174,7 @@
             <div class="tv-frame">
               <div class="screen">
                 <div class="ph">BlueThreadz</div>
-                <iframe src="https://bluethreadz.vercel.app" loading="lazy" tabindex="-1" title="BlueThreadz live preview"></iframe>
+                <iframe width="1280" height="800" src="https://bluethreadz.vercel.app" loading="lazy" tabindex="-1" title="BlueThreadz live preview"></iframe>
                 <a class="cover" href="https://bluethreadz.vercel.app" target="_blank" rel="noopener" aria-label="Visit BlueThreadz"></a>
               </div>
             </div>
@@ -184,7 +184,7 @@
             <div class="tv-frame">
               <div class="screen">
                 <div class="ph">Klemic Performance Method</div>
-                <iframe src="https://klemic-performance-method.vercel.app" loading="lazy" tabindex="-1" title="Klemic Performance Method live preview"></iframe>
+                <iframe width="1280" height="800" src="https://klemic-performance-method.vercel.app" loading="lazy" tabindex="-1" title="Klemic Performance Method live preview"></iframe>
                 <a class="cover" href="https://klemic-performance-method.vercel.app" target="_blank" rel="noopener" aria-label="Visit Klemic Performance Method"></a>
               </div>
             </div>
@@ -194,7 +194,7 @@
             <div class="tv-frame">
               <div class="screen">
                 <div class="ph">Dorothy&rsquo;s Flower Shop</div>
-                <iframe src="https://dorothys-flower-shop.vercel.app" loading="lazy" tabindex="-1" title="Dorothy&rsquo;s Flower Shop live preview"></iframe>
+                <iframe width="1280" height="800" src="https://dorothys-flower-shop.vercel.app" loading="lazy" tabindex="-1" title="Dorothy&rsquo;s Flower Shop live preview"></iframe>
                 <a class="cover" href="https://dorothys-flower-shop.vercel.app" target="_blank" rel="noopener" aria-label="Visit Dorothy&rsquo;s Flower Shop"></a>
               </div>
             </div>
@@ -246,5 +246,26 @@
     </div>
   </footer>
 
+
+  <script>
+    // Scale each preview iframe so a 1280px-wide desktop render fits its frame.
+    // Computed in JS because container-query units are not applied reliably in
+    // every mobile WebKit view; the cqw value in the stylesheet is the no-JS fallback.
+    (function () {
+      var screens = document.querySelectorAll(".screen");
+      function fit() {
+        for (var i = 0; i < screens.length; i++) {
+          screens[i].style.setProperty("--s", (screens[i].clientWidth / 1280).toFixed(4));
+        }
+      }
+      if ("ResizeObserver" in window) {
+        var ro = new ResizeObserver(fit);
+        for (var i = 0; i < screens.length; i++) ro.observe(screens[i]);
+      } else {
+        addEventListener("resize", fit);
+      }
+      fit();
+    })();
+  </script>
 </body>
 </html>
