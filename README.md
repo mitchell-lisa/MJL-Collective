@@ -4,23 +4,22 @@ Static homepage for MJL Collective. The design is the "Studio, with B's steps"
 direction: dark hero over the glass block, the work wall with live previews,
 the Build / Maintain / Grow steps, poured-dark footer.
 
-## Why git deployments are disabled
+## Deploying
 
-`vercel.json` sets `git.deploymentEnabled: false`. The Vercel project
-`mjl-collective` is linked to this repository, but production
-(mjlcollective.com) is currently deployed from a separate local Next.js
-codebase that includes the `/api/contact` route and the branded contact
-emails. Until that route is ported into this repository, a git-triggered
-production deploy would replace the live site with a version whose contact
-form does not submit. Previews are deployed by file upload instead.
+Git deployments are enabled in `vercel.json`. The Vercel project
+`mjl-collective` is linked to this repository; pushes to the production
+branch deploy to mjlcollective.com, and pushes to any other branch create
+preview deployments.
 
-## Going live from this repo
+To make this branch the live site: in Vercel, open the mjl-collective
+project, then Settings -> Git -> Production Branch, set it to
+`claude/artifact-session-kfrwsz` (or merge this branch into the branch
+already configured there), and redeploy. The previous production
+deployment remains in the Deployments list for instant rollback.
 
-1. Port `/api/contact` (and its email templates) from the current Next.js
-   source into `api/contact.js` as a Vercel serverless function, or keep the
-   mailto contact.
-2. Remove the `git.deploymentEnabled` block from `vercel.json`.
-3. Confirm the Vercel project's production branch, then merge/push to it.
+Note: the earlier production site was a separate local Next.js codebase
+whose `/api/contact` route sent the branded contact emails. This site uses
+a mailto contact until that route is ported into `api/contact.js` here.
 
 ## Content notes
 
