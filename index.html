@@ -26,6 +26,7 @@
       --sans: "Instrument Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
       --block: "Archivo", "Helvetica Neue", Arial, sans-serif;
       color-scheme: light;
+      --barh: 108px;
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -51,22 +52,34 @@
     .hero .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
     .hero .shade { position: absolute; inset: 0; background: rgba(20, 21, 20, 0.5); }
 
-    .bar { position: relative; }
+    .bar { position: relative; color: #fff; }
     .bar .wrap { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-top: 26px; padding-bottom: 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.18); }
     .bar .mark { width: 104px; }
-    .bar nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 34px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #fff;
+    .bar .home { display: block; }
+    .bar nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 34px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap;
       /* the lockup carries COLLECTIVE below the MJL letterforms, so its optical centre
          sits above its geometric one; lift the menu to meet the letterforms, not the box */
       transform: translateY(-6px); }
     .bar nav a { text-decoration: none; opacity: 0.82; }
     .bar nav a:hover, .bar nav a:focus-visible { opacity: 1; }
+
+    /* the top bar is pinned: transparent over the hero, poured dark once the page scrolls */
+    .topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 20; transition: background-color 0.2s; }
+    .topbar.solid { background: rgba(42, 44, 42, 0.94); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+    .topbar.solid .wrap { border-bottom-color: rgba(255, 255, 255, 0.1); }
+    .hero { padding-top: var(--barh); }
+    section { scroll-margin-top: calc(var(--barh) - 20px); }
+    @media (prefers-reduced-motion: reduce) { .topbar { transition: none; } }
+
     @media (max-width: 640px) {
-      .bar .wrap { flex-wrap: wrap; row-gap: 10px; }
-      .bar .mark { width: 88px; }
-      .bar nav ul { gap: 18px; letter-spacing: 0.08em; }
+      :root { --barh: 92px; }
+      .bar .wrap { padding-top: 20px; padding-bottom: 18px; gap: 16px; }
+      .bar .mark { width: 82px; }
+      .bar nav ul { gap: 15px; font-size: 11px; letter-spacing: 0.06em; transform: translateY(-4px); }
     }
     @media (max-width: 380px) {
-      .bar nav ul { gap: 12px; font-size: 11px; }
+      .bar .wrap { flex-wrap: wrap; row-gap: 8px; }
+      .bar nav ul { gap: 12px; }
     }
 
     .hero-inner { position: relative; margin-top: auto; }
@@ -147,29 +160,30 @@
 </head>
 <body>
 
-  <header class="hero">
+  <header class="bar topbar" id="top">
+    <div class="wrap">
+      <a class="home" href="#top" aria-label="MJL Collective, back to top"><img class="mark" src="assets/mark-white.png" alt="MJL Collective"></a>
+      <nav aria-label="Main">
+        <ul>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
     <img class="bg" src="assets/glass.webp" alt="" aria-hidden="true">
     <div class="shade"></div>
-    <div class="bar">
-      <div class="wrap">
-        <img class="mark" src="assets/mark-white.png" alt="MJL Collective">
-        <nav aria-label="Main">
-          <ul>
-            <li><a href="#work">Work</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </nav>
-      </div>
-    </div>
     <div class="hero-inner">
       <div class="wrap">
         <h1>A website in days. Changes in hours.</h1>
         <div><a class="cta" href="#contact">Request a meeting</a></div>
       </div>
     </div>
-  </header>
+  </section>
 
   <main>
     <section class="statement">
@@ -295,6 +309,14 @@
 
 
   <script>
+    // The pinned bar goes solid as soon as the page leaves the top.
+    (function () {
+      var bar = document.getElementById("top");
+      function onScroll() { bar.classList.toggle("solid", window.scrollY > 24); }
+      addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    })();
+
     // Scale each preview iframe so a 1280px-wide desktop render fits its frame.
     // Computed in JS because container-query units are not applied reliably in
     // every mobile WebKit view; the cqw value in the stylesheet is the no-JS fallback.
