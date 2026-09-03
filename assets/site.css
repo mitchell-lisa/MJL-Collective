@@ -109,37 +109,33 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 .statement p { margin: 0; color: var(--ink-2); max-width: 46ch; align-self: end; }
 
 /* ---------- marks ---------- */
+#work .wrap { padding-bottom: 76px; }
 .marks .wrap { padding-bottom: 92px; }
-/* the label row tracks the grid width so its note sits over the wells, not the page edge */
-.marks .sec-head { border-top-width: 1px; max-width: 900px; }
-.marks-grid { padding-top: 32px; display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 900px; }
-@media (min-width: 700px) { .marks-grid { grid-template-columns: 1fr 1fr; } }
-.well { margin: 0; }
-.well .face { position: relative; aspect-ratio: 4 / 3; background: #fff; border: 1px solid var(--mortar); }
-.well .face > img { position: absolute; left: 14%; top: 12%; width: 72%; height: 76%; object-fit: contain; }
+.marks .sec-head { border-top-width: 1px; }
+.cases { padding-top: 32px; display: grid; gap: 52px; }
+.case { margin: 0; }
+/* the mark and the site it ended up on, side by side. 1fr to 1.2fr because a 4:3
+   well and a 16:10 screen land at the same height at that ratio */
+.case .art { display: grid; grid-template-columns: 1fr; gap: 18px; }
+@media (min-width: 860px) { .case .art { grid-template-columns: 1fr 1.2fr; gap: 24px; align-items: start; } }
+.case .face { position: relative; aspect-ratio: 4 / 3; background: #fff; border: 1px solid var(--mortar); }
+/* a mark drawn for a dark ground gets one, or it washes out */
+.case .face.dark { background: var(--poured); border-color: var(--poured); }
+.case .face > img { position: absolute; left: 12%; top: 8%; width: 76%; height: 84%; object-fit: contain; }
 /* with a before beside it, the new mark moves right so the two never touch */
-.well .face.has-before > img { left: 36%; top: 14%; width: 54%; height: 72%; }
-.well .before { position: absolute; left: 4%; bottom: 5%; width: 27%; height: 44%; opacity: 0.7; }
-.well .before img { width: 100%; height: 100%; object-fit: contain; object-position: left bottom; }
-.well figcaption { margin-top: 12px; font-size: 13px; color: var(--ink-2); display: flex; justify-content: space-between; gap: 12px; }
-.well figcaption small { font-size: 13px; color: var(--ink-3); text-align: right; }
-/* each well opens the client's live site, so the two sections never repeat a client */
-.well .face .cover { position: absolute; inset: 0; z-index: 2; }
-.well:hover .face, .well:focus-within .face { border-color: var(--ink-3); }
+.case .face.has-before > img { left: 36%; top: 14%; width: 54%; height: 72%; }
+.case .before { position: absolute; left: 4%; bottom: 5%; width: 27%; height: 44%; opacity: 0.7; }
+.case .before img { width: 100%; height: 100%; object-fit: contain; object-position: left bottom; }
+.case figcaption { margin-top: 14px; font-family: var(--block); font-weight: 700; font-size: 16px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.case figcaption small { font-family: var(--sans); font-weight: 400; font-size: 13px; color: var(--ink-3); text-align: right; }
 
 /* ---------- work ---------- */
 .sec-head { font-size: 13px; color: var(--ink-3); border-top: 1px solid var(--mortar); padding-top: 16px; display: flex; justify-content: space-between; gap: 8px 20px; flex-wrap: wrap; }
-.wall { padding-top: 36px; padding-bottom: 84px; display: grid; grid-template-columns: 1fr; gap: 48px 32px; }
-@media (min-width: 860px) { .wall { grid-template-columns: 1fr 1fr; } }
-.wall figure { margin: 0; }
 .tv-frame { padding: 6px; background: linear-gradient(145deg, #f6f7f5 0%, #c6c8c5 30%, #eef0ee 55%, #a9aba8 100%); box-shadow: 0 20px 45px rgba(27, 28, 27, 0.16), 0 3px 9px rgba(27, 28, 27, 0.1); }
 .screen { aspect-ratio: 16 / 10; background: var(--plaster); position: relative; overflow: hidden; container-type: inline-size; }
 .screen .ph { position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink-3); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; padding: 12px; }
 .screen iframe { position: absolute; top: 0; left: 0; width: 1280px; height: 800px; border: 0; transform-origin: 0 0; transform: scale(var(--s, calc(100cqw / 1280))); pointer-events: none; background: var(--plaster); }
 .screen .cover { position: absolute; inset: 0; z-index: 2; }
-.wall figcaption { margin-top: 14px; font-family: var(--block); font-weight: 700; font-size: 16px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
-.wall figcaption small { font-family: var(--sans); font-weight: 400; font-size: 13px; color: var(--ink-3); }
-
 /* ---------- services ---------- */
 .services-head h2 { margin: 0 0 12px; font-weight: 400; font-size: clamp(22px, 2.6vw, 32px); letter-spacing: -0.02em; line-height: 1.15; max-width: 22ch; text-wrap: balance; }
 .services-head p { margin: 0; color: var(--ink-2); max-width: 52ch; }

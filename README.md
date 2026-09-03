@@ -22,9 +22,10 @@ deployment remains in the Deployments list for instant rollback.
 Five pages, one shared stylesheet and script:
 
 - `index.html` at `/`: the glass hero, the statement, and an index of the other pages.
-- `work.html` at `/work`: Websites, then Marks. No client appears in both
-  sections, so a rebrand client is shown once, by its mark, and the well
-  links to that client's live site.
+- `work.html` at `/work`: one row per client, the mark beside the live site
+  it ended up on. Two sections name the engagement: identity and website
+  built from scratch, then rebrand and rebuild, where the identity that was
+  replaced sits faded in the corner of the mark. No client appears twice.
 - `services.html` at `/services`: the four steps and the process under them.
 - `about.html` at `/about` and `contact.html` at `/contact`.
 - `assets/site.css` and `assets/site.js` are shared. `vercel.json` sets
