@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MJL Collective: logo directions</title>
+  <meta name="robots" content="noindex">
+  <style>
+    @font-face { font-family: "Instrument Sans"; src: url("assets/fonts/InstrumentSans-latin.woff2") format("woff2"); font-weight: 400 700; font-display: block; }
+    :root { --cement: #eceeec; --plaster: #f5f6f5; --mortar: #cfd3d0; --ink: #1b1c1b; --ink-2: #4e504e; --ink-3: #888b88; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--cement); color: var(--ink); font-family: "Instrument Sans", Helvetica, Arial, sans-serif; font-size: 15px; line-height: 1.55; }
+    .wrap { max-width: 1240px; margin: 0 auto; padding: 56px 40px 96px; }
+    h1 { font-weight: 400; font-size: 30px; letter-spacing: -0.02em; margin: 0 0 8px; }
+    .lede { color: var(--ink-2); max-width: 62ch; margin: 0 0 56px; }
+    .dir { border-top: 1px solid var(--ink); padding-top: 22px; margin-bottom: 72px; }
+    .dir header { display: grid; grid-template-columns: 1fr; gap: 12px 48px; margin-bottom: 26px; }
+    @media (min-width: 860px) { .dir header { grid-template-columns: 240px 1fr; } }
+    .dir h2 { margin: 0; font-size: 22px; font-weight: 500; letter-spacing: -0.01em; }
+    .dir h2 small { display: block; font-size: 12px; color: var(--ink-3); font-weight: 400; letter-spacing: 0.02em; margin-top: 4px; }
+    .dir p { margin: 0; color: var(--ink-2); max-width: 66ch; }
+    .row { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    @media (min-width: 860px) { .row { grid-template-columns: 1fr 1fr; } }
+    .sheet { padding: 28px; display: grid; grid-template-columns: 1fr; gap: 28px; align-content: start; }
+    .sheet.white { background: #fff; color: var(--ink); border: 1px solid var(--mortar); }
+    .sheet.ink { background: var(--ink); color: #fff; }
+    .sizes { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 36px 44px; }
+    .size { display: grid; gap: 10px; justify-items: start; }
+    .size span { font-size: 11px; letter-spacing: 0.02em; opacity: 0.55; }
+    .large { justify-self: start; }
+    svg { display: block; overflow: visible; }
+    .ink svg { color: #fff; }
+    .white svg { color: var(--ink); }
+    .mono text { font-family: "Instrument Sans", Helvetica, Arial, sans-serif; }
+    .ask { border-top: 1px solid var(--ink); padding-top: 22px; color: var(--ink-2); max-width: 62ch; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Four directions for the MJL Collective mark.</h1>
+  <p class="lede">Every mark is drawn by hand as SVG and set in one color. Where type appears it is Instrument Sans, the face the site already uses, and it will be converted to outlines in the final files. Each direction is shown at the four sizes the mark has to live at: the header at 82 pixels, the favicon at 32, the email signature at 132, and large at 480. Once on white, once on ink.</p>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Shared letterforms: monoline, square ends, cap height 100, built like framing rather than drawn. -->
+    <g id="letters-mjl" fill="none" stroke="currentColor" stroke-width="14" stroke-linejoin="miter" stroke-miterlimit="6">
+      <path d="M7,110 V10 L52,72 L97,10 V110"/>
+      <path d="M163,10 V80 A30,30 0 0 1 133,110 H120"/>
+    </g>
+
+    <!-- A. Stair: the L's foot is the stair. -->
+    <symbol id="a-icon" viewBox="-10 -6 320 132">
+      <use href="#letters-mjl"/>
+      <path d="M205,10 V103 H243 V83 H265 V63 H287" fill="none" stroke="currentColor" stroke-width="14" stroke-linejoin="miter" stroke-miterlimit="6"/>
+    </symbol>
+    <symbol id="a-full" viewBox="-10 -6 320 172" class="mono">
+      <use href="#letters-mjl"/>
+      <path d="M205,10 V103 H243 V83 H265 V63 H287" fill="none" stroke="currentColor" stroke-width="14" stroke-linejoin="miter" stroke-miterlimit="6"/>
+      <text x="1" y="156" textLength="285" lengthAdjust="spacing" font-family="Instrument Sans, Helvetica, Arial, sans-serif" font-weight="500" font-size="21" fill="currentColor">COLLECTIVE</text>
+    </symbol>
+
+    <!-- B. Ligature: the M's last leg drops below the line and hooks, which is the J. -->
+    <symbol id="b-icon" viewBox="-10 -6 220 166">
+      <g fill="none" stroke="currentColor" stroke-width="14" stroke-linejoin="miter" stroke-miterlimit="6">
+        <path d="M7,110 V10 L52,72 L97,10 V124 A30,30 0 0 1 67,154 H54"/>
+        <path d="M137,10 V103 H197"/>
+      </g>
+    </symbol>
+    <symbol id="b-full" viewBox="-10 -6 560 166">
+      <g fill="none" stroke="currentColor" stroke-width="14" stroke-linejoin="miter" stroke-miterlimit="6">
+        <path d="M7,110 V10 L52,72 L97,10 V124 A30,30 0 0 1 67,154 H54"/>
+        <path d="M137,10 V103 H197"/>
+      </g>
+      <text x="236" y="110" font-family="Instrument Sans, Helvetica, Arial, sans-serif" font-weight="500" font-size="72" letter-spacing="-1.5" fill="currentColor">Collective</text>
+    </symbol>
+
+    <!-- C. Hallmark: a solid block with the letters cut out of it, the way a maker's mark is struck into metal. -->
+    <mask id="c-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="160" height="160">
+      <rect width="160" height="160" fill="#fff"/>
+      <g transform="translate(20 30) scale(0.45)" fill="none" stroke="#000" stroke-width="16" stroke-linejoin="miter" stroke-miterlimit="6">
+        <path d="M7,110 V10 L52,72 L97,10 V110"/>
+        <path d="M163,10 V80 A30,30 0 0 1 133,110 H120"/>
+        <path d="M205,10 V103 H265"/>
+      </g>
+      <text x="20" y="127" textLength="120" lengthAdjust="spacing" font-family="Instrument Sans, Helvetica, Arial, sans-serif" font-weight="600" font-size="13.5" fill="#000">COLLECTIVE</text>
+    </mask>
+    <mask id="c-mask-icon" maskUnits="userSpaceOnUse" x="0" y="0" width="160" height="160">
+      <rect width="160" height="160" fill="#fff"/>
+      <g transform="translate(22 45) scale(0.45)" fill="none" stroke="#000" stroke-width="18" stroke-linejoin="miter" stroke-miterlimit="6">
+        <path d="M7,110 V10 L52,72 L97,10 V110"/>
+        <path d="M163,10 V80 A30,30 0 0 1 133,110 H120"/>
+        <path d="M205,10 V103 H265"/>
+      </g>
+    </mask>
+    <symbol id="c-icon" viewBox="0 0 160 160"><rect width="160" height="160" fill="currentColor" mask="url(#c-mask-icon)"/></symbol>
+    <symbol id="c-full" viewBox="0 0 160 160"><rect width="160" height="160" fill="currentColor" mask="url(#c-mask)"/></symbol>
+
+    <!-- D. Masthead: no symbol at all. The name, set once, like a nameplate on a newspaper or a plaque by a door. -->
+    <symbol id="d-full" viewBox="0 0 400 240">
+      <rect x="0" y="0" width="400" height="2" fill="currentColor"/>
+      <text x="-14.2" y="181" font-family="Instrument Sans, Helvetica, Arial, sans-serif" font-weight="600" font-size="228.7" letter-spacing="-6.9" fill="currentColor">MJL</text>
+      <text x="1" y="221" textLength="398" lengthAdjust="spacing" font-family="Instrument Sans, Helvetica, Arial, sans-serif" font-weight="500" font-size="18" fill="currentColor">COLLECTIVE</text>
+      <rect x="0" y="238" width="400" height="2" fill="currentColor"/>
+    </symbol>
+    <symbol id="d-icon" viewBox="0 0 160 160">
+      <rect x="0" y="0" width="160" height="3" fill="currentColor"/>
+      <rect x="0" y="157" width="160" height="3" fill="currentColor"/>
+      <text x="7.2" y="108" font-family="Instrument Sans, Helvetica, Arial, sans-serif" font-weight="600" font-size="77.8" letter-spacing="-2.3" fill="currentColor">MJL</text>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============================== A ============================== -->
+<section class="dir" id="a">
+  <header>
+    <h2>A. Stair<small>Monoline letters, the L climbs</small></h2>
+    <p>Three letters built from straight strokes of one weight, with the foot of the L stepping up into the three treads of Build, Maintain, Grow. It comes from the mark you have now and the stone stairway you photographed in Italy, redrawn so the stair reads at 32 pixels and the letters stand square instead of leaning.</p>
+  </header>
+  <div class="row">
+    <div class="sheet white">
+      <div class="sizes">
+        <div class="size"><svg width="82" viewBox="-10 -6 320 172"><use href="#a-full"/></svg><span>Header, 82px</span></div>
+        <div class="size"><svg width="32" height="32" viewBox="-10 -6 320 132" preserveAspectRatio="xMidYMid meet"><use href="#a-icon"/></svg><span>Favicon, 32px</span></div>
+        <div class="size"><svg width="132" viewBox="-10 -6 320 172"><use href="#a-full"/></svg><span>Email, 132px</span></div>
+      </div>
+      <div class="large"><svg width="480" viewBox="-10 -6 320 172"><use href="#a-full"/></svg></div>
+    </div>
+    <div class="sheet ink">
+      <div class="sizes">
+        <div class="size"><svg width="82" viewBox="-10 -6 320 172"><use href="#a-full"/></svg><span>Header, 82px</span></div>
+        <div class="size"><svg width="32" height="32" viewBox="-10 -6 320 132"><use href="#a-icon"/></svg><span>Favicon, 32px</span></div>
+        <div class="size"><svg width="132" viewBox="-10 -6 320 172"><use href="#a-full"/></svg><span>Email, 132px</span></div>
+      </div>
+      <div class="large"><svg width="480" viewBox="-10 -6 320 172"><use href="#a-full"/></svg></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== B ============================== -->
+<section class="dir" id="b">
+  <header>
+    <h2>B. Ligature<small>The M carries the J</small></h2>
+    <p>The last leg of the M runs below the line and hooks back, and that hook is the J, so the three letters become one built object with the L standing beside it. It is the most compact of the four and the one that embroiders and stamps best, because there is nothing small in it. The name sits to the right in sentence case, the way an architecture practice sets its own.</p>
+  </header>
+  <div class="row">
+    <div class="sheet white">
+      <div class="sizes">
+        <div class="size"><svg width="82" viewBox="-10 -6 560 166"><use href="#b-full"/></svg><span>Header, 82px</span></div>
+        <div class="size"><svg width="32" height="32" viewBox="-10 -6 220 166"><use href="#b-icon"/></svg><span>Favicon, 32px</span></div>
+        <div class="size"><svg width="132" viewBox="-10 -6 560 166"><use href="#b-full"/></svg><span>Email, 132px</span></div>
+      </div>
+      <div class="large"><svg width="480" viewBox="-10 -6 560 166"><use href="#b-full"/></svg></div>
+    </div>
+    <div class="sheet ink">
+      <div class="sizes">
+        <div class="size"><svg width="82" viewBox="-10 -6 560 166"><use href="#b-full"/></svg><span>Header, 82px</span></div>
+        <div class="size"><svg width="32" height="32" viewBox="-10 -6 220 166"><use href="#b-icon"/></svg><span>Favicon, 32px</span></div>
+        <div class="size"><svg width="132" viewBox="-10 -6 560 166"><use href="#b-full"/></svg><span>Email, 132px</span></div>
+      </div>
+      <div class="large"><svg width="480" viewBox="-10 -6 560 166"><use href="#b-full"/></svg></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== C ============================== -->
+<section class="dir" id="c">
+  <header>
+    <h2>C. Hallmark<small>A block with the name struck out of it</small></h2>
+    <p>A solid square, the proportions of one glass block from your photograph, with the letters and the word cut out of it rather than printed on it. It behaves like a maker's mark: a stamp on an invoice, a woven label, a patch on a hat, a plate by a door, and it needs no second color because the ground shows through the letters.</p>
+  </header>
+  <div class="row">
+    <div class="sheet white">
+      <div class="sizes">
+        <div class="size"><svg width="82" height="82" viewBox="0 0 160 160"><use href="#c-full"/></svg><span>Header, 82px</span></div>
+        <div class="size"><svg width="32" height="32" viewBox="0 0 160 160"><use href="#c-icon"/></svg><span>Favicon, 32px</span></div>
+        <div class="size"><svg width="132" height="132" viewBox="0 0 160 160"><use href="#c-full"/></svg><span>Email, 132px</span></div>
+      </div>
+      <div class="large"><svg width="480" height="480" viewBox="0 0 160 160"><use href="#c-full"/></svg></div>
+    </div>
+    <div class="sheet ink">
+      <div class="sizes">
+        <div class="size"><svg width="82" height="82" viewBox="0 0 160 160"><use href="#c-full"/></svg><span>Header, 82px</span></div>
+        <div class="size"><svg width="32" height="32" viewBox="0 0 160 160"><use href="#c-icon"/></svg><span>Favicon, 32px</span></div>
+        <div class="size"><svg width="132" height="132" viewBox="0 0 160 160"><use href="#c-full"/></svg><span>Email, 132px</span></div>
+      </div>
+      <div class="large"><svg width="480" height="480" viewBox="0 0 160 160"><use href="#c-full"/></svg></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== D ============================== -->
+<section class="dir" id="d">
+  <header>
+    <h2>D. Masthead<small>A pure wordmark, no symbol</small></h2>
+    <p>No symbol at all: the three letters set large and tight in Instrument Sans, the word set small and spaced to exactly the same width beneath, held between two rules like the nameplate on a newspaper. It is the quietest of the four and the closest to the Aimé Leon Dore reference, and it carries the whole brand on typography, which is also what the site does.</p>
+  </header>
+  <div class="row">
+    <div class="sheet white">
+      <div class="sizes">
+        <div class="size"><svg width="82" viewBox="0 0 400 240"><use href="#d-full"/></svg><span>Header, 82px</span></div>
+        <div class="size"><svg width="32" height="32" viewBox="0 0 160 160"><use href="#d-icon"/></svg><span>Favicon, 32px</span></div>
+        <div class="size"><svg width="132" viewBox="0 0 400 240"><use href="#d-full"/></svg><span>Email, 132px</span></div>
+      </div>
+      <div class="large"><svg width="480" viewBox="0 0 400 240"><use href="#d-full"/></svg></div>
+    </div>
+    <div class="sheet ink">
+      <div class="sizes">
+        <div class="size"><svg width="82" viewBox="0 0 400 240"><use href="#d-full"/></svg><span>Header, 82px</span></div>
+        <div class="size"><svg width="32" height="32" viewBox="0 0 160 160"><use href="#d-icon"/></svg><span>Favicon, 32px</span></div>
+        <div class="size"><svg width="132" viewBox="0 0 400 240"><use href="#d-full"/></svg><span>Email, 132px</span></div>
+      </div>
+      <div class="large"><svg width="480" viewBox="0 0 400 240"><use href="#d-full"/></svg></div>
+    </div>
+  </div>
+</section>
+
+  <p class="ask">Reply with a letter. If one is close but not right, say what is off and I will refine that one before wiring it in.</p>
+</div>
+</body>
+</html>
