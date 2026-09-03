@@ -119,7 +119,7 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 .well .face > img { position: absolute; left: 14%; top: 12%; width: 72%; height: 76%; object-fit: contain; }
 /* with a before beside it, the new mark moves right so the two never touch */
 .well .face.has-before > img { left: 36%; top: 14%; width: 54%; height: 72%; }
-.well .before { position: absolute; left: 4%; bottom: 5%; width: 27%; height: 44%; opacity: 0.55; }
+.well .before { position: absolute; left: 4%; bottom: 5%; width: 27%; height: 44%; opacity: 0.7; }
 .well .before img { width: 100%; height: 100%; object-fit: contain; object-position: left bottom; }
 .well figcaption { margin-top: 12px; font-size: 13px; color: var(--ink-2); display: flex; justify-content: space-between; gap: 12px; }
 .well figcaption span { color: var(--ink-3); }
