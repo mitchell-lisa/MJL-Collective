@@ -110,10 +110,10 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 
 /* ---------- marks ---------- */
 .marks .wrap { padding-bottom: 92px; }
-.marks .sec-head { border-top-width: 1px; }
-.marks-grid { padding-top: 32px; display: grid; grid-template-columns: 1fr; gap: 24px; }
-@media (min-width: 640px) { .marks-grid { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 1000px) { .marks-grid { grid-template-columns: repeat(3, 1fr); } }
+/* the label row tracks the grid width so its note sits over the wells, not the page edge */
+.marks .sec-head { border-top-width: 1px; max-width: 900px; }
+.marks-grid { padding-top: 32px; display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 900px; }
+@media (min-width: 700px) { .marks-grid { grid-template-columns: 1fr 1fr; } }
 .well { margin: 0; }
 .well .face { position: relative; aspect-ratio: 4 / 3; background: #fff; border: 1px solid var(--mortar); }
 .well .face > img { position: absolute; left: 14%; top: 12%; width: 72%; height: 76%; object-fit: contain; }
@@ -122,10 +122,13 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 .well .before { position: absolute; left: 4%; bottom: 5%; width: 27%; height: 44%; opacity: 0.7; }
 .well .before img { width: 100%; height: 100%; object-fit: contain; object-position: left bottom; }
 .well figcaption { margin-top: 12px; font-size: 13px; color: var(--ink-2); display: flex; justify-content: space-between; gap: 12px; }
-.well figcaption span { color: var(--ink-3); }
+.well figcaption small { font-size: 13px; color: var(--ink-3); text-align: right; }
+/* each well opens the client's live site, so the two sections never repeat a client */
+.well .face .cover { position: absolute; inset: 0; z-index: 2; }
+.well:hover .face, .well:focus-within .face { border-color: var(--ink-3); }
 
 /* ---------- work ---------- */
-.sec-head { font-size: 13px; color: var(--ink-3); border-top: 1px solid var(--mortar); padding-top: 16px; }
+.sec-head { font-size: 13px; color: var(--ink-3); border-top: 1px solid var(--mortar); padding-top: 16px; display: flex; justify-content: space-between; gap: 8px 20px; flex-wrap: wrap; }
 .wall { padding-top: 36px; padding-bottom: 84px; display: grid; grid-template-columns: 1fr; gap: 48px 32px; }
 @media (min-width: 860px) { .wall { grid-template-columns: 1fr 1fr; } }
 .wall figure { margin: 0; }
