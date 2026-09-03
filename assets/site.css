@@ -9,7 +9,7 @@
   --sans: "Instrument Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --block: "Archivo", "Helvetica Neue", Arial, sans-serif;
   color-scheme: light;
-  --barh: 108px;
+  --barh: 90px;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -37,11 +37,11 @@ a { color: inherit; }
 
 .bar { position: relative; color: #fff; }
 .bar .wrap { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-top: 26px; padding-bottom: 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.18); }
-.bar .mark { width: 104px; }
-.bar .home { display: block; }
+.bar .mark { width: 152px; }
+.bar .home { display: block; flex: none; }
 .bar nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 34px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap;
-  /* the lockup carries COLLECTIVE below the MJL letterforms, so its optical centre
-     sits above its geometric one; lift the menu to meet the letterforms, not the box */
+  /* the J drops below the baseline, so the lockup's box centre sits under its cap
+     band; lift the menu to meet the letters rather than the box */
   transform: translateY(-6px); }
 .bar nav a { text-decoration: none; opacity: 0.82; }
 .bar nav a:hover, .bar nav a:focus-visible { opacity: 1; }
@@ -75,14 +75,16 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 .index a:hover .name, .index a:focus-visible .name { text-decoration: underline; text-underline-offset: 4px; }
 
 @media (max-width: 640px) {
-  :root { --barh: 92px; }
-  .bar .wrap { padding-top: 20px; padding-bottom: 18px; gap: 16px; }
-  .bar .mark { width: 82px; }
-  .bar nav ul { gap: 15px; font-size: 11px; letter-spacing: 0.06em; transform: translateY(-4px); }
+  :root { --barh: 68px; }
+  .bar .wrap { padding-top: 20px; padding-bottom: 18px; gap: 14px; }
+  .bar .mark { width: 112px; }
+  .bar nav ul { gap: 13px; font-size: 10.5px; letter-spacing: 0.04em; transform: translateY(-4px); }
 }
+/* under 380 the menu drops to its own line, so the bar is two rows tall */
 @media (max-width: 380px) {
-  .bar .wrap { flex-wrap: wrap; row-gap: 8px; }
-  .bar nav ul { gap: 12px; }
+  :root { --barh: 90px; }
+  .bar .wrap { flex-wrap: wrap; row-gap: 6px; }
+  .bar nav ul { gap: 12px; transform: none; }
 }
 
 .hero-inner { position: relative; margin-top: auto; }

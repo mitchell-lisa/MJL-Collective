@@ -31,6 +31,18 @@ Five pages, one shared stylesheet and script:
 The bar and footer are the same markup on every page. When editing them,
 change all five files, or regenerate the set from one template.
 
+## Brand
+
+`brand/` holds the logo: SVG for the lockup and the monogram, in ink and in
+white, plus PNG exports on white and on ink. `brand/README.md` states the
+palette, the typeface, the minimum sizes and the clear space. Every site asset
+in `assets/` (the header mark, the favicon, the touch icon, the social card and
+the email mark) is generated from the same geometry, so regenerate them
+together rather than editing one by hand.
+
+`logo-directions.html` is the comparison page the mark was chosen from. It is
+listed in `.vercelignore` and is not deployed.
+
 ## Contact form
 
 `api/contact.js` is a Vercel serverless function ported from the previous
