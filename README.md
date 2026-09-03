@@ -23,9 +23,9 @@ Five pages, one shared stylesheet and script:
 
 - `index.html` at `/`: the glass hero, the statement, and an index of the other pages.
 - `work.html` at `/work`: one row per client, the mark beside the live site
-  it ended up on. Two sections name the engagement: identity and website
-  built from scratch, then rebrand and rebuild, where the identity that was
-  replaced sits faded in the corner of the mark. No client appears twice.
+  it ended up on, with the identity it replaced faded in the corner where
+  there was one. Scope is stated per project in its caption rather than by
+  grouping, because no two engagements have had the same scope so far.
 - `services.html` at `/services`: the four steps and the process under them.
 - `about.html` at `/about` and `contact.html` at `/contact`.
 - `assets/site.css` and `assets/site.js` are shared. `vercel.json` sets

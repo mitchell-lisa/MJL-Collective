@@ -109,10 +109,10 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 .statement p { margin: 0; color: var(--ink-2); max-width: 46ch; align-self: end; }
 
 /* ---------- marks ---------- */
-#work .wrap { padding-bottom: 76px; }
-.marks .wrap { padding-bottom: 92px; }
-.marks .sec-head { border-top-width: 1px; }
-.cases { padding-top: 32px; display: grid; gap: 52px; }
+#work .wrap { padding-bottom: 92px; }
+/* one list, no groups: four engagements that differ in scope, so the scope is
+   stated per project in its caption rather than implied by a section it sits in */
+.cases { border-top: 1px solid var(--mortar); padding-top: 40px; display: grid; gap: 52px; }
 .case { margin: 0; }
 /* the mark and the site it ended up on, side by side. 1fr to 1.2fr because a 4:3
    well and a 16:10 screen land at the same height at that ratio */
@@ -130,7 +130,6 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 .case figcaption small { font-family: var(--sans); font-weight: 400; font-size: 13px; color: var(--ink-3); text-align: right; }
 
 /* ---------- work ---------- */
-.sec-head { font-size: 13px; color: var(--ink-3); border-top: 1px solid var(--mortar); padding-top: 16px; display: flex; justify-content: space-between; gap: 8px 20px; flex-wrap: wrap; }
 .tv-frame { padding: 6px; background: linear-gradient(145deg, #f6f7f5 0%, #c6c8c5 30%, #eef0ee 55%, #a9aba8 100%); box-shadow: 0 20px 45px rgba(27, 28, 27, 0.16), 0 3px 9px rgba(27, 28, 27, 0.1); }
 .screen { aspect-ratio: 16 / 10; background: var(--plaster); position: relative; overflow: hidden; container-type: inline-size; }
 .screen .ph { position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink-3); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; padding: 12px; }
