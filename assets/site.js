@@ -6,14 +6,17 @@
   onScroll();
 })();
 
-// Scale each preview iframe so a 1280px-wide desktop render fits its frame.
-// Computed in JS because container-query units are not applied reliably in
-// every mobile WebKit view; the cqw value in the stylesheet is the no-JS fallback.
+// Scale each preview iframe so the render fits its frame. The render width is
+// --vw on the frame, which the stylesheet drops to a phone width on small
+// screens, so a phone visitor sees the client's mobile layout rather than a
+// shrunken desktop one. Computed in JS because container-query units are not
+// applied reliably in every mobile WebKit view; the cqw value is the fallback.
 (function () {
   var screens = document.querySelectorAll(".screen");
   function fit() {
     for (var i = 0; i < screens.length; i++) {
-      screens[i].style.setProperty("--s", (screens[i].clientWidth / 1280).toFixed(4));
+      var base = parseFloat(getComputedStyle(screens[i]).getPropertyValue("--vw")) || 1280;
+      screens[i].style.setProperty("--s", (screens[i].clientWidth / base).toFixed(4));
     }
   }
   if ("ResizeObserver" in window) {

@@ -117,6 +117,11 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 /* the mark and the site it ended up on, side by side. 1fr to 1.2fr because a 4:3
    well and a 16:10 screen land at the same height at that ratio */
 .case .art { display: grid; grid-template-columns: 1fr; gap: 18px; }
+/* stacked, both blocks cap at the same width so they share a left edge */
+@media (max-width: 859px) {
+  .case .face, .case .tv-frame { max-width: 300px; }
+  .case .screen { --vw: 390; --vh: 720; }
+}
 @media (min-width: 860px) { .case .art { grid-template-columns: 1fr 1.2fr; gap: 24px; align-items: start; } }
 .case .face { position: relative; aspect-ratio: 4 / 3; background: #fff; border: 1px solid var(--mortar); }
 /* a mark drawn for a dark ground gets one, or it washes out */
@@ -131,9 +136,12 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 
 /* ---------- work ---------- */
 .tv-frame { padding: 6px; background: linear-gradient(145deg, #f6f7f5 0%, #c6c8c5 30%, #eef0ee 55%, #a9aba8 100%); box-shadow: 0 20px 45px rgba(27, 28, 27, 0.16), 0 3px 9px rgba(27, 28, 27, 0.1); }
-.screen { aspect-ratio: 16 / 10; background: var(--plaster); position: relative; overflow: hidden; container-type: inline-size; }
+/* the frame renders the client site at --vw wide, so the site itself decides which
+   layout to serve. On a phone that is a phone width, which is the layout a phone
+   visitor actually wants to see. */
+.screen { --vw: 1280; --vh: 800; aspect-ratio: var(--vw) / var(--vh); background: var(--plaster); position: relative; overflow: hidden; container-type: inline-size; }
 .screen .ph { position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink-3); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; padding: 12px; }
-.screen iframe { position: absolute; top: 0; left: 0; width: 1280px; height: 800px; border: 0; transform-origin: 0 0; transform: scale(var(--s, calc(100cqw / 1280))); pointer-events: none; background: var(--plaster); }
+.screen iframe { position: absolute; top: 0; left: 0; width: calc(var(--vw) * 1px); height: calc(var(--vh) * 1px); border: 0; transform-origin: 0 0; transform: scale(var(--s, calc(100cqw / var(--vw)))); pointer-events: none; background: var(--plaster); }
 .screen .cover { position: absolute; inset: 0; z-index: 2; }
 /* ---------- services ---------- */
 .services-head h2 { margin: 0 0 12px; font-weight: 400; font-size: clamp(22px, 2.6vw, 32px); letter-spacing: -0.02em; line-height: 1.15; max-width: 22ch; text-wrap: balance; }
