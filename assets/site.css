@@ -63,7 +63,7 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 /* ---------- page head: how every page after the home page opens ---------- */
 .page-head .wrap { padding-top: 64px; padding-bottom: 40px; display: grid; grid-template-columns: 1fr; gap: 18px 48px; }
 @media (min-width: 860px) { .page-head .wrap { grid-template-columns: 1.4fr 1fr; align-items: end; } }
-.page-head h1 { margin: 0; font-weight: 400; font-size: clamp(24px, 3vw, 36px); line-height: 1.15; letter-spacing: -0.02em; max-width: 22ch; text-wrap: balance; }
+.page-head h1 { margin: 0; font-weight: 400; font-size: clamp(28px, calc(25px + 0.77vw), 36px); line-height: 1.15; letter-spacing: -0.02em; max-width: 22ch; text-wrap: balance; }
 .page-head p { margin: 0; color: var(--ink-2); max-width: 46ch; }
 
 /* ---------- home index: where the rest of the site is ---------- */
@@ -81,6 +81,10 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
    the room, keeps the whole lockup. */
 @media (max-width: 640px) {
   :root { --barh: 69px; }
+  /* the block is anchored to the bottom of the hero, so a tall phone left over
+     half the screen as empty glass above it. A shorter hero puts the line where
+     the eye lands and brings the statement up to the fold. */
+  .hero { min-height: 72vh; min-height: 72svh; }
   .bar .wrap { padding-top: 18px; padding-bottom: 17px; gap: 20px; }
   .topbar .mark { width: 44px; }
   .foot .mark { width: 124px; }
@@ -99,7 +103,10 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 .hero-inner { position: relative; margin-top: auto; }
 .hero-inner .wrap { padding-top: 96px; padding-bottom: 72px; display: grid; grid-template-columns: 1fr; gap: 28px 48px; }
 @media (min-width: 860px) { .hero-inner .wrap { grid-template-columns: 1.2fr 0.8fr; align-items: end; } }
-.hero h1 { margin: 0; font-family: var(--block); font-weight: 500; font-size: clamp(26px, 3.4vw, 44px); line-height: 1.15; letter-spacing: -0.02em; color: #fff; max-width: 19ch; text-wrap: balance; }
+/* 3.4vw of a phone is 13px, so this clamp bottomed out on every phone and the
+   hero read at its smallest where it has the most room. These interpolate from
+   a 390px phone to a 1440px desktop instead of resting on the floor. */
+.hero h1 { margin: 0; font-family: var(--block); font-weight: 500; font-size: clamp(32px, calc(27.5px + 1.15vw), 44px); line-height: 1.15; letter-spacing: -0.02em; color: #fff; max-width: 19ch; text-wrap: balance; }
 .cta { display: inline-block; border: 1px solid currentColor; padding: 14px 24px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background 0.15s, color 0.15s; }
 .hero .cta { color: #fff; }
 .hero .cta:hover, .hero .cta:focus-visible { background: #fff; color: var(--ink); }
@@ -107,8 +114,13 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 /* ---------- statement ---------- */
 .statement .wrap { padding-top: 76px; padding-bottom: 64px; display: grid; grid-template-columns: 1fr; gap: 24px 48px; }
 @media (min-width: 860px) { .statement .wrap { grid-template-columns: 1.4fr 1fr; } }
-.statement h2 { margin: 0; font-weight: 400; font-size: clamp(24px, 3vw, 36px); line-height: 1.15; letter-spacing: -0.02em; max-width: 26ch; text-wrap: balance; }
+.statement h2 { margin: 0; font-weight: 400; font-size: clamp(28px, calc(25px + 0.77vw), 36px); line-height: 1.15; letter-spacing: -0.02em; max-width: 26ch; text-wrap: balance; }
 .statement p { margin: 0; color: var(--ink-2); max-width: 46ch; align-self: end; }
+/* these sit after the rules they trim, or the base padding wins on order */
+@media (max-width: 640px) {
+  .hero-inner .wrap { padding-top: 72px; padding-bottom: 56px; }
+  .statement .wrap { padding-top: 56px; padding-bottom: 48px; }
+}
 
 /* ---------- marks ---------- */
 #work .wrap { padding-bottom: 92px; }
@@ -193,14 +205,14 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 .about .portrait { aspect-ratio: 4 / 5; overflow: hidden; max-width: 420px; }
 .about .portrait img { width: 100%; height: 100%; object-fit: cover; }
 .about .label { font-size: 13px; color: var(--ink-3); margin: 0 0 14px; }
-.about h2 { margin: 0 0 16px; font-family: var(--block); font-weight: 700; font-size: clamp(22px, 2.6vw, 30px); letter-spacing: -0.02em; line-height: 1.1; }
+.about h1, .about h2 { margin: 0 0 16px; font-weight: 400; font-size: clamp(28px, calc(25px + 0.77vw), 36px); letter-spacing: -0.02em; line-height: 1.15; }
 .about p { margin: 0 0 14px; color: var(--ink-2); max-width: 48ch; }
 .about p:last-child { margin-bottom: 0; }
 
 /* ---------- contact ---------- */
 .meet .wrap { padding-top: 64px; padding-bottom: 92px; display: grid; grid-template-columns: 1fr; gap: 36px 56px; }
 @media (min-width: 860px) { .meet .wrap { grid-template-columns: 0.8fr 1.2fr; align-items: start; } }
-.meet h2 { margin: 0 0 16px; font-weight: 400; font-size: clamp(22px, 2.6vw, 32px); letter-spacing: -0.02em; line-height: 1.15; max-width: 18ch; text-wrap: balance; }
+.meet h1, .meet h2 { margin: 0 0 16px; font-weight: 400; font-size: clamp(28px, calc(25px + 0.77vw), 36px); letter-spacing: -0.02em; line-height: 1.15; max-width: 18ch; text-wrap: balance; }
 .meet-intro p { margin: 0; color: var(--ink-2); max-width: 40ch; }
 .cf { position: relative; }
 .cf .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
