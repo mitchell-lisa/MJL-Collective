@@ -4,13 +4,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MJL Collective</title>
-  <meta name="description" content="MJL Collective is a digital consulting studio. Build. Maintain. Grow.">
+  <meta name="description" content="Logos, brands and websites for local businesses, built fast by one person who stays after launch.">
+  <link rel="canonical" href="https://mjlcollective.com/">
   <meta property="og:title" content="MJL Collective">
-  <meta property="og:description" content="A website in days. Changes in hours. Websites for local businesses, built fast and kept current by one person.">
+  <meta property="og:description" content="Logos, brands and websites for local businesses, built fast by one person who stays after launch.">
+  <meta property="og:site_name" content="MJL Collective">
+  <meta property="og:image" content="https://mjlcollective.com/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="The MJL Collective mark">
+  <meta name="twitter:card" content="summary_large_image">
   <meta property="og:url" content="https://mjlcollective.com">
   <meta property="og:type" content="website">
   <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"MJL Collective LLC","alternateName":"MJL Collective","url":"https://mjlcollective.com","email":"mitchelljordanlisa@gmail.com","description":"Logos, brands and websites for local businesses, built fast by one person who stays after launch.","founder":{"@type":"Person","name":"Mitchell Lisa"},"address":{"@type":"PostalAddress","addressLocality":"Moorestown","addressRegion":"NJ","addressCountry":"US"},"knowsAbout":["brand identity","logo design","web design","website maintenance","email marketing"]}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Archivo:wght@500;700;800&display=swap">
@@ -93,11 +101,24 @@
     /* ---------- statement ---------- */
     .statement .wrap { padding-top: 76px; padding-bottom: 76px; display: grid; grid-template-columns: 1fr; gap: 24px 48px; }
     @media (min-width: 860px) { .statement .wrap { grid-template-columns: 1.4fr 1fr; } }
-    .statement h2 { margin: 0; font-weight: 400; font-size: clamp(24px, 3vw, 36px); line-height: 1.15; letter-spacing: -0.02em; max-width: 20ch; text-wrap: balance; }
+    .statement h2 { margin: 0; font-weight: 400; font-size: clamp(24px, 3vw, 36px); line-height: 1.15; letter-spacing: -0.02em; max-width: 26ch; text-wrap: balance; }
     .statement p { margin: 0; color: var(--ink-2); max-width: 46ch; align-self: end; }
 
+    /* ---------- marks ---------- */
+    .marks .wrap { padding-bottom: 84px; }
+    .marks-grid { padding-top: 32px; display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media (min-width: 640px) { .marks-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1000px) { .marks-grid { grid-template-columns: repeat(3, 1fr); } }
+    .well { margin: 0; }
+    .well .face { position: relative; aspect-ratio: 4 / 3; background: #fff; border: 1px solid var(--mortar); display: grid; place-items: center; padding: 12%; }
+    .well .face img { width: 100%; max-height: 100%; object-fit: contain; }
+    .well .before { position: absolute; left: 14px; bottom: 12px; width: 22%; opacity: 0.4; }
+    .well .before img { width: 100%; object-fit: contain; }
+    .well figcaption { margin-top: 12px; font-size: 13px; color: var(--ink-2); display: flex; justify-content: space-between; gap: 12px; }
+    .well figcaption span { color: var(--ink-3); }
+
     /* ---------- work ---------- */
-    .work-head { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); border-top: 1px solid var(--mortar); padding-top: 18px; }
+    .sec-head { font-size: 13px; color: var(--ink-3); border-top: 1px solid var(--mortar); padding-top: 16px; }
     .wall { padding-top: 36px; padding-bottom: 84px; display: grid; grid-template-columns: 1fr; gap: 48px 32px; }
     @media (min-width: 860px) { .wall { grid-template-columns: 1fr 1fr; } }
     .wall figure { margin: 0; }
@@ -112,14 +133,15 @@
     .services-head h2 { margin: 0 0 12px; font-weight: 400; font-size: clamp(22px, 2.6vw, 32px); letter-spacing: -0.02em; line-height: 1.15; max-width: 22ch; text-wrap: balance; }
     .services-head p { margin: 0; color: var(--ink-2); max-width: 52ch; }
     .steps { display: grid; grid-template-columns: 1fr; gap: 20px 32px; margin-top: 44px; }
-    @media (min-width: 860px) { .steps { grid-template-columns: repeat(3, 1fr); align-items: end; } }
+    @media (min-width: 860px) { .steps { grid-template-columns: repeat(4, 1fr); gap: 20px 24px; align-items: end; } }
     .step { border-top: 3px solid var(--ink); padding-top: 18px; }
     @media (min-width: 860px) {
-      .step:nth-child(2) { padding-bottom: 36px; }
-      .step:nth-child(3) { padding-bottom: 72px; }
+      .step:nth-child(2) { padding-bottom: 28px; }
+      .step:nth-child(3) { padding-bottom: 56px; }
+      .step:nth-child(4) { padding-bottom: 84px; }
     }
     .step h3 { margin: 0 0 10px; font-family: var(--block); font-weight: 800; font-size: clamp(26px, 2.6vw, 32px); letter-spacing: -0.02em; line-height: 1; }
-    .step p { margin: 0; color: var(--ink-2); font-size: 14px; max-width: 34ch; }
+    .step p { margin: 0; color: var(--ink-2); font-size: 14px; max-width: 30ch; }
     /* stacked, the three columns lose the staircase, so the steps become solid blocks:
        each block is inset one run further and sits directly on the one above, so the
        left silhouette is the stair itself, the way the stair in the L is drawn */
@@ -128,9 +150,15 @@
       .step { background: var(--cement); padding: 20px 20px 26px; }
       .step:nth-child(2) { margin-left: var(--run); }
       .step:nth-child(3) { margin-left: calc(var(--run) * 2); }
+      .step:nth-child(4) { margin-left: calc(var(--run) * 3); }
     }
+    /* the one real sequence on the page, so it is the one place numbers are allowed */
+    .process { list-style: none; margin: 44px 0 0; padding: 0; counter-reset: p; max-width: 52ch; font-size: 13px; color: var(--ink-2); }
+    .process li { counter-increment: p; display: grid; grid-template-columns: 28px 1fr; padding: 9px 0; border-top: 1px solid var(--mortar); }
+    .process li:last-child { border-bottom: 1px solid var(--mortar); }
+    .process li::before { content: counter(p); color: var(--ink-3); font-variant-numeric: tabular-nums; }
     @media (max-width: 380px) {
-      .steps { --run: 20px; }
+      .steps { --run: 18px; }
       .step { padding: 18px 16px 22px; }
     }
 
@@ -139,7 +167,7 @@
     @media (min-width: 860px) { .about .wrap { grid-template-columns: 0.42fr 0.58fr; align-items: center; } }
     .about .portrait { aspect-ratio: 4 / 5; overflow: hidden; max-width: 420px; }
     .about .portrait img { width: 100%; height: 100%; object-fit: cover; }
-    .about .label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 14px; }
+    .about .label { font-size: 13px; color: var(--ink-3); margin: 0 0 14px; }
     .about h2 { margin: 0 0 16px; font-family: var(--block); font-weight: 700; font-size: clamp(22px, 2.6vw, 30px); letter-spacing: -0.02em; line-height: 1.1; }
     .about p { margin: 0 0 14px; color: var(--ink-2); max-width: 48ch; }
     .about p:last-child { margin-bottom: 0; }
@@ -206,14 +234,26 @@
   <main>
     <section class="statement">
       <div class="wrap">
-        <h2>Most sites take months, then never change. Yours takes a week and changes when you text.</h2>
-        <p>MJL Collective builds the site fast, keeps it current, and keeps it in front of the customers already looking. When you reach out, you are talking to Mitchell.</p>
+        <h2>Logos, brands and websites for local businesses, built fast by one person who stays after launch.</h2>
+        <p>MJL Collective designs the mark, the colors and the site, keeps it running, and keeps it in front of the customers already looking. When you reach out, you are talking to Mitchell.</p>
+      </div>
+    </section>
+
+    <section id="marks" class="marks">
+      <div class="wrap">
+        <div class="sec-head">Marks</div>
+        <div class="marks-grid">
+          <figure class="well">
+            <div class="face"><img src="assets/mark-dark.png" alt="The MJL Collective mark"></div>
+            <figcaption>MJL Collective</figcaption>
+          </figure>
+        </div>
       </div>
     </section>
 
     <section id="work">
       <div class="wrap">
-        <div class="work-head">Selected work</div>
+        <div class="sec-head">Selected work</div>
         <div class="wall">
           <figure>
             <div class="tv-frame">
@@ -262,10 +302,14 @@
     <section id="services">
       <div class="wrap">
         <div class="services-head">
-          <h2>Three things, in the order they happen.</h2>
-          <p>The site gets built, then kept current, then put in front of more customers. Each one stands on the one before, which is why the work is arranged as steps.</p>
+          <h2>Four things, in the order they happen.</h2>
+          <p>The brand gets made, the site gets built, then kept current, then put in front of more customers. Each one stands on the one before, which is why the work is arranged as steps.</p>
         </div>
         <div class="steps">
+          <div class="step">
+            <h3>Brand</h3>
+            <p>A logo you are not embarrassed by, colors that match, and a look that carries across the sign, the truck, the socials and the site.</p>
+          </div>
           <div class="step">
             <h3>Build</h3>
             <p>A real site in days, not months. Designed for your business and made to turn visitors into customers.</p>
@@ -279,6 +323,12 @@
             <p>Email and SMS campaigns that bring customers back, and I know who to call for SEO.</p>
           </div>
         </div>
+        <ol class="process" aria-label="How it goes">
+          <li>A call.</li>
+          <li>Brand directions to choose from.</li>
+          <li>The site live.</li>
+          <li>Kept up after launch.</li>
+        </ol>
       </div>
     </section>
 
