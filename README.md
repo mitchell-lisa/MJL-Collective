@@ -17,9 +17,14 @@ project, then Settings -> Git -> Production Branch, set it to
 already configured there), and redeploy. The previous production
 deployment remains in the Deployments list for instant rollback.
 
-Note: the earlier production site was a separate local Next.js codebase
-whose `/api/contact` route sent the branded contact emails. This site uses
-a mailto contact until that route is ported into `api/contact.js` here.
+## Contact form
+
+`api/contact.js` is a Vercel serverless function ported from the previous
+Next.js site. It validates the submission, drops honeypot hits, and sends
+two emails through Resend: a notification to Mitchell (reply-to set to the
+visitor) and a branded confirmation to the visitor. It needs the
+`RESEND_API_KEY` environment variable in the Vercel project; without it the
+function returns a 500 and the form shows the "email me directly" fallback.
 
 ## Content notes
 
