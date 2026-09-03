@@ -8,225 +8,44 @@
   <link rel="canonical" href="https://mjlcollective.com/">
   <meta property="og:title" content="MJL Collective">
   <meta property="og:description" content="Logos, brands and websites for local businesses, built fast by one person who stays after launch.">
+  <meta property="og:url" content="https://mjlcollective.com/">
+  <meta property="og:type" content="website">
   <meta property="og:site_name" content="MJL Collective">
   <meta property="og:image" content="https://mjlcollective.com/assets/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The MJL Collective mark">
   <meta name="twitter:card" content="summary_large_image">
-  <meta property="og:url" content="https://mjlcollective.com">
-  <meta property="og:type" content="website">
-  <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png">
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon.png">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"MJL Collective LLC","alternateName":"MJL Collective","url":"https://mjlcollective.com","email":"mitchelljordanlisa@gmail.com","description":"Logos, brands and websites for local businesses, built fast by one person who stays after launch.","founder":{"@type":"Person","name":"Mitchell Lisa"},"address":{"@type":"PostalAddress","addressLocality":"Moorestown","addressRegion":"NJ","addressCountry":"US"},"knowsAbout":["brand identity","logo design","web design","website maintenance","email marketing"]}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Archivo:wght@500;700;800&display=swap">
-  <style>
-    :root {
-      --cement: #eceeec;
-      --plaster: #f5f6f5;
-      --mortar: #cfd3d0;
-      --ink: #1b1c1b;
-      --ink-2: #4e504e;
-      --ink-3: #888b88;
-      --poured: #2a2c2a;
-      --sans: "Instrument Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      --block: "Archivo", "Helvetica Neue", Arial, sans-serif;
-      color-scheme: light;
-      --barh: 108px;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-    body {
-      margin: 0;
-      background: var(--plaster);
-      color: var(--ink);
-      font-family: var(--sans);
-      font-size: 15px;
-      line-height: 1.55;
-      -webkit-font-smoothing: antialiased;
-    }
-    img { max-width: 100%; display: block; }
-    a { color: inherit; }
-    :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
-
-    .wrap { max-width: 1320px; margin: 0 auto; padding-left: 5.5%; padding-right: 5.5%; }
-    @media (min-width: 1440px) { .wrap { padding-left: 48px; padding-right: 48px; } }
-
-    /* ---------- hero ---------- */
-    .hero { position: relative; overflow: hidden; background: var(--poured); min-height: 84vh; min-height: 84svh; display: flex; flex-direction: column; }
-    .hero .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
-    .hero .shade { position: absolute; inset: 0; background: rgba(20, 21, 20, 0.5); }
-
-    .bar { position: relative; color: #fff; }
-    .bar .wrap { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-top: 26px; padding-bottom: 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.18); }
-    .bar .mark { width: 104px; }
-    .bar .home { display: block; }
-    .bar nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 34px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap;
-      /* the lockup carries COLLECTIVE below the MJL letterforms, so its optical centre
-         sits above its geometric one; lift the menu to meet the letterforms, not the box */
-      transform: translateY(-6px); }
-    .bar nav a { text-decoration: none; opacity: 0.82; }
-    .bar nav a:hover, .bar nav a:focus-visible { opacity: 1; }
-
-    /* the top bar is pinned: transparent over the hero, poured dark once the page scrolls */
-    .topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 20; transition: background-color 0.2s; }
-    .topbar.solid { background: rgba(42, 44, 42, 0.94); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
-    .topbar.solid .wrap { border-bottom-color: rgba(255, 255, 255, 0.1); }
-    .hero { padding-top: var(--barh); }
-    section { scroll-margin-top: calc(var(--barh) - 20px); }
-    @media (prefers-reduced-motion: reduce) { .topbar { transition: none; } }
-
-    @media (max-width: 640px) {
-      :root { --barh: 92px; }
-      .bar .wrap { padding-top: 20px; padding-bottom: 18px; gap: 16px; }
-      .bar .mark { width: 82px; }
-      .bar nav ul { gap: 15px; font-size: 11px; letter-spacing: 0.06em; transform: translateY(-4px); }
-    }
-    @media (max-width: 380px) {
-      .bar .wrap { flex-wrap: wrap; row-gap: 8px; }
-      .bar nav ul { gap: 12px; }
-    }
-
-    .hero-inner { position: relative; margin-top: auto; }
-    .hero-inner .wrap { padding-top: 96px; padding-bottom: 72px; display: grid; grid-template-columns: 1fr; gap: 28px 48px; }
-    @media (min-width: 860px) { .hero-inner .wrap { grid-template-columns: 1.2fr 0.8fr; align-items: end; } }
-    .hero h1 { margin: 0; font-family: var(--block); font-weight: 500; font-size: clamp(26px, 3.4vw, 44px); line-height: 1.15; letter-spacing: -0.02em; color: #fff; max-width: 19ch; text-wrap: balance; }
-    .cta { display: inline-block; border: 1px solid currentColor; padding: 14px 24px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background 0.15s, color 0.15s; }
-    .hero .cta { color: #fff; }
-    .hero .cta:hover, .hero .cta:focus-visible { background: #fff; color: var(--ink); }
-
-    /* ---------- statement ---------- */
-    .statement .wrap { padding-top: 76px; padding-bottom: 76px; display: grid; grid-template-columns: 1fr; gap: 24px 48px; }
-    @media (min-width: 860px) { .statement .wrap { grid-template-columns: 1.4fr 1fr; } }
-    .statement h2 { margin: 0; font-weight: 400; font-size: clamp(24px, 3vw, 36px); line-height: 1.15; letter-spacing: -0.02em; max-width: 26ch; text-wrap: balance; }
-    .statement p { margin: 0; color: var(--ink-2); max-width: 46ch; align-self: end; }
-
-    /* ---------- marks ---------- */
-    .marks .wrap { padding-bottom: 84px; }
-    .marks-grid { padding-top: 32px; display: grid; grid-template-columns: 1fr; gap: 24px; }
-    @media (min-width: 640px) { .marks-grid { grid-template-columns: 1fr 1fr; } }
-    @media (min-width: 1000px) { .marks-grid { grid-template-columns: repeat(3, 1fr); } }
-    .well { margin: 0; }
-    .well .face { position: relative; aspect-ratio: 4 / 3; background: #fff; border: 1px solid var(--mortar); display: grid; place-items: center; padding: 12%; }
-    .well .face img { width: 100%; max-height: 100%; object-fit: contain; }
-    .well .before { position: absolute; left: 14px; bottom: 12px; width: 22%; opacity: 0.4; }
-    .well .before img { width: 100%; object-fit: contain; }
-    .well figcaption { margin-top: 12px; font-size: 13px; color: var(--ink-2); display: flex; justify-content: space-between; gap: 12px; }
-    .well figcaption span { color: var(--ink-3); }
-
-    /* ---------- work ---------- */
-    .sec-head { font-size: 13px; color: var(--ink-3); border-top: 1px solid var(--mortar); padding-top: 16px; }
-    .wall { padding-top: 36px; padding-bottom: 84px; display: grid; grid-template-columns: 1fr; gap: 48px 32px; }
-    @media (min-width: 860px) { .wall { grid-template-columns: 1fr 1fr; } }
-    .wall figure { margin: 0; }
-    .tv-frame { padding: 6px; background: linear-gradient(145deg, #f6f7f5 0%, #c6c8c5 30%, #eef0ee 55%, #a9aba8 100%); box-shadow: 0 20px 45px rgba(27, 28, 27, 0.16), 0 3px 9px rgba(27, 28, 27, 0.1); }
-    .screen { aspect-ratio: 16 / 10; background: var(--plaster); position: relative; overflow: hidden; container-type: inline-size; }
-    .screen .ph { position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink-3); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; padding: 12px; }
-    .screen iframe { position: absolute; top: 0; left: 0; width: 1280px; height: 800px; border: 0; transform-origin: 0 0; transform: scale(var(--s, calc(100cqw / 1280))); pointer-events: none; background: var(--plaster); }
-    .screen .cover { position: absolute; inset: 0; z-index: 2; }
-    .wall figcaption { margin-top: 14px; font-family: var(--block); font-weight: 700; font-size: 16px; }
-
-    /* ---------- services ---------- */
-    .services-head h2 { margin: 0 0 12px; font-weight: 400; font-size: clamp(22px, 2.6vw, 32px); letter-spacing: -0.02em; line-height: 1.15; max-width: 22ch; text-wrap: balance; }
-    .services-head p { margin: 0; color: var(--ink-2); max-width: 52ch; }
-    .steps { display: grid; grid-template-columns: 1fr; gap: 20px 32px; margin-top: 44px; }
-    @media (min-width: 860px) { .steps { grid-template-columns: repeat(4, 1fr); gap: 20px 24px; align-items: end; } }
-    .step { border-top: 3px solid var(--ink); padding-top: 18px; }
-    @media (min-width: 860px) {
-      .step:nth-child(2) { padding-bottom: 28px; }
-      .step:nth-child(3) { padding-bottom: 56px; }
-      .step:nth-child(4) { padding-bottom: 84px; }
-    }
-    .step h3 { margin: 0 0 10px; font-family: var(--block); font-weight: 800; font-size: clamp(26px, 2.6vw, 32px); letter-spacing: -0.02em; line-height: 1; }
-    .step p { margin: 0; color: var(--ink-2); font-size: 14px; max-width: 30ch; }
-    /* stacked, the three columns lose the staircase, so the steps become solid blocks:
-       each block is inset one run further and sits directly on the one above, so the
-       left silhouette is the stair itself, the way the stair in the L is drawn */
-    @media (max-width: 859px) {
-      .steps { --run: 26px; margin-top: 36px; gap: 0; }
-      .step { background: var(--cement); padding: 20px 20px 26px; }
-      .step:nth-child(2) { margin-left: var(--run); }
-      .step:nth-child(3) { margin-left: calc(var(--run) * 2); }
-      .step:nth-child(4) { margin-left: calc(var(--run) * 3); }
-    }
-    /* the one real sequence on the page, so it is the one place numbers are allowed */
-    .process { list-style: none; margin: 44px 0 0; padding: 0; counter-reset: p; max-width: 52ch; font-size: 13px; color: var(--ink-2); }
-    .process li { counter-increment: p; display: grid; grid-template-columns: 28px 1fr; padding: 9px 0; border-top: 1px solid var(--mortar); }
-    .process li:last-child { border-bottom: 1px solid var(--mortar); }
-    .process li::before { content: counter(p); color: var(--ink-3); font-variant-numeric: tabular-nums; }
-    @media (max-width: 380px) {
-      .steps { --run: 18px; }
-      .step { padding: 18px 16px 22px; }
-    }
-
-    /* ---------- about ---------- */
-    .about .wrap { padding-top: 84px; display: grid; grid-template-columns: 1fr; gap: 28px 56px; }
-    @media (min-width: 860px) { .about .wrap { grid-template-columns: 0.42fr 0.58fr; align-items: center; } }
-    .about .portrait { aspect-ratio: 4 / 5; overflow: hidden; max-width: 420px; }
-    .about .portrait img { width: 100%; height: 100%; object-fit: cover; }
-    .about .label { font-size: 13px; color: var(--ink-3); margin: 0 0 14px; }
-    .about h2 { margin: 0 0 16px; font-family: var(--block); font-weight: 700; font-size: clamp(22px, 2.6vw, 30px); letter-spacing: -0.02em; line-height: 1.1; }
-    .about p { margin: 0 0 14px; color: var(--ink-2); max-width: 48ch; }
-    .about p:last-child { margin-bottom: 0; }
-
-    /* ---------- contact ---------- */
-    .meet .wrap { padding-top: 84px; padding-bottom: 92px; display: grid; grid-template-columns: 1fr; gap: 36px 56px; }
-    @media (min-width: 860px) { .meet .wrap { grid-template-columns: 0.8fr 1.2fr; align-items: start; } }
-    .meet h2 { margin: 0 0 16px; font-weight: 400; font-size: clamp(22px, 2.6vw, 32px); letter-spacing: -0.02em; line-height: 1.15; max-width: 18ch; text-wrap: balance; }
-    .meet-intro p { margin: 0; color: var(--ink-2); max-width: 40ch; }
-    .cf { position: relative; }
-    .cf .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
-    .cf-grid { display: grid; grid-template-columns: 1fr; gap: 20px 24px; }
-    @media (min-width: 640px) { .cf-grid { grid-template-columns: 1fr 1fr; } .cf-grid .full { grid-column: 1 / -1; } }
-    .cf label { display: block; }
-    .cf label span { display: block; margin-bottom: 8px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
-    .cf label span em { font-style: normal; text-transform: none; letter-spacing: 0; }
-    .cf input, .cf textarea { width: 100%; border: 1px solid var(--mortar); background: var(--cement); padding: 12px 14px; font: inherit; font-size: 15px; color: var(--ink); border-radius: 0; -webkit-appearance: none; }
-    .cf input:focus, .cf textarea:focus { outline: none; border-color: var(--ink); }
-    .cf textarea { resize: vertical; min-height: 120px; }
-    .cf ::placeholder { color: var(--ink-3); }
-    .cf-foot { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; }
-    .cf .cta { color: var(--ink); background: none; cursor: pointer; font-family: inherit; }
-    .cf .cta:hover, .cf .cta:focus-visible { background: var(--ink); color: var(--plaster); }
-    .cf .cta:disabled { opacity: 0.5; cursor: default; }
-    .cf-note { margin: 0; font-size: 13px; color: var(--ink-2); }
-    .cf-note a { text-decoration: underline; text-underline-offset: 3px; }
-    .cf-sent { border: 1px solid var(--mortar); background: var(--cement); padding: 40px 28px; text-align: center; }
-    .cf-sent .big { margin: 0 0 8px; font-size: 24px; }
-    .cf-sent p { margin: 0; color: var(--ink-2); }
-
-    /* ---------- footer: the top bar again, closing the page ---------- */
-    .foot { background: var(--poured); color: rgba(255, 255, 255, 0.55); }
-    .foot .legal { padding-top: 16px; padding-bottom: 26px; display: flex; justify-content: space-between; align-items: baseline; gap: 10px 24px; flex-wrap: wrap; font-size: 12px; }
-    .foot a { color: inherit; }
-  </style>
+  <link rel="stylesheet" href="/assets/site.css">
 </head>
 <body>
-
   <header class="bar topbar" id="top">
     <div class="wrap">
-      <a class="home" href="#top" aria-label="MJL Collective, back to top"><img class="mark" src="assets/mark-white.png" alt="MJL Collective"></a>
+      <a class="home" href="/" aria-label="MJL Collective, home"><img class="mark" src="/assets/mark-white.png" alt="MJL Collective"></a>
       <nav aria-label="Main">
         <ul>
-          <li><a href="#work">Work</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="/work">Work</a></li>
+          <li><a href="/services">Services</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <section class="hero">
-    <img class="bg" src="assets/glass.webp" alt="" aria-hidden="true">
+    <img class="bg" src="/assets/glass.webp" alt="" aria-hidden="true">
     <div class="shade"></div>
     <div class="hero-inner">
       <div class="wrap">
         <h1>A website in days. Changes in hours.</h1>
-        <div><a class="cta" href="#contact">Request a meeting</a></div>
+        <div><a class="cta" href="/contact">Request a meeting</a></div>
       </div>
     </div>
   </section>
@@ -239,135 +58,14 @@
       </div>
     </section>
 
-    <section id="marks" class="marks">
+    <section class="index" aria-label="Site index">
       <div class="wrap">
-        <div class="sec-head">Marks</div>
-        <div class="marks-grid">
-          <figure class="well">
-            <div class="face"><img src="assets/mark-dark.png" alt="The MJL Collective mark"></div>
-            <figcaption>MJL Collective</figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <section id="work">
-      <div class="wrap">
-        <div class="sec-head">Selected work</div>
-        <div class="wall">
-          <figure>
-            <div class="tv-frame">
-              <div class="screen">
-                <div class="ph">Tiger Digital</div>
-                <iframe width="1280" height="800" src="https://tigerdigital.marketing" loading="lazy" tabindex="-1" title="Tiger Digital live preview"></iframe>
-                <a class="cover" href="https://tigerdigital.marketing" target="_blank" rel="noopener" aria-label="Visit Tiger Digital"></a>
-              </div>
-            </div>
-            <figcaption>Tiger Digital</figcaption>
-          </figure>
-          <figure>
-            <div class="tv-frame">
-              <div class="screen">
-                <div class="ph">BlueThreadz</div>
-                <iframe width="1280" height="800" src="https://bluethreadz.vercel.app" loading="lazy" tabindex="-1" title="BlueThreadz live preview"></iframe>
-                <a class="cover" href="https://bluethreadz.vercel.app" target="_blank" rel="noopener" aria-label="Visit BlueThreadz"></a>
-              </div>
-            </div>
-            <figcaption>BlueThreadz</figcaption>
-          </figure>
-          <figure>
-            <div class="tv-frame">
-              <div class="screen">
-                <div class="ph">Simo&rsquo;s Barbering</div>
-                <iframe width="1280" height="800" src="https://simos-barber.vercel.app" loading="lazy" tabindex="-1" title="Simo&rsquo;s Barbering live preview"></iframe>
-                <a class="cover" href="https://simos-barber.vercel.app" target="_blank" rel="noopener" aria-label="Visit Simo&rsquo;s Barbering"></a>
-              </div>
-            </div>
-            <figcaption>Simo&rsquo;s Barbering</figcaption>
-          </figure>
-          <figure>
-            <div class="tv-frame">
-              <div class="screen">
-                <div class="ph">Dorothy&rsquo;s Flower Shop</div>
-                <iframe width="1280" height="800" src="https://www.dorothysflower.shop" loading="lazy" tabindex="-1" title="Dorothy&rsquo;s Flower Shop live preview"></iframe>
-                <a class="cover" href="https://www.dorothysflower.shop" target="_blank" rel="noopener" aria-label="Visit Dorothy&rsquo;s Flower Shop"></a>
-              </div>
-            </div>
-            <figcaption>Dorothy&rsquo;s Flower Shop</figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <section id="services">
-      <div class="wrap">
-        <div class="services-head">
-          <h2>Four things, in the order they happen.</h2>
-          <p>The brand gets made, the site gets built, then kept current, then put in front of more customers. Each one stands on the one before, which is why the work is arranged as steps.</p>
-        </div>
-        <div class="steps">
-          <div class="step">
-            <h3>Brand</h3>
-            <p>A logo you are not embarrassed by, colors that match, and a look that carries across the sign, the truck, the socials and the site.</p>
-          </div>
-          <div class="step">
-            <h3>Build</h3>
-            <p>A real site in days, not months. Designed for your business and made to turn visitors into customers.</p>
-          </div>
-          <div class="step">
-            <h3>Maintain</h3>
-            <p>Text a change and it is live the same day. Hosting, updates, and fixes handled, without you chasing anyone.</p>
-          </div>
-          <div class="step">
-            <h3>Grow</h3>
-            <p>Email and SMS campaigns that bring customers back, and I know who to call for SEO.</p>
-          </div>
-        </div>
-        <ol class="process" aria-label="How it goes">
-          <li>A call.</li>
-          <li>Brand directions to choose from.</li>
-          <li>The site live.</li>
-          <li>Kept up after launch.</li>
-        </ol>
-      </div>
-    </section>
-
-    <section id="about" class="about">
-      <div class="wrap">
-        <div class="portrait"><img src="assets/mitchell.webp" alt="Mitchell Lisa"></div>
-        <div>
-          <p class="label">The person behind it</p>
-          <h2>Mitchell Lisa</h2>
-          <p>MJL Collective is one person, not an agency. I see things a little differently. I notice what a business could look like before its owner does, then I build it, fast.</p>
-          <p>Every site here I designed and built myself, and I keep it current after launch. Text me a change and it is live the same day. When you reach out, you are talking to me.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="meet">
-      <div class="wrap">
-        <div class="meet-intro">
-          <h2>Tell me about the business.</h2>
-          <p>Say what it does and where it is stuck. I will tell you what the site needs and what it costs, before anyone signs anything. Your message goes straight to my inbox, and you will hear back from me, not a team.</p>
-        </div>
-        <form class="cf" id="cf" novalidate>
-          <input type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
-          <div class="cf-grid">
-            <label><span>Name</span><input name="name" required maxlength="200" autocomplete="name"></label>
-            <label><span>Business</span><input name="business" maxlength="200" autocomplete="organization"></label>
-            <label><span>Email</span><input name="email" type="email" required maxlength="200" autocomplete="email"></label>
-            <label><span>Phone <em>(optional)</em></span><input name="phone" type="tel" maxlength="60" autocomplete="tel"></label>
-            <label class="full"><span>What do you need help with?</span><textarea name="message" required rows="5" maxlength="4000" placeholder="New site, a rebuild, updates, or email and SMS marketing. Tell me a little about your business."></textarea></label>
-          </div>
-          <div class="cf-foot">
-            <button class="cta" type="submit">Send message</button>
-            <p class="cf-note" hidden>Something went wrong. <a href="mailto:mitchelljordanlisa@gmail.com?subject=MJL%20Collective%20meeting%20request">Email me directly instead</a>.</p>
-          </div>
-          <div class="cf-sent" hidden>
-            <p class="big">Got it.</p>
-            <p>Your message is in my inbox. I will be in touch soon.</p>
-          </div>
-        </form>
+        <ul>
+          <li><a href="/work"><span class="name">Work</span><span class="line">Live sites, and the marks behind them.</span></a></li>
+          <li><a href="/services"><span class="name">Services</span><span class="line">Four things, in the order they happen.</span></a></li>
+          <li><a href="/about"><span class="name">About</span><span class="line">The one person behind it.</span></a></li>
+          <li><a href="/contact"><span class="name">Contact</span><span class="line">Tell me about the business.</span></a></li>
+        </ul>
       </div>
     </section>
   </main>
@@ -375,15 +73,15 @@
   <footer class="foot">
     <div class="bar">
       <div class="wrap">
-        <img class="mark" src="assets/mark-white.png" alt="MJL Collective">
+        <a class="home" href="/" aria-label="MJL Collective, home"><img class="mark" src="/assets/mark-white.png" alt="MJL Collective"></a>
         <nav aria-label="Footer">
-          <ul>
-            <li><a href="#work">Work</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </nav>
+        <ul>
+          <li><a href="/work">Work</a></li>
+          <li><a href="/services">Services</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>
       </div>
     </div>
     <div class="wrap legal">
@@ -392,57 +90,6 @@
     </div>
   </footer>
 
-
-  <script>
-    // The pinned bar goes solid as soon as the page leaves the top.
-    (function () {
-      var bar = document.getElementById("top");
-      function onScroll() { bar.classList.toggle("solid", window.scrollY > 24); }
-      addEventListener("scroll", onScroll, { passive: true });
-      onScroll();
-    })();
-
-    // Scale each preview iframe so a 1280px-wide desktop render fits its frame.
-    // Computed in JS because container-query units are not applied reliably in
-    // every mobile WebKit view; the cqw value in the stylesheet is the no-JS fallback.
-    (function () {
-      var screens = document.querySelectorAll(".screen");
-      function fit() {
-        for (var i = 0; i < screens.length; i++) {
-          screens[i].style.setProperty("--s", (screens[i].clientWidth / 1280).toFixed(4));
-        }
-      }
-      if ("ResizeObserver" in window) {
-        var ro = new ResizeObserver(fit);
-        for (var i = 0; i < screens.length; i++) ro.observe(screens[i]);
-      } else {
-        addEventListener("resize", fit);
-      }
-      fit();
-    })();
-
-    // The contact form posts to /api/contact, which emails the submission
-    // straight to Mitchell's inbox and a confirmation to the visitor.
-    (function () {
-      var form = document.getElementById("cf");
-      if (!form) return;
-      var button = form.querySelector("button");
-      var note = form.querySelector(".cf-note");
-      var sent = form.querySelector(".cf-sent");
-      var grid = form.querySelector(".cf-grid");
-      var foot = form.querySelector(".cf-foot");
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        if (!form.reportValidity()) return;
-        var payload = {};
-        new FormData(form).forEach(function (v, k) { payload[k] = v; });
-        button.disabled = true; button.textContent = "Sending"; note.hidden = true;
-        fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
-          .then(function (r) { if (!r.ok) throw new Error("send failed"); grid.hidden = true; foot.hidden = true; sent.hidden = false; form.reset(); })
-          .catch(function () { note.hidden = false; })
-          .then(function () { button.disabled = false; button.textContent = "Send message"; });
-      });
-    })();
-  </script>
+  <script src="/assets/site.js"></script>
 </body>
 </html>
