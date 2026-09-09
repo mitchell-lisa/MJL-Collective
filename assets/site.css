@@ -243,33 +243,6 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 .cf-sent .big { margin: 0 0 8px; font-size: 24px; }
 .cf-sent p { margin: 0; color: var(--ink-2); }
 
-/* ---------- glass block ----------
-   A drawn wall, not a filter over content. The grid, the mortar recess, the
-   convex faces, the caught light and the doubled edges are all geometry in the
-   markup; this only colours them, and every colour comes off a page token so
-   the wall stands in the same light as the ground. Nothing here blurs what is
-   behind it, and nothing moves. */
-.gb { position: relative; overflow: hidden; background: var(--poured); height: clamp(168px, 21vw, 292px); }
-.gb-art { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-/* the joint is a recess, so it sits darker than any face on the wall */
-.gb-joint { fill: color-mix(in srgb, var(--poured) 26%, var(--ink)); }
-.gb-f1 { stop-color: color-mix(in srgb, var(--poured) 60%, var(--mortar)); }
-.gb-f2 { stop-color: var(--poured); }
-.gb-f3 { stop-color: color-mix(in srgb, var(--poured) 40%, var(--ink)); }
-/* no two blocks are lit alike, which is what keeps a wall from reading as tile */
-.gb-lift { fill: var(--mortar); }
-.gb-sink { fill: var(--ink); }
-/* the inner mass of the block, held a little off its own edge */
-.gb-pillow { fill: color-mix(in srgb, var(--mortar) 6%, transparent); }
-/* what the block caught of the room, smeared by the depth of the glass */
-.gb-streak { fill: var(--plaster); }
-/* thick glass doubles its own edge: a lit line and a darker one just inside it */
-.gb-edge-lit { fill: none; stroke: color-mix(in srgb, var(--mortar) 34%, transparent); stroke-width: 2; }
-.gb-edge-ghost { fill: none; stroke: color-mix(in srgb, var(--ink) 40%, transparent); stroke-width: 1.25; }
-.gb-edge-far { fill: none; stroke: color-mix(in srgb, var(--ink) 58%, transparent); stroke-width: 2.5; }
-/* the light held in the body of the block, uneven across the field */
-.gb-bloom { fill: var(--plaster); }
-
 /* ---------- footer: the top bar again, closing the page ---------- */
 .foot { background: var(--poured); color: rgba(255, 255, 255, 0.55); }
 .foot .legal { padding-top: 16px; padding-bottom: 26px; display: flex; justify-content: space-between; align-items: baseline; gap: 10px 24px; flex-wrap: wrap; font-size: 12px; }
