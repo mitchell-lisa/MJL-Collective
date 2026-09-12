@@ -32,11 +32,28 @@ a { color: inherit; }
 
 /* ---------- hero ---------- */
 .hero { position: relative; overflow: hidden; background: var(--poured); min-height: 84vh; min-height: 84svh; display: flex; flex-direction: column; }
-.hero .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; }
+.hero .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 62%; }
 /* the scrim comes off the ink token so it warms with the ground. The flat rgba
    is the same colour, kept as a fallback because losing the scrim would drop the
    contrast under the hero line. */
-.hero .shade { position: absolute; inset: 0; background: rgba(28, 26, 23, 0.5); background: color-mix(in srgb, var(--ink) 50%, transparent); }
+.hero .shade { position: absolute; inset: 0;
+  /* A scrim at each end rather than a flat wash over everything. The bar needs a
+     dark ground for the white lockup and the headline needs one for the white
+     type; the middle of the hero needs neither, so the photograph is left alone
+     there. Measured against the warm ink: 4.60:1 behind the bar, 4.63:1 behind
+     the headline. The old flat 50 percent wash held the whole picture at 0.05
+     luminance, which is why nothing put there ever read. */
+  background: linear-gradient(to bottom,
+    rgba(28, 26, 23, 0.54) 0%, rgba(28, 26, 23, 0.54) 14%,
+    rgba(28, 26, 23, 0) 32%, rgba(28, 26, 23, 0) 56%,
+    rgba(28, 26, 23, 0.68) 80%, rgba(28, 26, 23, 0.68) 100%);
+  background: linear-gradient(to bottom,
+    color-mix(in srgb, var(--ink) 54%, transparent) 0%,
+    color-mix(in srgb, var(--ink) 54%, transparent) 14%,
+    color-mix(in srgb, var(--ink) 0%, transparent) 32%,
+    color-mix(in srgb, var(--ink) 0%, transparent) 56%,
+    color-mix(in srgb, var(--ink) 68%, transparent) 80%,
+    color-mix(in srgb, var(--ink) 68%, transparent) 100%); }
 
 .bar { position: relative; color: #fff; }
 .bar .wrap { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-top: 26px; padding-bottom: 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.18); }
@@ -52,7 +69,10 @@ a { color: inherit; }
 .bar nav a:hover, .bar nav a:focus-visible { opacity: 1; }
 
 /* the top bar is pinned: transparent over the hero, poured dark once the page scrolls */
-.topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 20; transition: background-color 0.2s; }
+.topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 20; transition: background-color 0.2s;
+  /* Over the hero the bar carries blur and no tint of its own, because the scrim
+     beneath it already holds the contrast. Below the fold .solid adds a ground. */
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
 .topbar.solid { background: rgba(43, 40, 37, 0.94); background: color-mix(in srgb, var(--poured) 94%, transparent);
   -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
 .topbar.solid .wrap { border-bottom-color: rgba(255, 255, 255, 0.1); }
@@ -85,6 +105,8 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
    the room, keeps the whole lockup. */
 @media (max-width: 640px) {
   :root { --barh: 69px; }
+  /* phones keep the tighter crop; the wide file is mostly filler flutes at 390px */
+  .hero .bg { object-position: center bottom; }
   /* the block is anchored to the bottom of the hero, so a tall phone left over
      half the screen as empty glass above it. A shorter hero puts the line where
      the eye lands and brings the statement up to the fold. */
