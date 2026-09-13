@@ -101,8 +101,15 @@ body:not(.sub) .topbar.solid .mark-ink { opacity: 1; }
 .hero { padding-top: var(--barh); }
 section { scroll-margin-top: calc(var(--barh) - 20px); }
 @media (prefers-reduced-motion: reduce) { .topbar { transition: none; } }
-.sub .topbar { background: var(--poured); }
-.sub .topbar .wrap { border-bottom-color: rgba(255, 255, 255, 0.1); }
+/* the sub pages have no hero, so there is no photograph for the bar to sit over
+   and no fold to cross: they carry the frosted treatment at every scroll
+   position, which is the home page's scrolled bar exactly. Their lockup is the
+   dark one in the markup rather than a cross-fade, because it never changes
+   state. Ink measures 15.3:1 over the plaster the pages are set on, and 8.8:1 at
+   the foot, where the bar crosses the poured footer. */
+.sub .topbar { background: rgba(244, 240, 233, 0.72); background: color-mix(in srgb, var(--plaster) 72%, transparent);
+  color: var(--ink); }
+.sub .topbar .wrap { border-bottom-color: rgba(28, 26, 23, 0.12); }
 .sub main { padding-top: var(--barh); }
 .bar nav a[aria-current="page"] { opacity: 1; text-decoration: underline; text-underline-offset: 7px; text-decoration-thickness: 1px; }
 
