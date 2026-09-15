@@ -87,8 +87,8 @@ a { color: inherit; }
 .topbar.solid .wrap { border-bottom-color: rgba(255, 255, 255, 0.1); }
 /* On the home page the scrolled bar stays frosted rather than going to a slab:
    the blur keeps doing the work and the plaster tint is thin enough that the page
-   still moves through it. White type cannot survive that — the ground below the
-   hero is plaster, where white measures 1.1:1 — so the bar turns its contents to
+   still moves through it. White type cannot survive that. The ground below the
+   hero is plaster, where white measures 1.1:1, so the bar turns its contents to
    ink and shows the dark lockup. Measured on the ink: 15.3:1 over the plaster
    sections, and 8.8:1 at the worst case, where the bar sits over the poured
    footer. Sub pages are excluded: their bar is poured at every scroll position,
@@ -116,7 +116,7 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 /* ---------- page head: how every page after the home page opens ---------- */
 .page-head .wrap { padding-top: 64px; padding-bottom: 40px; display: grid; grid-template-columns: 1fr; gap: 18px 48px; }
 @media (min-width: 860px) { .page-head .wrap { grid-template-columns: 1.4fr 1fr; align-items: end; } }
-.page-head h1 { margin: 0; font-weight: 400; font-size: clamp(28px, calc(25px + 0.77vw), 36px); line-height: 1.15; letter-spacing: -0.02em; max-width: 22ch; text-wrap: balance; }
+.page-head h1 { margin: 0; font-weight: 400; font-size: clamp(28px, calc(25px + 0.77vw), 36px); line-height: 1.15; letter-spacing: -0.02em; max-width: 24ch; text-wrap: balance; }
 .page-head p { margin: 0; color: var(--ink-2); max-width: 46ch; }
 
 /* ---------- home index: where the rest of the site is ---------- */
@@ -162,7 +162,7 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 /* 3.4vw of a phone is 13px, so this clamp bottomed out on every phone and the
    hero read at its smallest where it has the most room. These interpolate from
    a 390px phone to a 1440px desktop instead of resting on the floor. */
-.hero h1 { margin: 0; font-family: var(--block); font-weight: 500; font-size: clamp(32px, calc(27.5px + 1.15vw), 44px); line-height: 1.15; letter-spacing: -0.02em; color: #fff; max-width: 19ch; text-wrap: balance; }
+.hero h1 { margin: 0; font-family: var(--block); font-weight: 500; font-size: clamp(32px, calc(27.5px + 1.15vw), 44px); line-height: 1.15; letter-spacing: -0.02em; color: #fff; max-width: 24ch; text-wrap: balance; }
 .cta { display: inline-block; border: 1px solid currentColor; padding: 14px 24px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background 0.15s, color 0.15s; }
 .hero .cta { color: #fff; }
 .hero .cta:hover, .hero .cta:focus-visible { background: #fff; color: var(--ink); }
@@ -224,7 +224,26 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 .screen .ph { position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink-3); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; padding: 12px; }
 .screen iframe { position: absolute; top: 0; left: 0; width: calc(var(--vw) * 1px); height: calc(var(--vh) * 1px); border: 0; transform-origin: 0 0; transform: scale(var(--s, calc(100cqw / var(--vw)))); pointer-events: none; background: var(--plaster); }
 .screen .cover { position: absolute; inset: 0; z-index: 2; }
-/* ---------- services ---------- */
+/* ---------- services: operating offer, not four equal tiles ---------- */
+.offer { padding-bottom: 92px; }
+.offer-lead { padding: 4px 0 48px; border-top: 3px solid var(--ink); }
+.offer-lead .label { font-size: 13px; color: var(--ink-3); margin: 0 0 14px; }
+.offer-lead h2 { margin: 0 0 16px; font-family: var(--block); font-weight: 800; font-size: clamp(32px, 4.2vw, 52px); letter-spacing: -0.02em; line-height: 1.05; max-width: 14ch; text-wrap: balance; }
+.offer-lead > p { margin: 0; color: var(--ink-2); max-width: 46ch; }
+.offer-list { display: grid; grid-template-columns: 1fr; }
+.offer-item { padding: 26px 0; border-top: 1px solid var(--mortar); }
+.offer-item:last-child { border-bottom: 1px solid var(--mortar); }
+.offer-item h3 { margin: 0 0 10px; font-family: var(--block); font-weight: 700; font-size: clamp(20px, 2vw, 24px); letter-spacing: -0.01em; }
+.offer-item p { margin: 0; color: var(--ink-2); font-size: 14px; max-width: 42ch; }
+@media (min-width: 860px) {
+  .offer-list { grid-template-columns: 1fr 1fr 1fr; gap: 0 32px; border-top: 1px solid var(--mortar); }
+  .offer-item { padding: 32px 0 8px; border-top: none; }
+  .offer-item:last-child { border-bottom: none; }
+}
+@media (max-width: 640px) {
+  .offer-lead { padding-bottom: 36px; }
+}
+/* ---------- services (unused staircase tiles, kept so older markup still paints) ---------- */
 .services-head h2 { margin: 0 0 12px; font-weight: 400; font-size: clamp(22px, 2.6vw, 32px); letter-spacing: -0.02em; line-height: 1.15; max-width: 22ch; text-wrap: balance; }
 .services-head p { margin: 0; color: var(--ink-2); max-width: 52ch; }
 .steps { display: grid; grid-template-columns: 1fr; gap: 20px 32px; margin-top: 44px; }
