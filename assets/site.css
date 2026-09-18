@@ -314,6 +314,23 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 .cf-sent .big { margin: 0 0 8px; font-size: 24px; }
 .cf-sent p { margin: 0; color: var(--ink-2); }
 
+/* ---------- privacy ---------- */
+.policy .wrap { padding-bottom: 92px; }
+.policy .doc { max-width: 68ch; }
+.policy .block { margin: 0 0 8px; padding: 28px 0 8px; border-top: 1px solid var(--mortar); }
+.policy .block:first-child { padding-top: 0; border-top: none; }
+.policy h2 { margin: 0 0 14px; font-weight: 400; font-size: clamp(22px, calc(20px + 0.45vw), 26px); letter-spacing: -0.02em; line-height: 1.2; }
+.policy h3 { margin: 22px 0 10px; font-family: var(--block); font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
+.policy h3:first-of-type { margin-top: 4px; }
+.policy p { margin: 0 0 14px; color: var(--ink-2); }
+.policy p:last-child { margin-bottom: 0; }
+.policy ul { margin: 0 0 14px; padding-left: 1.15em; color: var(--ink-2); }
+.policy ul:last-child { margin-bottom: 0; }
+.policy li { margin: 0 0 6px; }
+.policy li:last-child { margin-bottom: 0; }
+.policy a { text-decoration: underline; text-underline-offset: 3px; }
+.policy strong { color: var(--ink); font-weight: 600; }
+
 /* ---------- footer: the top bar again, closing the page ---------- */
 .foot { background: var(--poured); color: rgba(255, 255, 255, 0.55); }
 .foot .legal { padding-top: 16px; padding-bottom: 26px; display: flex; justify-content: space-between; align-items: baseline; gap: 10px 24px; flex-wrap: wrap; font-size: 12px; }
