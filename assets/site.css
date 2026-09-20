@@ -65,59 +65,49 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 @media (min-width: 860px) { .page-head .wrap { grid-template-columns: 1.4fr 1fr; align-items: end; } }
 .page-head h1 { margin: 0; font-weight: 400; font-size: clamp(28px, calc(25px + 0.77vw), 36px); line-height: 1.15; letter-spacing: -0.02em; max-width: 22ch; text-wrap: balance; }
 .page-head p { margin: 0; color: var(--ink-2); max-width: 46ch; }
-/* services only: a contained reeded-glass well in the page-head. The photo
-   sits beside the type, washed with plaster, so the flutes read as texture
-   instead of competing with it. Work and the other pages are unchanged. */
-.page-head-stair { position: relative; isolation: isolate; }
-.page-head-stair .wrap { position: relative; padding-top: 72px; padding-bottom: 52px; }
+/* services only: a contained reeded-glass band in the page-head. Cement
+   marks the band off the plaster page; the photo sits on the right of the
+   wrap, washed so the flutes read as texture. Work is unchanged. */
+.page-head-stair { position: relative; isolation: isolate; background: var(--cement); }
+.page-head-stair .wrap { position: relative; padding-top: 72px; padding-bottom: 56px; }
+.page-head-stair h1, .page-head-stair p { position: relative; z-index: 1; }
 .page-head-stair .page-head-panel {
   position: relative;
   overflow: hidden;
   pointer-events: none;
-  min-height: 168px;
+  height: 120px;
+  margin-top: 8px;
   background: var(--cement);
 }
 .page-head-stair .page-head-panel img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 58% 40%;
-  /* scale covers the blur halo so the well edge stays clean */
-  filter: blur(6px) saturate(0.62);
-  transform: scale(1.08);
-  opacity: 0.72;
+  object-position: 60% 38%;
+  /* scale covers the blur halo so the band edge stays clean */
+  filter: blur(3px) saturate(0.7);
+  transform: scale(1.06);
+  opacity: 0.88;
 }
 .page-head-stair .page-head-panel::after {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, var(--plaster) 0%, transparent 20%, transparent 80%, var(--plaster) 100%),
-    rgba(245, 246, 245, 0.4);
+    linear-gradient(90deg, var(--cement) 0%, rgba(236, 238, 236, 0.55) 28%, rgba(245, 246, 245, 0.28) 100%),
+    linear-gradient(180deg, var(--cement) 0%, transparent 18%, transparent 82%, var(--cement) 100%);
 }
 @media (min-width: 860px) {
-  .page-head-stair .wrap {
-    grid-template-columns: 1.25fr 0.9fr minmax(200px, 0.72fr);
-    align-items: stretch;
-    min-height: 228px;
-  }
-  .page-head-stair h1 { grid-column: 1; align-self: end; }
-  .page-head-stair p { grid-column: 2; align-self: end; }
-  .page-head-stair .page-head-panel { grid-column: 3; grid-row: 1 / -1; min-height: 0; }
-}
-@media (max-width: 859px) {
+  .page-head-stair .wrap { min-height: 248px; }
   .page-head-stair .page-head-panel {
     position: absolute;
-    inset: 0;
-    min-height: 0;
-    background: none;
-  }
-  .page-head-stair .page-head-panel img {
-    opacity: 0.42;
-    filter: blur(8px) saturate(0.55);
-  }
-  .page-head-stair .page-head-panel::after {
-    background: rgba(245, 246, 245, 0.72);
+    z-index: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(38%, 420px);
+    height: auto;
+    margin-top: 0;
   }
 }
 
