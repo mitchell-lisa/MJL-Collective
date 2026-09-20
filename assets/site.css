@@ -65,53 +65,59 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 @media (min-width: 860px) { .page-head .wrap { grid-template-columns: 1.4fr 1fr; align-items: end; } }
 .page-head h1 { margin: 0; font-weight: 400; font-size: clamp(28px, calc(25px + 0.77vw), 36px); line-height: 1.15; letter-spacing: -0.02em; max-width: 22ch; text-wrap: balance; }
 .page-head p { margin: 0; color: var(--ink-2); max-width: 46ch; }
-/* services only: a contained reeded-glass panel in the page-head. The photo
-   stays in this band, washed with plaster, so the flutes sit behind the type
+/* services only: a contained reeded-glass well in the page-head. The photo
+   sits beside the type, washed with plaster, so the flutes read as texture
    instead of competing with it. Work and the other pages are unchanged. */
-.page-head-stair { position: relative; isolation: isolate; overflow: hidden; }
-.page-head-stair .wrap { position: relative; z-index: 1; padding-top: 72px; padding-bottom: 52px; }
+.page-head-stair { position: relative; isolation: isolate; }
+.page-head-stair .wrap { position: relative; padding-top: 72px; padding-bottom: 52px; }
 .page-head-stair .page-head-panel {
-  position: absolute;
-  z-index: 0;
-  pointer-events: none;
+  position: relative;
   overflow: hidden;
-  /* inset to the wrap's right edge, not a full-bleed page ground */
-  top: 12px;
-  bottom: 8px;
-  right: max(5.5%, calc((100vw - 1320px) / 2 + 48px));
-  width: min(40vw, 460px);
+  pointer-events: none;
+  min-height: 168px;
+  background: var(--cement);
 }
 .page-head-stair .page-head-panel img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 62% 42%;
-  /* scale covers the blur halo so the panel edge stays clean */
-  filter: blur(12px) saturate(0.5);
-  transform: scale(1.12);
-  opacity: 0.48;
+  object-position: 58% 40%;
+  /* scale covers the blur halo so the well edge stays clean */
+  filter: blur(6px) saturate(0.62);
+  transform: scale(1.08);
+  opacity: 0.72;
 }
 .page-head-stair .page-head-panel::after {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, var(--plaster) 0%, var(--plaster) 18%, rgba(245, 246, 245, 0.82) 48%, rgba(245, 246, 245, 0.5) 100%),
-    linear-gradient(180deg, var(--plaster) 0%, transparent 24%, transparent 76%, var(--plaster) 100%);
+    linear-gradient(180deg, var(--plaster) 0%, transparent 20%, transparent 80%, var(--plaster) 100%),
+    rgba(245, 246, 245, 0.4);
+}
+@media (min-width: 860px) {
+  .page-head-stair .wrap {
+    grid-template-columns: 1.25fr 0.9fr minmax(200px, 0.72fr);
+    align-items: stretch;
+    min-height: 228px;
+  }
+  .page-head-stair h1 { grid-column: 1; align-self: end; }
+  .page-head-stair p { grid-column: 2; align-self: end; }
+  .page-head-stair .page-head-panel { grid-column: 3; grid-row: 1 / -1; min-height: 0; }
 }
 @media (max-width: 859px) {
   .page-head-stair .page-head-panel {
+    position: absolute;
     inset: 0;
-    width: auto;
-    right: auto;
+    min-height: 0;
+    background: none;
   }
   .page-head-stair .page-head-panel img {
-    width: 100%;
-    opacity: 0.34;
-    filter: blur(16px) saturate(0.45);
+    opacity: 0.42;
+    filter: blur(8px) saturate(0.55);
   }
   .page-head-stair .page-head-panel::after {
-    background: rgba(245, 246, 245, 0.78);
+    background: rgba(245, 246, 245, 0.72);
   }
 }
 
