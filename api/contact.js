@@ -12,7 +12,7 @@ const site = {
   legalName: "MJL Collective LLC",
   domain: "mjlcollective.com",
   url: "https://mjlcollective.com",
-  email: "mitchelljordanlisa@gmail.com",
+  email: "mitchell@mjlcollective.com",
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
