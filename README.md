@@ -23,7 +23,7 @@ One shared stylesheet and script:
 
 - `index.html` at `/`: the glass hero, the statement, a trusted-by logo strip, and an index of the other pages.
 - `work.html` at `/work`: one card per client, a desktop screenshot beside a phone screenshot, one factual line, and a link to the live site.
-- `partners.html` at `/partners`: the client logos in full color, each linked to the live site. White-ink and yellow-ink marks sit on a dark tile.
+- `partners.html` at `/partners`: the client logos in full color, each linked to the live site.
 - `services.html` at `/services`: the four steps and the process under them.
 - `about.html` at `/about`, `contact.html` at `/contact`, and `privacy.html` at `/privacy`.
 - `assets/site.css` and `assets/site.js` are shared. `vercel.json` sets
