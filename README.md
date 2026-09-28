@@ -19,20 +19,18 @@ deployment remains in the Deployments list for instant rollback.
 
 ## Pages
 
-Five pages, one shared stylesheet and script:
+One shared stylesheet and script:
 
-- `index.html` at `/`: the glass hero, the statement, and an index of the other pages.
-- `work.html` at `/work`: one row per client, the mark beside the live site
-  it ended up on, with the identity it replaced faded in the corner where
-  there was one. Scope is stated per project in its caption rather than by
-  grouping, because no two engagements have had the same scope so far.
+- `index.html` at `/`: the glass hero, the statement, a trusted-by logo strip, and an index of the other pages.
+- `work.html` at `/work`: one card per client, a desktop screenshot beside a phone screenshot, one factual line, and a link to the live site.
+- `partners.html` at `/partners`: the client logos in full color, each linked to the live site. White-ink and yellow-ink marks sit on a dark tile.
 - `services.html` at `/services`: the four steps and the process under them.
-- `about.html` at `/about` and `contact.html` at `/contact`.
+- `about.html` at `/about`, `contact.html` at `/contact`, and `privacy.html` at `/privacy`.
 - `assets/site.css` and `assets/site.js` are shared. `vercel.json` sets
   `cleanUrls`, so `/work` serves `work.html`.
 
 The bar and footer are the same markup on every page. When editing them,
-change all five files, or regenerate the set from one template.
+change every page, or regenerate the set from one template.
 
 ## Brand
 
@@ -57,7 +55,7 @@ function returns a 500 and the form shows the "email me directly" fallback.
 
 ## Content notes
 
-- Work previews are live iframes of the client sites, scaled to fit the
-  frames; each frame links out to the real site.
+- Work cards use captured desktop and phone screenshots of the live sites.
+  Each card links out to the real site. Logos stay in their own color.
 - `assets/unused/` holds graded crops (stairwell, desk with the laptop
   screen blurred, sea wake) kept for future pages such as an about page.

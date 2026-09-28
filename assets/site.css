@@ -129,9 +129,31 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 .index a .line { color: var(--ink-2); font-size: 14px; }
 .index a:hover .name, .index a:focus-visible .name { text-decoration: underline; text-underline-offset: 4px; }
 
-/* On a phone the full lockup and four menu items cannot share a line without
+/* ---------- trusted by: client marks on the home page, in their own color ---------- */
+.trusted .wrap { padding-top: 4px; padding-bottom: 56px; }
+.trusted-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.trusted-head p { margin: 0; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
+.trusted-head a { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; }
+.trusted-head a:hover, .trusted-head a:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
+.trusted ul { list-style: none; margin: 14px 0 0; padding: 10px 0; border-top: 1px solid var(--mortar); border-bottom: 1px solid var(--mortar); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 18px; }
+.trusted li { flex: 1 1 108px; display: flex; justify-content: center; max-width: 168px; }
+.trusted li a { display: grid; place-items: center; width: 100%; height: 56px; }
+.trusted img { max-width: 100%; max-height: 36px; width: auto; height: auto; object-fit: contain; }
+/* white or yellow ink disappears on plaster, so those sit on a poured chip */
+.trusted a.on-dark { background: var(--poured); padding: 8px 10px; height: 56px; }
+@media (max-width: 640px) {
+  .trusted .wrap { padding-bottom: 40px; }
+  .trusted li { flex-basis: 88px; max-width: 46%; }
+  .trusted img { max-height: 32px; }
+}
+
+/* On a phone the full lockup and five menu items cannot share a line without
    crowding, so the top bar carries the monogram alone and the footer, which has
    the room, keeps the whole lockup. */
+/* five items: pull the tracking in before the lockup gives way to the monogram */
+@media (max-width: 900px) {
+  .bar nav ul { gap: 18px; letter-spacing: 0.08em; }
+}
 @media (max-width: 640px) {
   :root { --barh: 69px; }
   /* phones keep the tighter crop; the wide file is mostly filler flutes at 390px */
@@ -146,14 +168,14 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
   .foot .mark { width: 124px; }
   /* the footer is not pinned, so it can afford the whole lockup on its own row */
   .foot .wrap { flex-wrap: wrap; row-gap: 16px; }
-  .bar nav ul { gap: 17px; font-size: 11px; letter-spacing: 0.08em; }
+  .bar nav ul { gap: 11px; font-size: 11px; letter-spacing: 0.04em; }
   /* the J hangs below the cap band, so the menu meets the letters, not the box */
   .topbar nav ul { transform: translateY(-5px); }
   .foot nav ul { transform: translateY(-4px); }
 }
 @media (max-width: 380px) {
   .bar .wrap { gap: 14px; }
-  .bar nav ul { gap: 11px; font-size: 10.5px; letter-spacing: 0.03em; }
+  .bar nav ul { gap: 8px; font-size: 10px; letter-spacing: 0.01em; }
 }
 
 .hero-inner { position: relative; margin-top: auto; }
@@ -178,52 +200,34 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
   .statement .wrap { padding-top: 56px; padding-bottom: 48px; }
 }
 
-/* ---------- marks ---------- */
-#work .wrap { padding-bottom: 92px; }
-/* one list, no groups: four engagements that differ in scope, so the scope is
-   stated per project in its caption rather than implied by a section it sits in */
-.cases { border-top: 1px solid var(--mortar); padding-top: 40px; display: grid; gap: 52px; }
-.case { margin: 0; }
-/* the mark and the site it ended up on, side by side. 1fr to 1.2fr because a 4:3
-   well and a 16:10 screen land at the same height at that ratio */
-.case .art { display: grid; grid-template-columns: 1fr; gap: 18px; }
-/* one breakpoint runs this page. Below it the mark and the preview stack, share a
-   left edge with the text, and the preview opens on a phone window. Above it they
-   sit side by side on a desktop window and fill the column between them. */
-@media (max-width: 640px) {
-  .case .face, .case .tv-frame { max-width: 440px; }
-  /* a phone with browser chrome shows about 620pt of a 390pt page */
-  .case .screen { --vw: 390; --vh: 620; }
-}
-@media (min-width: 641px) { .case .art { grid-template-columns: 1fr 1.2fr; gap: 24px; align-items: start; } }
-.case .face { position: relative; aspect-ratio: 4 / 3; background: #fff; border: 1px solid var(--mortar); }
-/* a mark drawn for a dark ground gets one, or it washes out */
-.case .face.dark { background: var(--poured); border-color: var(--poured); }
-.case .face > img { position: absolute; left: 12%; top: 8%; width: 76%; height: 84%; object-fit: contain; }
-/* with a before beside it, the new mark moves right so the two never touch */
-.case .face.has-before > img { left: 36%; top: 14%; width: 54%; height: 72%; }
-.case .before { position: absolute; left: 4%; bottom: 5%; width: 27%; height: 44%; opacity: 0.7; }
-.case .before img { width: 100%; height: 100%; object-fit: contain; object-position: left bottom; }
-.case figcaption { margin-top: 14px; font-family: var(--block); font-weight: 700; font-size: 16px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
-.case figcaption small { font-family: var(--sans); font-weight: 400; font-size: 13px; color: var(--ink-3); text-align: right; }
-/* the name and the scope line cannot share a row on a phone without colliding,
-   so the scope drops beneath the name and reads left to right like the rest */
-@media (max-width: 640px) {
-  .case figcaption { display: block; }
-  .case figcaption small { display: block; margin-top: 5px; text-align: left; }
-}
+/* ---------- partners: a grid of the client marks, in their own color ---------- */
+.partners .wrap { padding-bottom: 92px; }
+.logo-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (min-width: 720px) { .logo-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
+@media (min-width: 1100px) { .logo-grid { grid-template-columns: repeat(4, 1fr); } }
+.logo-grid a { display: grid; place-items: center; aspect-ratio: 3 / 2; background: #fff; border: 1px solid var(--mortar); padding: 22px 18px; text-decoration: none; }
+.logo-grid img { max-width: 82%; max-height: 68%; width: auto; height: auto; object-fit: contain; }
+/* white or yellow ink disappears on white, so those sit on a poured ground */
+.logo-grid a.on-dark { background: var(--poured); border-color: var(--poured); }
 
-/* ---------- work ---------- */
-/* the bezel keeps its light to dark run but takes every stop off the ground
-   tokens, so it reads as brushed metal in the same light as the page */
-.tv-frame { padding: 6px; background: linear-gradient(145deg, var(--plaster) 0%, color-mix(in srgb, var(--mortar) 88%, var(--ink)) 30%, var(--cement) 55%, color-mix(in srgb, var(--mortar) 70%, var(--ink)) 100%); box-shadow: 0 20px 45px color-mix(in srgb, var(--ink) 16%, transparent), 0 3px 9px color-mix(in srgb, var(--ink) 10%, transparent); }
-/* the frame renders the client site at --vw wide, so the site itself decides which
-   layout to serve. On a phone that is a phone width, which is the layout a phone
-   visitor actually wants to see. */
-.screen { --vw: 1280; --vh: 800; aspect-ratio: var(--vw) / var(--vh); background: var(--plaster); position: relative; overflow: hidden; container-type: inline-size; }
-.screen .ph { position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink-3); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; padding: 12px; }
-.screen iframe { position: absolute; top: 0; left: 0; width: calc(var(--vw) * 1px); height: calc(var(--vh) * 1px); border: 0; transform-origin: 0 0; transform: scale(var(--s, calc(100cqw / var(--vw)))); pointer-events: none; background: var(--plaster); }
-.screen .cover { position: absolute; inset: 0; z-index: 2; }
+/* ---------- work: one card per live site ---------- */
+#work .wrap { padding-bottom: 92px; }
+.works { border-top: 1px solid var(--mortar); padding-top: 40px; display: grid; gap: 56px; }
+.work-card { margin: 0; }
+/* desktop shot beside the phone shot. The phone column stays narrow so the
+   tall capture does not take over the row. */
+.shots { display: grid; grid-template-columns: 1fr 96px; gap: 10px; align-items: start; text-decoration: none; }
+@media (min-width: 720px) { .shots { grid-template-columns: 1fr 180px; gap: 16px; } }
+.shots img { width: 100%; height: auto; border: 1px solid var(--mortar); background: #fff; }
+.work-card figcaption { margin-top: 14px; }
+.work-card h2 { margin: 0; font-family: var(--block); font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
+.work-card p { margin: 6px 0 0; font-size: 14px; color: var(--ink-2); max-width: 68ch; }
+.work-card .out { display: inline-block; margin-top: 8px; font-size: 13px; color: var(--ink); text-underline-offset: 3px; }
+.work-card .out:hover, .work-card .out:focus-visible { color: var(--ink-2); }
+@media (max-width: 640px) {
+  .works { gap: 40px; }
+  .shots { grid-template-columns: 1fr 108px; }
+}
 /* ---------- services: operating offer, not four equal tiles ---------- */
 .offer { padding-bottom: 92px; }
 .offer-lead { padding: 4px 0 48px; border-top: 3px solid var(--ink); }
