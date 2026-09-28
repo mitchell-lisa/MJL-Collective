@@ -19,20 +19,22 @@ deployment remains in the Deployments list for instant rollback.
 
 ## Pages
 
-Five pages, one shared stylesheet and script:
+Six pages, one shared stylesheet and script:
 
-- `index.html` at `/`: the glass hero, the statement, and an index of the other pages.
-- `work.html` at `/work`: one row per client, the mark beside the live site
-  it ended up on, with the identity it replaced faded in the corner where
-  there was one. Scope is stated per project in its caption rather than by
-  grouping, because no two engagements have had the same scope so far.
+- `index.html` at `/`: the glass hero, the statement, a short row of client
+  logos, and an index of the other pages.
+- `work.html` at `/work`: one card per client. Each card is a desktop
+  screenshot and a phone screenshot of the live site, the client name, one
+  line about the site, and a link out.
+- `partners.html` at `/partners`: a grid of the client logos. Each logo
+  links to that client's live site.
 - `services.html` at `/services`: the four steps and the process under them.
 - `about.html` at `/about` and `contact.html` at `/contact`.
 - `assets/site.css` and `assets/site.js` are shared. `vercel.json` sets
   `cleanUrls`, so `/work` serves `work.html`.
 
 The bar and footer are the same markup on every page. When editing them,
-change all five files, or regenerate the set from one template.
+change all six files, or regenerate the set from one template.
 
 ## Brand
 
@@ -57,7 +59,8 @@ function returns a 500 and the form shows the "email me directly" fallback.
 
 ## Content notes
 
-- Work previews are live iframes of the client sites, scaled to fit the
-  frames; each frame links out to the real site.
+- Work screenshots are captured from the live sites at a 1440 desktop width
+  and a 390 phone width. Each card links out to the real site.
+- Partner logos are the clients' own files, from the live site or its repo.
 - `assets/unused/` holds graded crops (stairwell, desk with the laptop
   screen blurred, sea wake) kept for future pages such as an about page.
