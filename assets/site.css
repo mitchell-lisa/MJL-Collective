@@ -217,24 +217,52 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 /* light ink disappears on white, so that mark sits on a poured ground */
 .logo-grid a.on-dark { background: var(--poured); border-color: var(--poured); }
 
-/* ---------- work: one card per live site ---------- */
+/* ---------- marks ---------- */
 #work .wrap { padding-bottom: 92px; }
-.works { border-top: 1px solid var(--mortar); padding-top: 40px; display: grid; gap: 56px; }
-.work-card { margin: 0; }
-/* desktop shot beside the phone shot. The phone column stays narrow so the
-   tall capture does not take over the row. */
-.shots { display: grid; grid-template-columns: 1fr 96px; gap: 10px; align-items: start; text-decoration: none; }
-@media (min-width: 720px) { .shots { grid-template-columns: 1fr 180px; gap: 16px; } }
-.shots img { width: 100%; height: auto; border: 1px solid var(--mortar); background: #fff; }
-.work-card figcaption { margin-top: 14px; }
-.work-card h2 { margin: 0; font-family: var(--block); font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
-.work-card p { margin: 6px 0 0; font-size: 14px; color: var(--ink-2); max-width: 68ch; }
-.work-card .out { display: inline-block; margin-top: 8px; font-size: 13px; color: var(--ink); text-underline-offset: 3px; }
-.work-card .out:hover, .work-card .out:focus-visible { color: var(--ink-2); }
+/* one list, no groups: four engagements that differ in scope, so the scope is
+   stated per project in its caption rather than implied by a section it sits in */
+.cases { border-top: 1px solid var(--mortar); padding-top: 40px; display: grid; gap: 52px; }
+.case { margin: 0; }
+/* the mark and the site it ended up on, side by side. 1fr to 1.2fr because a 4:3
+   well and a 16:10 screen land at the same height at that ratio */
+.case .art { display: grid; grid-template-columns: 1fr; gap: 18px; }
+/* one breakpoint runs this page. Below it the mark and the preview stack, share a
+   left edge with the text, and the preview opens on a phone window. Above it they
+   sit side by side on a desktop window and fill the column between them. */
 @media (max-width: 640px) {
-  .works { gap: 40px; }
-  .shots { grid-template-columns: 1fr 108px; }
+  .case .face, .case .tv-frame { max-width: 440px; }
+  /* a phone with browser chrome shows about 620pt of a 390pt page */
+  .case .screen { --vw: 390; --vh: 620; }
 }
+@media (min-width: 641px) { .case .art { grid-template-columns: 1fr 1.2fr; gap: 24px; align-items: start; } }
+.case .face { position: relative; aspect-ratio: 4 / 3; background: #fff; border: 1px solid var(--mortar); }
+/* a mark drawn for a dark ground gets one, or it washes out */
+.case .face.dark { background: var(--poured); border-color: var(--poured); }
+.case .face > img { position: absolute; left: 12%; top: 8%; width: 76%; height: 84%; object-fit: contain; }
+/* with a before beside it, the new mark moves right so the two never touch */
+.case .face.has-before > img { left: 36%; top: 14%; width: 54%; height: 72%; }
+.case .before { position: absolute; left: 4%; bottom: 5%; width: 27%; height: 44%; opacity: 0.7; }
+.case .before img { width: 100%; height: 100%; object-fit: contain; object-position: left bottom; }
+.case figcaption { margin-top: 14px; font-family: var(--block); font-weight: 700; font-size: 16px; display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.case figcaption small { font-family: var(--sans); font-weight: 400; font-size: 13px; color: var(--ink-3); text-align: right; }
+/* the name and the scope line cannot share a row on a phone without colliding,
+   so the scope drops beneath the name and reads left to right like the rest */
+@media (max-width: 640px) {
+  .case figcaption { display: block; }
+  .case figcaption small { display: block; margin-top: 5px; text-align: left; }
+}
+
+/* ---------- work ---------- */
+/* the bezel keeps its light to dark run but takes every stop off the ground
+   tokens, so it reads as brushed metal in the same light as the page */
+.tv-frame { padding: 6px; background: linear-gradient(145deg, var(--plaster) 0%, color-mix(in srgb, var(--mortar) 88%, var(--ink)) 30%, var(--cement) 55%, color-mix(in srgb, var(--mortar) 70%, var(--ink)) 100%); box-shadow: 0 20px 45px color-mix(in srgb, var(--ink) 16%, transparent), 0 3px 9px color-mix(in srgb, var(--ink) 10%, transparent); }
+/* the frame renders the client site at --vw wide, so the site itself decides which
+   layout to serve. On a phone that is a phone width, which is the layout a phone
+   visitor actually wants to see. */
+.screen { --vw: 1280; --vh: 800; aspect-ratio: var(--vw) / var(--vh); background: var(--plaster); position: relative; overflow: hidden; container-type: inline-size; }
+.screen .ph { position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink-3); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; text-align: center; padding: 12px; }
+.screen iframe { position: absolute; top: 0; left: 0; width: calc(var(--vw) * 1px); height: calc(var(--vh) * 1px); border: 0; transform-origin: 0 0; transform: scale(var(--s, calc(100cqw / var(--vw)))); pointer-events: none; background: var(--plaster); }
+.screen .cover { position: absolute; inset: 0; z-index: 2; }
 /* ---------- services: operating offer, not four equal tiles ---------- */
 .offer { padding-bottom: 92px; }
 .offer-lead { padding: 4px 0 48px; border-top: 3px solid var(--ink); }
