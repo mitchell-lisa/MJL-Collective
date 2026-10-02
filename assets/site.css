@@ -135,8 +135,19 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 .trusted-head p { margin: 0; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
 .trusted-head a { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; }
 .trusted-head a:hover, .trusted-head a:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
-.trusted ul { list-style: none; margin: 14px 0 0; padding: 14px 0; border-top: 1px solid var(--mortar); border-bottom: 1px solid var(--mortar); display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.trusted li { min-width: 0; }
+.trusted-row { position: relative; margin: 14px 0 0; padding: 14px 0; border-top: 1px solid var(--mortar); border-bottom: 1px solid var(--mortar); --cols: 2; --gap: 12px; --fade: 36px; --dur: 48s; }
+/* soft plaster fades over the two ends, inside the rules so the rules run full width */
+.trusted-row::before, .trusted-row::after { content: ""; position: absolute; top: 0; bottom: 0; width: var(--fade); z-index: 1; pointer-events: none; }
+.trusted-row::before { left: 0; background: linear-gradient(to right, var(--plaster), rgba(244, 240, 233, 0)); }
+.trusted-row::after { right: 0; background: linear-gradient(to left, var(--plaster), rgba(244, 240, 233, 0)); }
+.trusted-view { overflow: hidden; container-type: inline-size; }
+/* two identical sets side by side; moving the track by half its width lands set two exactly where set one began */
+.trusted-track { display: flex; width: max-content; animation: trusted-scroll var(--dur) linear infinite; will-change: transform; }
+.trusted-row:hover .trusted-track, .trusted-row:focus-within .trusted-track { animation-play-state: paused; }
+.trusted ul { list-style: none; margin: 0; padding: 0; display: flex; flex: 0 0 auto; }
+/* each box keeps the width it had as a grid column: the row width less the gaps, shared by the columns */
+.trusted li { flex: 0 0 auto; box-sizing: content-box; padding-right: var(--gap); width: calc((89vw - var(--gap) * (var(--cols) - 1)) / var(--cols)); width: calc((100cqw - var(--gap) * (var(--cols) - 1)) / var(--cols)); }
+@keyframes trusted-scroll { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
 .trusted li a { position: relative; display: block; width: 100%; aspect-ratio: 3 / 2; }
 .trusted img { position: absolute; inset: 0; margin: auto; object-fit: contain; object-position: center; }
 .trusted img.mark-stack { width: 70%; height: 82%; }
@@ -144,8 +155,18 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 .trusted img.mark-fill { width: 100%; height: 100%; object-fit: cover; }
 /* light ink disappears on plaster, so that mark sits on a poured chip */
 .trusted a.on-dark { background: var(--poured); }
-@media (min-width: 720px) { .trusted ul { grid-template-columns: repeat(4, 1fr); gap: 14px; } }
-@media (min-width: 1100px) { .trusted ul { grid-template-columns: repeat(8, 1fr); gap: 10px; } }
+@media (min-width: 720px) { .trusted-row { --cols: 4; --gap: 14px; --fade: 48px; --dur: 54s; } }
+@media (min-width: 1100px) { .trusted-row { --cols: 8; --gap: 10px; --fade: 56px; --dur: 40s; } }
+/* no motion: one set, still, and a row that swipes sideways when it is wider than the screen */
+@media (prefers-reduced-motion: reduce) {
+  .trusted-row::before, .trusted-row::after { display: none; }
+  .trusted-view { overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .trusted-view::-webkit-scrollbar { display: none; }
+  .trusted-track { animation: none; will-change: auto; }
+  .trusted ul[aria-hidden="true"] { display: none; }
+  .trusted li { scroll-snap-align: start; }
+  .trusted li:last-child { padding-right: 0; }
+}
 @media (max-width: 640px) {
   .trusted .wrap { padding-bottom: 40px; }
 }
