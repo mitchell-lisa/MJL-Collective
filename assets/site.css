@@ -181,7 +181,7 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
   .bar nav ul { gap: 18px; letter-spacing: 0.08em; }
 }
 @media (max-width: 640px) {
-  :root { --barh: 69px; }
+  :root { --barh: 98px; }
   /* phones keep the tighter crop; the wide file is mostly filler flutes at 390px */
   .hero .bg { object-position: center bottom; }
   /* the hero fills the phone screen too. The block stays anchored to the bottom,
@@ -194,7 +194,8 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
   .foot .mark { width: 124px; }
   /* the footer is not pinned, so it can afford the whole lockup on its own row */
   .foot .wrap { flex-wrap: wrap; row-gap: 16px; }
-  .bar nav ul { gap: 11px; font-size: 11px; letter-spacing: 0.04em; }
+  .bar nav { min-width: 0; flex: 1; }
+  .bar nav ul { gap: 2px 14px; font-size: 11px; letter-spacing: 0.04em; flex-wrap: wrap; justify-content: flex-end; }
   /* the J hangs below the cap band, so the menu meets the letters, not the box */
   .topbar nav ul { transform: translateY(-5px); }
   .foot nav ul { transform: translateY(-4px); }
