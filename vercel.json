@@ -1,4 +1,8 @@
 {
   "git": { "deploymentEnabled": true },
-  "cleanUrls": true
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/clients", "destination": "https://mjl-client-portal.vercel.app/clients" },
+    { "source": "/clients/:path*", "destination": "https://mjl-client-portal.vercel.app/clients/:path*" }
+  ]
 }
