@@ -156,7 +156,7 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 /* light ink disappears on plaster, so that mark sits on a poured chip */
 .trusted a.on-dark { background: var(--poured); }
 @media (min-width: 720px) { .trusted-row { --cols: 4; --gap: 14px; --fade: 48px; --dur: 68s; } }
-@media (min-width: 1100px) { .trusted-row { --cols: 8; --gap: 10px; --fade: 56px; --dur: 50s; } }
+@media (min-width: 1100px) { .trusted-row { --cols: 7; --gap: 10px; --fade: 56px; --dur: 46s; } }
 /* no motion: one set, still, and a row that swipes sideways when it is wider than the screen */
 @media (prefers-reduced-motion: reduce) {
   .trusted-row::before, .trusted-row::after { display: none; }
@@ -168,7 +168,7 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
   .trusted li:last-child { padding-right: 0; }
 }
 /* standing still on a wide screen, all ten share the row */
-@media (prefers-reduced-motion: reduce) and (min-width: 1100px) { .trusted-row { --cols: 10; } }
+@media (prefers-reduced-motion: reduce) and (min-width: 1100px) { .trusted-row { --cols: 8; } }
 @media (max-width: 640px) {
   .trusted .wrap { padding-bottom: 40px; }
 }
@@ -403,3 +403,7 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 .foot a { color: inherit; }
 /* the address line is the one place a thumb has to find a 12px link */
 .foot .legal a { display: inline-block; padding: 7px 0; margin: -7px 0; }
+
+/* logo boxes sized per mark (--lw/--lh set on each img) so every client reads at the same visual size */
+.trusted img[style] { width: var(--lw); height: var(--lh); }
+.logo-grid img[style] { width: calc(var(--lw) * 0.88); height: calc(var(--lh) * 0.88); }
