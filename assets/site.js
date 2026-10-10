@@ -97,8 +97,10 @@
       var r = enter.getBoundingClientRect();
       var p = clamp(-r.top / Math.max(1, r.height - vh));
       var st = enter.style;
-      var w = ease(0, .12, p), f = ease(.03, .2, p);
-      var m = f * (1 - ease(.8, .9, p)), c = ease(.84, .95, p);
+      // one screen of scroll: the words lift away as the wall frosts, then the
+      // frost lifts off in one soft wave from the middle and the mortar fades
+      var w = ease(0, .16, p), f = ease(0, .26, p);
+      var m = f * (1 - ease(.36, .6, p)), c = ease(.78, .92, p);
       st.setProperty("--w", w.toFixed(3));
       st.setProperty("--f", f.toFixed(3));
       st.setProperty("--m", m.toFixed(3));
@@ -106,18 +108,17 @@
       enter.classList.toggle("frosted", f > .995);
       enter.classList.toggle("past-words", w > .995);
       enter.classList.toggle("at-end", c > .5);
-      // each block clears on its own, from the middle outwards
       cellsets.forEach(function (set) {
-        if (!set.wall.offsetParent && set.wall.offsetWidth === 0) return;
+        if (set.wall.offsetWidth === 0) return;
         for (var i = 0; i < set.cells.length; i++) {
           var cl = set.cells[i];
-          var a = .22 + cl.t * .5;
-          var o = 1 - ease(a, a + .08, p);
+          var a = .3 + cl.t * .14;
+          var o = 1 - ease(a, a + .3, p);
           o = Math.round(o * 50) / 50;
           if (o !== cl.o) { cl.o = o; cl.el.style.opacity = o; }
         }
       });
-      lenses.forEach(function (L) { if (L.host === enter) L.el.style.setProperty("--l", (f * (1 - ease(.2, .3, p))).toFixed(3)); });
+      lenses.forEach(function (L) { if (L.host === enter) L.el.style.setProperty("--l", (f * (1 - ease(.26, .34, p))).toFixed(3)); });
     }
     if (head && !still) {
       var h = head.getBoundingClientRect();

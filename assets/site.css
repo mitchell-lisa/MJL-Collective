@@ -104,6 +104,8 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .glass-head, .enter { margin-top: calc(var(--barh) * -1 - 1px); }
 .glass-head { position: relative; isolation: isolate; overflow: hidden; min-height: min(78vh, 760px); display: flex; align-items: flex-end; padding: calc(var(--barh) + 64px) 0 clamp(36px, 5vw, 72px); }
 .glass-head .wrap { position: relative; }
+.glass-head .pane { width: fit-content; max-width: min(720px, 100%); padding-right: clamp(36px, 5vw, 80px); }
+.glass-head .pane .lede { max-width: 34ch; }
 .glass-head .lens { z-index: 0; }
 .glass-head.lost { min-height: min(88vh, 820px); }
 @media (max-width: 700px) {
@@ -140,7 +142,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .credit { margin: 0; font-size: 16px; color: var(--ink-2); }
 .credit strong { font: 400 24px/1.2 var(--display); color: var(--ink); margin-right: 4px; }
 .credit .link { margin-left: 8px; white-space: nowrap; }
-.enter.live { height: 440vh; height: 440svh; }
+.enter.live { height: 200vh; height: 200svh; }
 .enter.live .enter-stage { position: sticky; top: 0; height: 100vh; height: 100svh; min-height: 560px; overflow: hidden; }
 .enter.live .wall-box { inset: 0; height: auto; min-height: 0; }
 .enter.live .wall .cells, .enter.live .wall .mortar { display: block; }
@@ -152,7 +154,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .enter.live.past-words .enter-words { visibility: hidden; }
 .enter.live .enter-credit { position: absolute; left: 0; right: 0; bottom: clamp(20px, 4vh, 40px); padding: 0; display: flex; opacity: var(--c, 0); transform: translate3d(0, calc((1 - var(--c, 0)) * 16px), 0); }
 .enter.live:not(.at-end) .enter-credit { pointer-events: none; }
-.enter.live .credit { background: rgba(248, 246, 241, .9); padding: 14px 20px; box-shadow: 0 20px 50px -30px rgba(28, 26, 23, .4); }
+.enter.live .credit { background: rgba(248, 246, 241, .97); padding: 14px 20px; box-shadow: 0 20px 50px -30px rgba(28, 26, 23, .4); }
 @media (max-width: 700px) {
   .enter-words .pane { padding: 26px 22px 28px; }
   .enter-words h1 { font-size: clamp(40px, 11.5vw, 56px); }
@@ -191,6 +193,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .marks .tall { height: clamp(96px, 9vw, 128px); }
 .marks .wide { width: min(100%, 240px); height: auto; }
 .marks .px { width: 32px; height: 32px; }
+.marks .icon { width: 56px; height: 56px; border-radius: 12px; box-shadow: 0 10px 24px -14px rgba(28, 26, 23, .5); }
 .marks .swatches { flex-basis: 100%; margin: 0; }
 @media (min-width: 901px) and (min-height: 620px) and (prefers-reduced-motion: no-preference) {
   .room { position: sticky; top: 0; height: 100vh; height: 100svh; padding: var(--barh) 0 0; display: flex; align-items: center; border-top: 0; box-shadow: 0 -1px 0 var(--mortar), 0 -40px 80px -60px rgba(28, 26, 23, .35); }
@@ -202,7 +205,14 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   .room-art.has-p > .plate.d { margin-right: 9%; }
   .room-art .plate.p { width: 16%; bottom: -7%; }
   .room-words { margin-top: 0; }
+  .room-words .ba-mark .ba-frame { width: min(100%, 260px, calc(22svh * 4 / 3)); }
+  .room-words .ba-mark.wide .ba-frame { width: min(100%, 340px, calc(16svh * 2)); }
+  .room-words .ba { margin-bottom: 22px; }
+  .room-words > p { margin: 18px 0 22px; }
 }
+
+.more-work { padding-top: clamp(56px, 7vw, 96px); padding-bottom: clamp(72px, 9vw, 140px); text-align: center; border-top: 1px solid var(--mortar); }
+.rooms + .more-work { position: relative; background: var(--plaster); }
 
 /* ---------- plain bands ---------- */
 .band { padding: clamp(80px, 10vw, 160px) 0; border-top: 1px solid var(--mortar); }
@@ -333,6 +343,7 @@ figcaption strong { font: 400 21px/1.2 var(--display); color: var(--ink); margin
 
 
 /* ---------- footer ---------- */
+.foot.slim { padding-top: clamp(56px, 6vw, 88px); }
 .foot { background: var(--cement); color: var(--ink); font-family: var(--sans); padding: clamp(80px, 10vw, 150px) 0 28px; }
 .foot .ask { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(16px, 2vw, 32px); align-items: end; padding-bottom: clamp(72px, 9vw, 140px); }
 .foot .ask h2 { grid-column: 1 / span 7; font-size: clamp(46px, 5.6vw, 92px); }
@@ -340,9 +351,8 @@ figcaption strong { font: 400 21px/1.2 var(--display); color: var(--ink); margin
 .foot .ask p { font: 400 18px/1.6 var(--serif); color: var(--ink-2); margin-bottom: 26px; }
 .foot .ask .mail { display: block; margin-top: 18px; font: 500 14px/1.4 var(--sans); }
 @media (max-width: 900px) { .foot .ask { display: block; } .foot .ask div { margin-top: 26px; } }
-.foot .sign { display: flex; align-items: center; gap: clamp(16px, 2vw, 26px); margin: 0 0 34px; }
-.foot .sign-block { width: clamp(60px, 6vw, 84px); height: auto; filter: drop-shadow(0 14px 22px rgba(28, 26, 23, .14)); }
-.foot .sign-lock { width: clamp(150px, 15vw, 210px); height: auto; }
+.foot .sign { display: inline-block; margin: 0 0 36px; line-height: 0; }
+.foot .sign img { width: clamp(170px, 16vw, 230px); height: auto; }
 .foot .rows { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 20px 40px; padding-top: 22px; border-top: 1px solid var(--mortar); font-size: 13.5px; }
 .foot .rows ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 28px; }
 .foot .rows a { text-decoration: none; }
@@ -387,11 +397,3 @@ figcaption strong { font: 400 21px/1.2 var(--display); color: var(--ink); margin
 .ba figcaption { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 4px 22px; font: 400 14px/1.45 var(--sans); color: var(--ink-2); max-width: none; }
 .ba figcaption a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--mortar); }
 .room-words .ba { margin-bottom: 30px; }
-
-/* ---------- the monogram: a first-visit hello, under a second ---------- */
-.intro-mark { display: none; }
-html.intro .intro-mark { display: flex; position: fixed; inset: 0; z-index: 200; align-items: center; justify-content: center; background: var(--plaster); pointer-events: none; animation: intro-out .9s ease forwards; }
-html.intro .intro-mark svg { width: clamp(96px, 13vw, 160px); height: auto; animation: intro-in .9s cubic-bezier(.2, .7, .2, 1) forwards; }
-@keyframes intro-in { 0% { opacity: 0; transform: scale(.94); } 38% { opacity: 1; transform: scale(1); } 100% { opacity: 1; transform: scale(1.015); } }
-@keyframes intro-out { 0%, 58% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
-@media (prefers-reduced-motion: reduce) { html.intro .intro-mark { display: none; } }
