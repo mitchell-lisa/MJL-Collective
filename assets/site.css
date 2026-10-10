@@ -109,7 +109,7 @@ html.over-enter .bar { -webkit-backdrop-filter: none; backdrop-filter: none; bac
 .bar { isolation: isolate; box-shadow: 0 1px 0 rgba(255, 255, 255, .55) inset; }
 .bar-glass { position: absolute; inset: 0; overflow: hidden; z-index: -1; display: none; pointer-events: none; }
 html.over-enter .bar-glass { display: block; }
-.bar-glass i { position: absolute; left: 0; top: 0; width: 100%; height: 100vh; background: 0 0 / 100% 100% no-repeat; }
+.bar-glass i { position: absolute; left: 0; top: 0; width: 100%; height: 100vh; background: 0 0 / 100% 100% no-repeat; will-change: transform; }
 .bar-glass .g { background-image: url(/assets/glass/soft-wall.webp); }
 .bar-glass .f { background-image: url(/assets/glass/soft-frost-wall.webp); opacity: 0; will-change: opacity; }
 @media (max-width: 700px) {
@@ -140,13 +140,9 @@ html.over-enter .bar-glass { display: block; }
   .pane h1 { font-size: clamp(42px, 12vw, 60px); }
 }
 
-/* ---------- home: the entrance ----------
-   The wall, clear. One screen of scroll frosts it, the words lift away, and a
-   client site settles onto the frosted wall like a framed print, with the
-   glass all round it as the mat. site.js adds .live and sets --w (words out),
-   --f (frost) and --c (print in). Only opacity and transform change, each on
-   its own layer. Without .live (no script, or reduced motion) it is a still
-   page: the wall with the words on it, then the print below. */
+/* ---------- home: the hero ----------
+   The glass wall, still, with the words on a frosted pane over it. It scrolls
+   away like the rest of the page: nothing pinned, nothing tied to the scroll. */
 .enter { position: relative; }
 .enter-stage { position: relative; isolation: isolate; display: flex; flex-direction: column; }
 .wall-box { position: absolute; left: 0; right: 0; top: 0; height: 100vh; height: 100svh; min-height: 560px; overflow: hidden; }
@@ -161,28 +157,7 @@ html.over-enter .bar-glass { display: block; }
 @media (max-width: 700px) { .wall-wall { display: none; } .wall-tall { display: block; } }
 .enter-words { position: relative; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding-top: calc(var(--barh) + 40px); padding-bottom: clamp(40px, 9vh, 110px); }
 .enter-words .pane { max-width: 860px; }
-/* the print: a client site, framed, on the wall */
-.print { position: relative; margin: clamp(64px, 8vw, 120px) auto clamp(48px, 6vw, 96px); width: min(64vw, 1180px, calc((100svh - var(--barh) - 170px) * 1.6)); }
-.print-frame { display: block; line-height: 0; background: var(--plaster); box-shadow: 0 0 0 1px rgba(28, 26, 23, .14), 0 2px 6px rgba(28, 26, 23, .06), 0 40px 90px -40px rgba(28, 26, 23, .45); }
-.print-frame img { display: block; width: 100%; height: auto; aspect-ratio: 1440 / 900; object-fit: contain; }
-.print figcaption { width: fit-content; max-width: 100%; margin: 18px auto 0; padding: 8px 16px; font: 400 14px/1.5 var(--sans); color: #3f3a33; text-align: center; background: linear-gradient(rgba(255, 255, 255, .3), rgba(255, 255, 255, .08)), rgba(246, 243, 237, .62); box-shadow: 0 1px 0 rgba(255, 255, 255, .8) inset, 0 0 0 1px rgba(255, 255, 255, .45) inset, 0 0 0 1px rgba(28, 26, 23, .05); }
-.print figcaption strong { font-weight: 500; color: var(--ink); }
-.print figcaption a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--mortar); text-underline-offset: 4px; margin-left: 6px; white-space: nowrap; }
-@media (max-width: 700px) {
-  .print { width: min(86vw, calc((100svh - var(--barh) - 200px) * 390 / 844)); }
-  .print-frame img { aspect-ratio: 390 / 844; }
-  .print figcaption { font-size: 13px; padding: 0 4px; }
-}
-.enter.live { height: 200vh; height: 200svh; }
-.enter.live .enter-stage { position: sticky; top: 0; height: 100vh; height: 100svh; min-height: 560px; overflow: hidden; display: block; }
-.enter.live .wall-box { inset: 0; height: auto; min-height: 0; }
-.enter.live .wall .frosted { display: block; opacity: var(--f, 0); will-change: opacity; }
-.enter.live.frosted .wall .clear { visibility: hidden; }
-.enter.live .enter-words { position: absolute; left: 0; right: 0; top: 0; bottom: 0; min-height: 0; opacity: calc(1 - var(--w, 0)); transform: translate3d(0, calc(var(--w, 0) * -36px), 0); will-change: opacity, transform; }
-.enter.live.past-words .enter-words { visibility: hidden; }
-.enter.live .print { position: absolute; left: 50%; top: calc(50% + var(--barh) / 2 - 22px); margin: 0; transform: translate3d(-50%, calc(-50% + (1 - var(--c, 0)) * 28px), 0); opacity: var(--c, 0); will-change: opacity, transform; }
-.enter.live:not(.at-end) .print { pointer-events: none; visibility: hidden; }
-.enter.live.showing .print { visibility: visible; }
+.nobr { white-space: nowrap; }
 @media (max-width: 700px) {
   .enter-words .pane { padding: 26px 22px 28px; }
   .enter-words h1 { font-size: clamp(40px, 11.5vw, 56px); }
@@ -237,6 +212,12 @@ html.over-enter .bar-glass { display: block; }
   .room-words .ba-mark.wide .ba-frame { width: min(100%, 340px, calc(16svh * 2)); }
   .room-words .ba { margin-bottom: 22px; }
   .room-words > p { margin: 18px 0 22px; }
+}
+/* home: the rooms sit one after another like an ordinary page (Work keeps
+   the stacked rooms) */
+@media (min-width: 901px) and (min-height: 620px) and (prefers-reduced-motion: no-preference) {
+  .rooms.flow .room { position: relative; height: auto; padding: clamp(80px, 9vw, 140px) 0; border-top: 1px solid var(--mortar); box-shadow: none; }
+  .rooms.flow .room:first-child { border-top: 0; }
 }
 
 .more-work { padding-top: clamp(56px, 7vw, 96px); padding-bottom: clamp(72px, 9vw, 140px); text-align: center; border-top: 1px solid var(--mortar); }

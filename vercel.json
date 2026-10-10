@@ -3,6 +3,30 @@
     "deploymentEnabled": true
   },
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/clients",
+      "has": [
+        {
+          "type": "host",
+          "value": "^mjl-collective-[a-z0-9-]+-mitchell-lisas-projects\\.vercel\\.app$"
+        }
+      ],
+      "destination": "https://mjl-client-portal-git-redesign-s-dae1cb-mitchell-lisas-projects.vercel.app/clients",
+      "permanent": false
+    },
+    {
+      "source": "/clients/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "^mjl-collective-[a-z0-9-]+-mitchell-lisas-projects\\.vercel\\.app$"
+        }
+      ],
+      "destination": "https://mjl-client-portal-git-redesign-s-dae1cb-mitchell-lisas-projects.vercel.app/clients/:path*",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/clients",

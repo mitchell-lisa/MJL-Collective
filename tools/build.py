@@ -6,20 +6,20 @@ import json, pathlib, re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 C = ROOT / "tools" / "content"
 SITE = "https://mjlcollective.com"
-V = "20261010m1"  # bump when site.css or site.js changes
+V = "20261010n2"  # bump when site.css or site.js changes
 
 NAV = [("/work", "Work"), ("/partners", "Partners"), ("/services", "Services"), ("/about", "About"), ("/contact", "Contact")]
 
 # Clients, newest first (order from commit fea8c67, with ABC Styling added on top).
 CLIENTS = [
-  ("ABC Styling", "https://annie-culbertson-concept.vercel.app", "/assets/logos/abc-styling.svg", 1003, 166, "wide"),
+  ("ABC Styling", "https://annie-culbertson-concept.vercel.app", "/assets/logos/abc-styling.svg?v=20261010", 1011, 174, "wide"),
   ("Arden Collective", "https://arden-collective.vercel.app", "/assets/logos/arden-seal-small.svg", 827, 985, "stack"),
-  ("Loftus Construction", "https://loftus-construction.vercel.app", "/assets/logos/loftus.webp?v=20261009", 1191, 277, "wide"),
-  ("Lewiston Design &amp; Build", "https://lewistondesignbuild.com", "/assets/logos/lewiston.webp", 508, 508, "stack"),
-  ("Simo&rsquo;s Barbering", "https://www.simosbarbering.com", "/assets/logos/simos.webp?v=20261002", 1022, 556, "wide"),
-  ("George Gravenstine Insurance Agency", "https://georgeinsurance.agency", "/assets/logos/george.webp", 781, 391, "wide"),
-  ("Tiger Digital", "https://www.tigerdigital.marketing", "/assets/logos/tiger.webp", 560, 560, "stack"),
-  ("BlueThreadz", "https://www.bluethreadz.com", "/assets/logos/bluethreadz.webp", 1000, 132, "wide"),
+  ("Loftus Construction", "https://loftus-construction.vercel.app", "/assets/logos/loftus.webp?v=20261010", 1219, 305, "wide"),
+  ("Lewiston Design &amp; Build", "https://lewistondesignbuild.com", "/assets/logos/lewiston.webp?v=20261010", 520, 520, "stack"),
+  ("Simo&rsquo;s Barbering", "https://www.simosbarbering.com", "/assets/logos/simos.webp?v=20261010", 1046, 571, "wide"),
+  ("George Gravenstine Insurance Agency", "https://georgeinsurance.agency", "/assets/logos/george.webp?v=20261010", 799, 409, "wide"),
+  ("Tiger Digital", "https://www.tigerdigital.marketing", "/assets/logos/tiger.webp?v=20261010", 574, 574, "stack"),
+  ("BlueThreadz", "https://www.bluethreadz.com", "/assets/logos/bluethreadz.webp?v=20261010", 1024, 156, "wide"),
   ("Dorothy&rsquo;s Flower Shop", "https://www.dorothysflower.shop", "/assets/logos/dorothy.webp", 700, 1337, "stack"),
 ]
 
@@ -305,11 +305,6 @@ L = "https://lewistondesignbuild.com"
 # Behind the glass: the top of the site for Annie Culbertson's styling
 # studio. She is the newest client: first in the logos and on Partners.
 ANNIE = "https://annie-culbertson-concept.vercel.app"
-print_ = (f'<picture><source media="(max-width: 700px)" type="image/avif" srcset="/assets/shots/annie-top-p-360.avif 360w, /assets/shots/annie-top-p-720.avif 720w, /assets/shots/annie-top-p-1080.avif 1080w" sizes="70vw">'
-          f'<source media="(max-width: 700px)" type="image/webp" srcset="/assets/shots/annie-top-p-360.webp 360w, /assets/shots/annie-top-p-720.webp 720w, /assets/shots/annie-top-p-1080.webp 1080w" sizes="70vw">'
-          f'<source type="image/avif" srcset="/assets/shots/annie-top-d-1200.avif 1200w, /assets/shots/annie-top-d-1800.avif 1800w, /assets/shots/annie-top-d-2880.avif 2880w" sizes="(min-width: 701px) min(64vw, 1180px), 70vw">'
-          f'<img src="/assets/shots/annie-top-d-1800.webp" srcset="/assets/shots/annie-top-d-1200.webp 1200w, /assets/shots/annie-top-d-1800.webp 1800w, /assets/shots/annie-top-d-2880.webp 2880w" sizes="(min-width: 701px) min(64vw, 1180px), 70vw" '
-          f'alt="The top of the ABC Styling site: Annie in a black cape beside the ABC Styling wordmark on oxblood, under the site&rsquo;s menu" width="1440" height="900" loading="lazy" decoding="async" fetchpriority="low"></picture>')
 home = f'''    <section class="enter" aria-labelledby="hello">
       <div class="enter-stage">
         <div class="wall-box">
@@ -318,24 +313,21 @@ home = f'''    <section class="enter" aria-labelledby="hello">
         </div>
         <div class="wrap enter-words">
           <div class="pane">
-            <h1 id="hello">Websites and brands for local businesses.</h1>
-            <p class="lede">I build them, then I keep them current.</p>
+            <h1 id="hello">The local places people love, <span class="nobr">done right online.</span></h1>
+            <p class="lede">I design the site, build the brand, and keep it all running, so you can get back to&nbsp;work.</p>
             <div class="actions">
-              <a class="btn" href="/contact">Tell me about your business</a>
+              <a class="btn" href="/contact">Start a project</a>
               <a class="link" href="/work">See the work</a>
             </div>
           </div>
         </div>
-        <figure class="print">
-          <a class="print-frame" href="{ANNIE}" target="_blank" rel="noopener">{print_}</a>
-          <figcaption><strong>ABC Styling.</strong> A site for Annie Culbertson, a stylist in New York. <a href="{ANNIE}" target="_blank" rel="noopener">See the site</a></figcaption>
-        </figure>
       </div>
     </section>
 
     {carousel()}
 
-    <section class="rooms" aria-label="The newest sites">
+    <section class="rooms flow" aria-label="The newest sites">
+      {room("ABC Styling", ANNIE, "A site for Annie Culbertson, a stylist in New York.", "annie-top-d", "The top of the ABC Styling site: Annie in a black cape beside the ABC Styling wordmark on oxblood, under the site&rsquo;s menu", "annie-services-p", "The ABC Styling services page on a phone: Services, then her menu of styling sessions", link="See the site")}
       {room("Arden Collective", "https://arden-collective.vercel.app", "I drew the oval seal, then built the site from it.", "arden-home-d", "The Arden Collective home page, with the oval seal: Boutique talent management for social media creators", "arden-contact-p", "The Arden Collective contact page on a phone, with the pink seal", tag="h2", link="See the preview")}
       {room("Loftus Construction", "https://loftus-construction.vercel.app", "Bridges since 1994, laid out for the engineers who hire them.", "loftus-home-d", "The Loftus home page: a steam train on a bridge under Design-build, preconstruction, construction", "loftus-build-p", "What Loftus builds on a phone: a stone-faced bridge with a black steel railing, and the kinds of bridges they build", tag="h2", flip=True, link="See the preview")}
     </section>
@@ -353,8 +345,8 @@ home = f'''    <section class="enter" aria-labelledby="hello">
     </section>
 
     </section>'''
-page("index.html", "/", "MJL Collective | Websites and brands for local businesses",
-     "Mitchell Lisa builds websites and brands for local businesses, then keeps them current.", home)
+page("index.html", "/", "MJL Collective | The local places people love, done right online",
+     "I design websites and brands for local businesses, then keep it all running, so you can get back to work.", home)
 
 # ------------------------------------------------------------------ work
 loftus_ba = ba("Loftus Construction",
@@ -367,7 +359,7 @@ tiger_ba = ba("Tiger Digital mark",
     "the old mark", "the seal I drew", "mark")
 blue_ba = ba("BlueThreadz logo",
     mark("/assets/brand-work/bluethreadz-before.webp", "The old BlueThreadz logo", 760, 250),
-    mark("/assets/brand-work/bluethreadz-wordmark.webp", "The BlueThreadz wordmark I redrew", 600, 80),
+    mark("/assets/brand-work/bluethreadz-wordmark.webp?v=20261010", "The BlueThreadz wordmark I redrew", 614, 93),
     "the old logo", "the one I redrew", "mark wide")
 work = glass_head('''<h1>The work.</h1>
           <p class="lede">Every site opens live. Try them on your phone too.</p>''') + f'''
@@ -375,7 +367,7 @@ work = glass_head('''<h1>The work.</h1>
       {room("Arden Collective", "https://arden-collective.vercel.app", "An oval seal I drew, and a site built from its type and color.", "arden-contact-d", "The Arden Collective contact page, with the email address inside the pink oval seal", "arden-top-p", "The Arden Collective home page on a phone", side='<div class="marks">' + mark("/assets/brand-work/arden-seal.svg", "The Arden Collective oval seal", 120, 145, "tall") + mark("/assets/brand-work/arden-icon.svg", "The Arden favicon: the seal on an oak green tile", 64, 64, "icon") + '</div>', link="See the preview", rid="arden")}
       {room("Loftus Construction", "https://loftus-construction.vercel.app", "The site they have now, and the one I built for the engineers who hire them.", None, "", art=loftus_ba, flip=True, link="See the preview")}
       {room("Lewiston Design &amp; Build", L, "Every house has its plans, and buyers try the finishes before they call.", "lewiston-projects-d", "The Lewiston projects page: three houses, each with its plans", "lewiston-top-p", "The Lewiston home page on a phone: Custom homes in Middle Tennessee", side='<div class="marks">' + mark("/assets/brand-work/lewiston-badge.webp", "The Lewiston lion badge, which I cut down into the favicon", 160, 160, "tall") + mark("/assets/brand-work/lewiston-fav-32.png", "The Lewiston favicon at 32 pixels", 32, 32, "px") + '</div>')}
-      {room("Simo&rsquo;s Barbering", "https://www.simosbarbering.com", "The shop&rsquo;s first website, live a week after I met John.", "simos-top-d", "The top of the Simo&rsquo;s site: the price board under the Simo&rsquo;s wordmark", "simos-door-p", "Further down the Simo&rsquo;s site on a phone: His name on the door, with John at work", flip=True, side='<div class="marks">' + mark("/assets/brand-work/simos-wordmark.webp", "The Simo&rsquo;s Barbering wordmark, cut out clean for the header", 600, 334, "wide") + '</div>')}
+      {room("Simo&rsquo;s Barbering", "https://www.simosbarbering.com", "The shop&rsquo;s first website, live a week after I met John.", "simos-top-d", "The top of the Simo&rsquo;s site: the price board under the Simo&rsquo;s wordmark", "simos-door-p", "Further down the Simo&rsquo;s site on a phone: His name on the door, with John at work", flip=True, side='<div class="marks">' + mark("/assets/brand-work/simos-wordmark.webp?v=20261010", "The Simo&rsquo;s Barbering wordmark, cut out clean for the header", 600, 328, "wide") + '</div>')}
       {room("George Gravenstine Agency", "https://georgeinsurance.agency", "Auto and home quotes right on the site, in three to five minutes.", "george-home-d", "The George Gravenstine home page: Independent auto, home and business insurance", "george-auto-p", "The George Gravenstine auto insurance page on a phone")}
       {room("Tiger Digital", "https://www.tigerdigital.marketing", "Joe&rsquo;s agency got a new seal and a new site in two days.", "tiger-home-d", "The Tiger Digital home page: Real growth. No fluff. Under the new seal", "tiger-team-p", "The Tiger Digital team page on a phone, with Joe", flip=True, side=tiger_ba, rid="tiger")}
       {room("BlueThreadz", "https://www.bluethreadz.com", "I redrew the logo and rebuilt the catalog so every garment leads to a quote.", "bluethreadz-home-d", "The BlueThreadz home page: Build your brand in style", "bluethreadz-quote-p", "The BlueThreadz quote form on a phone: Tell us about your order", side=blue_ba)}

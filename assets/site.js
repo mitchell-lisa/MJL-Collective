@@ -43,13 +43,12 @@
   var enter = document.querySelector(".enter");
   var head = document.querySelector(".glass-head");
   var plates = $$(".plate.focus");
-  var rooms = $$(".room");
-  if (enter && !still) enter.classList.add("live");
+  var rooms = $$(".rooms:not(.flow) .room");
+  // The home hero is a still photograph: no pinned, scroll-linked entrance.
   // Lens: a soft circle around the pointer where the frost lifts. Desktop only.
   var lenses = [];
   if (fine && !still) {
     var hosts = [];
-    if (enter) $$(".wall", enter).forEach(function (w) { hosts.push({ box: w, src: w.querySelector(".clear"), after: w.querySelector(".frosted"), host: enter }); });
     if (head) hosts.push({ box: head, src: head.querySelector(".gp"), after: head.querySelector(".frost"), host: head });
     hosts.forEach(function (h) {
       if (!h.src || !h.after) return;
@@ -83,14 +82,14 @@
     var sy = scrollY;
     G.vh = innerHeight;
     if (enter) { var r = enter.getBoundingClientRect(); G.enterTop = r.top + sy; G.enterH = r.height; }
-    // the bar's pre-blurred copy of the wall, placed where the wall sits once
-    // the entrance stage is pinned to the top of the screen
+    // the bar's pre-blurred copy of the wall, placed where the wall sits at
+    // the top of the page (each frame shifts it by the scroll)
     if (enter && barGlass.length) {
       var wl = enter.querySelector(innerWidth <= 700 ? ".wall-tall" : ".wall-wall"), st = enter.querySelector(".enter-stage");
       if (wl && st) {
         var wr = wl.getBoundingClientRect(), sr = st.getBoundingClientRect();
         barGlass.forEach(function (i) {
-          i.style.left = wr.left.toFixed(1) + "px"; i.style.top = (wr.top - sr.top).toFixed(1) + "px";
+          i.style.left = wr.left.toFixed(1) + "px"; i.style.top = (wr.top + scrollY).toFixed(1) + "px";
           i.style.width = wr.width.toFixed(1) + "px"; i.style.height = wr.height.toFixed(1) + "px";
         });
       }
@@ -110,7 +109,6 @@
     var k = last.get(el) || {}; if (k[name] === val) return;
     k[name] = val; last.set(el, k); el.style[name] = val;
   }
-  var E = enter ? { words: enter.querySelector(".enter-words"), print: enter.querySelector(".print"), frost: $$(".wall .frosted", enter) } : null;
   var headFrost = head ? head.querySelector(".frost") : null;
   function flag(el, cls, on) { if (el.classList.contains(cls) !== on) el.classList.toggle(cls, on); }
 
@@ -132,30 +130,19 @@
         if (img.complete) go(); else img.addEventListener("load", go, { once: true });
       });
     }, { rootMargin: "200% 0px" });
-    $$(".room img, .plate img, .print img, .ba img, .lens img").forEach(function (i) { pre.observe(i); });
+    $$(".room img, .plate img, .ba img, .lens img").forEach(function (i) { pre.observe(i); });
   }
 
   var queued = false;
   function frame() {
     queued = false;
     var sy = scrollY, vh = G.vh;
-    if (enter) flag(document.documentElement, "over-enter", sy < G.enterTop + G.enterH - 40);
-    if (enter && !still) {
-      var p = clamp((sy - G.enterTop) / Math.max(1, G.enterH - vh));
-      var w = ease(0, .18, p), f = ease(.04, .34, p), c = ease(.36, .66, p);
-      put(E.words, "opacity", (1 - w).toFixed(3));
-      put(E.words, "transform", "translate3d(0," + (-36 * w).toFixed(1) + "px,0)");
-      // never fully 0: the frost layer stays rastered and decoded from load, so
-      // the first scroll frame does not wait on it
-      E.frost.forEach(function (el) { put(el, "opacity", Math.max(f, .002).toFixed(3)); });
-      put(barFrost, "opacity", f.toFixed(3));
-      put(E.print, "opacity", c.toFixed(3));
-      put(E.print, "transform", "translate3d(-50%,calc(-50% + " + ((1 - c) * 28).toFixed(1) + "px),0)");
-      flag(enter, "frosted", f > .995);
-      flag(enter, "past-words", w > .995);
-      flag(enter, "showing", p > .2);
-      flag(enter, "at-end", c > .6);
-      lenses.forEach(function (L) { if (L.host === enter) put(L.el, "opacity", (f * (1 - c)).toFixed(3)); });
+    if (enter) {
+      var over = sy < G.enterTop + G.enterH - 40;
+      flag(document.documentElement, "over-enter", over);
+      // the hero scrolls like the rest of the page; its blurred copy behind
+      // the bar moves with it
+      if (over) barGlass.forEach(function (i) { put(i, "transform", "translate3d(0," + (-sy).toFixed(1) + "px,0)"); });
     }
     if (head && !still) {
       var hf = ease(0, .9, (sy - G.headTop) / Math.max(1, G.headH));
