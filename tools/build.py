@@ -6,7 +6,7 @@ import json, pathlib, re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 C = ROOT / "tools" / "content"
 SITE = "https://mjlcollective.com"
-V = "20261009r5"  # bump when site.css or site.js changes
+V = "20261010b1"  # bump when site.css or site.js changes
 
 NAV = [("/work", "Work"), ("/partners", "Partners"), ("/services", "Services"), ("/about", "About"), ("/contact", "Contact")]
 
@@ -43,7 +43,7 @@ def head(path, title, desc, extra=""):
   <title>{title}</title>
   <meta name="description" content="{desc}">
   <link rel="canonical" href="{url}">
-  <meta name="theme-color" content="#2b2825">
+  <meta name="theme-color" content="#f4f0e9">
   <meta property="og:title" content="{title}">
   <meta property="og:description" content="{desc}">
   <meta property="og:url" content="{url}">
@@ -56,7 +56,8 @@ def head(path, title, desc, extra=""):
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  {ld}<link rel="preload" href="/assets/fonts/InstrumentSans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  {ld}<link rel="preload" href="/assets/fonts/InstrumentSerif-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/InstrumentSans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/SourceSerif4-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/site.css?v={V}">{extra}
 </head>'''
@@ -75,7 +76,7 @@ def bar(cur):
   <a class="skip" href="#main">Skip to the content</a>
   <header class="bar" id="top">
     <div class="wrap">
-      <a class="home" href="/" aria-label="MJL Collective, home"><img src="/assets/lockup-plaster.svg" alt="MJL Collective" width="552" height="143"></a>
+      <a class="home" href="/" aria-label="MJL Collective, home"><img src="/assets/lockup-ink.svg" alt="MJL Collective" width="552" height="143"></a>
       <nav class="nav" aria-label="Main">
         <ul>
           {items}
@@ -103,7 +104,7 @@ def foot(cur, ask=True):
         <h2>Tell me about the business.</h2>
         <div>
           <p>I&rsquo;ll tell you what it needs and what it costs, before anyone signs anything.</p>
-          <a class="btn solid" href="/contact">Write to me</a>
+          <a class="btn" href="/contact">Write to me</a>
           <a class="mail" href="mailto:mitchell@mjlcollective.com">mitchell@mjlcollective.com</a>
         </div>
       </div>''' if ask else ""
@@ -111,7 +112,7 @@ def foot(cur, ask=True):
   <footer class="foot">
     <div class="wrap">
       {askblock}
-      <div class="mark-wall"><img class="big-mark" src="/assets/lockup-plaster.svg" alt="MJL Collective" width="552" height="143" loading="lazy"></div>
+      <img class="big-mark" src="/assets/lockup-ink.svg" alt="MJL Collective" width="552" height="143" loading="lazy">
       <div class="rows">
         <ul>
           {items}
@@ -138,9 +139,9 @@ def img(src, alt, w, h, eager=False):
 # Client captures: desktop 1440x900 at 2x, phone 390x844 at 3x (tools/export_shots.py),
 # served as AVIF with a WebP fallback, at three widths each.
 SHOT_W = {"d": (1200, 1800, 2880), "p": (360, 720, 1080)}
-SIZES = {"lead": "(min-width: 1100px) min(60vw, 860px), 100vw", "project": "(min-width: 900px) min(72vw, 1040px), 100vw",
-         "wide": "(min-width: 900px) min(82vw, 1160px), 100vw", "pair": "(min-width: 900px) min(56vw, 800px), 100vw",
-         "phone": "(min-width: 900px) min(16vw, 230px), 28vw"}
+SIZES = {"lead": "(min-width: 900px) min(62vw, 940px), 88vw", "look": "(min-width: 900px) min(78vw, 1120px), 100vw",
+         "half": "(min-width: 900px) min(56vw, 800px), 100vw", "phone": "(min-width: 900px) 220px, 52vw",
+         "lead-phone": "(min-width: 900px) 170px, 26vw"}
 
 def pic(shot, alt, sizes, eager=False):
     kind = shot.rsplit("-", 1)[1]
@@ -151,14 +152,34 @@ def pic(shot, alt, sizes, eager=False):
     return (f'<picture><source type="image/avif" srcset="{src("avif")}" sizes="{sizes}">'
             f'<img src="/assets/shots/{shot}-{ws[1]}.webp" srcset="{src("webp")}" sizes="{sizes}" alt="{alt}" width="{w}" height="{h}" {lz}></picture>')
 
-def browser(url, shot, alt, eager=False, sizes="pair"):
-    return f'<a class="browser" href="{url}" target="_blank" rel="noopener"><span class="addr">{host(url)}</span>{pic(shot, alt, SIZES[sizes], eager)}</a>'
+def plate(url, shot, alt, sizes="look", eager=False, focus=True):
+    kind = "d" if shot.endswith("-d") else "p"
+    t = ' tabindex="-1"' if kind == "p" else ""
+    f = " focus" if focus else ""
+    return f'<a class="plate {kind}{f}" href="{url}" target="_blank" rel="noopener"{t}>{pic(shot, alt, SIZES[sizes], eager)}</a>'
 
-def phone(url, shot, alt, eager=False):
-    return f'<a class="phone" href="{url}" target="_blank" rel="noopener" tabindex="-1">{pic(shot, alt, SIZES["phone"], eager)}</a>'
+# The glass block: one photograph, MJL's material. Wide crop for bands on large
+# screens, the full tall frame on phones. Used once per page at most.
+def glass_pic(eager=False, cls="gp"):
+    ww = lambda ext: ", ".join(f"/assets/glass/glass-wide-{w}.{ext} {w}w" for w in (960, 1680))
+    tt = lambda ext: ", ".join(f"/assets/glass/glass-tall-{w}.{ext} {w}w" for w in (720, 1200, 1680))
+    lz = 'fetchpriority="high"' if eager else 'loading="lazy" decoding="async"'
+    return (f'<picture class="{cls}">'
+            f'<source media="(max-width: 700px)" type="image/avif" srcset="{tt("avif")}" sizes="100vw">'
+            f'<source media="(max-width: 700px)" type="image/webp" srcset="{tt("webp")}" sizes="100vw">'
+            f'<source type="image/avif" srcset="{ww("avif")}" sizes="100vw">'
+            f'<img src="/assets/glass/glass-wide-1680.webp" srcset="{ww("webp")}" sizes="100vw" alt="" width="1680" height="1050" {lz}></picture>')
 
-def stage(url, d, dalt, p, palt, flip=False, eager=False, sizes="project"):
-    return f'<div class="stage{" flip" if flip else ""}">{browser(url, d, dalt, eager, sizes)}{phone(url, p, palt, eager)}</div>'
+def glass_head(inner, cls=""):
+    return f'''    <section class="glass-head{(" " + cls) if cls else ""}">
+      {glass_pic(eager=True)}
+      <div class="frost" aria-hidden="true"></div>
+      <div class="wrap">
+        <div class="pane">
+          {inner}
+        </div>
+      </div>
+    </section>'''
 
 # Brand panels: only brand work MJL actually did, shown next to the site it belongs to.
 def bimg(src, alt, w, h, cls=""):
@@ -190,20 +211,14 @@ BRAND = {
                    "The old shop sign, made into the mark."),
 }
 
-def about_it(name, url, text, tag="h3", panel=""):
-    return f'<div class="about-it"><{tag}>{name}</{tag}><p>{text}</p><a class="link" href="{url}" target="_blank" rel="noopener">Visit {host(url)}</a>{panel}</div>'
-
-def project(cls, name, url, text, d, dalt, p, palt, flip=False, panel=""):
-    return f'''<article class="project {cls}">
-          {stage(url, d, dalt, p, palt, flip, sizes="wide" if "wide" in cls else "project")}
-          {about_it(name, url, text, panel=panel)}
+def look(name, url, text, d, dalt, p, palt, flip=False, panel="", tag="h3"):
+    return f'''<article class="look{" flip" if flip else ""}">
+          {plate(url, d, dalt)}
+          <div class="side">
+            {plate(url, p, palt, "phone")}
+            <div class="words"><{tag}>{name}</{tag}><p>{text}</p><a class="link" href="{url}" target="_blank" rel="noopener">Visit {host(url)}</a>{panel}</div>
+          </div>
         </article>'''
-
-def pair_item(name, url, text, d=None, dalt="", p=None, palt="", flip=False, panel=""):
-    if d and p: art = stage(url, d, dalt, p, palt, flip, sizes="pair")
-    elif d: art = browser(url, d, dalt)
-    else: art = f'<div class="solo-phone">{phone(url, p, palt)}</div>'
-    return f'<article class="item">{art}{about_it(name, url, text, panel=panel)}</article>'
 
 def carousel():
     def li(c, hidden):
@@ -239,46 +254,47 @@ def page(name, path, title, desc, body, ask=True, extra=""):
 
 # ------------------------------------------------------------------ home
 L = "https://lewistondesignbuild.com"
-home = f'''    <section class="opening">
-      <div class="wrap hero">
-        <h1>Websites and brands for local businesses. I build them, then I keep them current.</h1>
-        <div class="words">
-          <p class="lede">I&rsquo;m Mitchell Lisa, and MJL Collective is my studio in Moorestown, New Jersey. Everything on this page is a site I built. Open any of them and click around.</p>
-          <div class="actions">
-            <a class="btn solid" href="/contact">Tell me about your business</a>
-            <a class="link" href="/work">See all the work</a>
+home = f'''    <section class="through" aria-labelledby="hello">
+      <div class="through-stage">
+        {glass_pic(eager=True)}
+        <div class="frost" aria-hidden="true"></div>
+        <div class="wrap through-words">
+          <div class="pane">
+            <h1 id="hello">Websites and brands for local businesses. I build them, then I keep them current.</h1>
+            <p class="lede">I&rsquo;m Mitchell Lisa, and MJL Collective is my studio in Moorestown, New Jersey. Everything on this page is a site I built. Open any of them and click around.</p>
+            <div class="actions">
+              <a class="btn" href="/contact">Tell me about your business</a>
+              <a class="link" href="/work">See all the work</a>
+            </div>
           </div>
         </div>
-        <div class="lead">
-          {stage(L, "lewiston-finishes-d", "The Lewiston finishes page on a laptop: a stone house above the facade, paint, door and roof choices", "lewiston-top-p", "The Lewiston home page on a phone: Custom homes in Middle Tennessee", eager=True, sizes="lead")}
+        <div class="wrap through-work">
+          <div class="lead-box">
+          <div class="lead">
+            {plate(L, "lewiston-finishes-d", "The Lewiston finishes page: a stone house above the facade, paint, door and roof choices", "lead", focus=False)}
+            {plate(L, "lewiston-top-p", "The Lewiston home page on a phone: Custom homes in Middle Tennessee", "lead-phone", focus=False)}
+          </div>
+          <p class="credit"><strong>Lewiston Design &amp; Build.</strong> Custom homes in Middle Tennessee. Every project has its plans to download, and buyers can try out finishes on the house before they call. <a class="link" href="{L}" target="_blank" rel="noopener">Visit lewistondesignbuild.com</a></p>
+          </div>
         </div>
       </div>
     </section>
-    <div class="wrap hero-after">
-      <p class="credit"><span><strong>Lewiston Design &amp; Build.</strong> Custom homes in Middle Tennessee. Every project has its plans to download, and buyers can try out finishes on the house before they call.</span> <a class="link" href="{L}" target="_blank" rel="noopener">Visit lewistondesignbuild.com</a></p>
-    </div>
 
     {carousel()}
 
-    <section class="projects" aria-labelledby="recent-h" style="padding-top:clamp(40px,5vw,72px)">
+    <section class="looks" aria-labelledby="recent-h">
       <div class="wrap">
-        <div class="section-head">
-          <h2 id="recent-h">The newest sites.</h2>
-        </div>
-        {project("", "Arden Collective", "https://arden-collective.vercel.app", "Talent management for social media creators. I drew the oval seal and built the site around it. The site is in preview.", "arden-home-d", "The Arden Collective home page, with the oval seal: Boutique talent management for social media creators", "arden-business-p", "The Arden Collective business services on a phone, down to Creators and brands, say hello")}
-        {project("right", "Loftus Construction", "https://loftus-construction.vercel.app", "A heavy civil contractor in Cinnaminson, New Jersey, building bridges since 1994. The new site is written for the people who hire them, like PennDOT and NJDOT, and is in preview.", "loftus-build-d", "What Loftus builds: bridges, culverts and retaining walls, each with a photo of finished work", "loftus-top-p", "The Loftus home page on a phone: the wordmark and the train, Design-build, preconstruction, construction", flip=True)}
-        <div class="pair">
-          {pair_item("George Gravenstine Agency", "https://georgeinsurance.agency/quote", "An independent insurance agency on North Church Street, here in Moorestown. Auto and home quotes run on the site, through the agency&rsquo;s own quoting system.", d="george-quote-d", dalt="The George Gravenstine quote page: Start a quote")}
-          {pair_item("Simo&rsquo;s Barbering", "https://www.simosbarbering.com", "A traditional barbershop on Lancaster Ave in Wayne. The shop&rsquo;s first website, live one week after I met John.", d="simos-menu-d", dalt="The Simo&rsquo;s Barbering price board on the website")}
-        </div>
-        <div class="after-projects">
-          <p>Tiger Digital, BlueThreadz, Dorothy&rsquo;s and the rest are on the Work page.</p>
+        <h2 id="recent-h" class="looks-h">The newest sites.</h2>
+        {look("Arden Collective", "https://arden-collective.vercel.app", "Talent management for social media creators. I drew the oval seal and built the site around it. The site is in preview.", "arden-home-d", "The Arden Collective home page, with the oval seal: Boutique talent management for social media creators", "arden-business-p", "The Arden Collective business services on a phone, down to Creators and brands, say hello")}
+        {look("Loftus Construction", "https://loftus-construction.vercel.app", "A heavy civil contractor in Cinnaminson, New Jersey, building bridges since 1994. The new site is written for the people who hire them, like PennDOT and NJDOT, and is in preview.", "loftus-build-d", "What Loftus builds: bridges, culverts and retaining walls, each with a photo of finished work", "loftus-top-p", "The Loftus home page on a phone: the wordmark and the train, Design-build, preconstruction, construction", flip=True)}
+        <div class="after-looks">
+          <p>Simo&rsquo;s, George Gravenstine, Tiger Digital and the rest are on the Work page.</p>
           <a class="link" href="/work">See all the work</a>
         </div>
       </div>
     </section>
 
-    <section class="band cement on-light" aria-labelledby="me-h">
+    <section class="band" aria-labelledby="me-h">
       <div class="wrap two">
         <h2 id="me-h">When you reach out, you&rsquo;re talking to me.</h2>
         <div>
@@ -295,26 +311,18 @@ page("index.html", "/", "MJL Collective | Websites and brands for local business
      "Mitchell Lisa builds websites and brands for local businesses, then keeps them current. MJL Collective, Moorestown, New Jersey.", home)
 
 # ------------------------------------------------------------------ work
-work = f'''    <section class="dark page-head">
+work = glass_head('''<h1>Client sites, newest first.</h1>
+          <p class="lede">Every project opens the live site, so you can click around. Try them on your phone too.</p>''') + f'''
+    <section class="looks">
       <div class="wrap">
-        <h1>Client sites, newest first.</h1>
-        <p class="lede">Every project opens the live site, so you can click around. Try them on your phone too.</p>
-      </div>
-    </section>
-    <section class="projects">
-      <div class="wrap">
-        {project("wide", "Arden Collective", "https://arden-collective.vercel.app", "Talent management for social media creators. The brand is an oval seal I drew for them, and the site is built from the same type and colors. In preview.", "arden-creative-d", "The Arden Collective services: Creative and Business on either side of a Full service oval", "arden-contact-p", "The Arden Collective contact page on a phone, with the email inside a pink oval", panel=BRAND["arden"])}
-        {project("right", "Loftus Construction", "https://loftus-construction.vercel.app", "Bridges, culverts, retaining walls, foundations and dams, laid out by type so an engineer can find the work they care about. In preview.", "loftus-record-d", "The Loftus selected record: a table of finished public projects with owner and contract value", "loftus-careers-p", "Loftus careers on a phone: the Bench Strength Program", flip=True)}
-        {project("", "Lewiston Design &amp; Build", L, "Custom homes in Middle Tennessee, drawn and built by the same firm. Each house has its drawings to download, and on the finishes page a buyer picks a facade, paint, door and roof and watches the house change.", "lewiston-projects-d", "The Lewiston projects page: three houses, each with its plans", "lewiston-process-p", "The Lewiston process on a phone: discovery, site and feasibility, architectural design", panel=BRAND["lewiston"])}
-        <div class="pair mirror">
-          {pair_item("Simo&rsquo;s Barbering", "https://www.simosbarbering.com", "The shop&rsquo;s first website, live one week after I met John. The price board, booking, and the hours and directions for 240 Lancaster Ave.", "simos-door-d", "The Simo&rsquo;s shop section: His name on the door, with John at work", "simos-book-p", "The end of the Simo&rsquo;s price board on a phone, and Book a chair", panel=BRAND["simos"])}
-          {pair_item("George Gravenstine Agency", "https://georgeinsurance.agency", "An independent agency in Moorestown that quotes across several companies. Auto and home quotes run right on the site, in three to five minutes, through the agency&rsquo;s own quoting system.", "george-home-d", "The George Gravenstine home page: Independent auto, home and business insurance in Moorestown", "george-auto-p", "The George Gravenstine auto insurance page on a phone", flip=True)}
-        </div>
-        {project("wide", "Tiger Digital", "https://www.tigerdigital.marketing", "A marketing agency for people who just bought a business. New brand and a new site in two days.", "tiger-results-d", "Tiger Digital results: Numbers we can back up", "tiger-top-p", "The Tiger Digital home page on a phone: Real growth. No fluff.", panel=BRAND["tiger"])}
-        <div class="pair">
-          {pair_item("BlueThreadz", "https://www.bluethreadz.com", "Custom embroidery and printing. I redrew the logo and rebuilt the catalog so every garment leads straight to a quote.", "bluethreadz-ordering-d", "BlueThreadz: What people are ordering right now, a row of jackets, hoodies and polos", "bluethreadz-methods-p", "BlueThreadz on a phone: Five ways to put your name on it", panel=BRAND["bluethreadz"])}
-          {pair_item("Dorothy&rsquo;s Flower Shop", "https://www.dorothysflower.shop", "The old shop sign became the mark, then a line of hats and the store that sells them.", "dorothy-home-d", "The Dorothy&rsquo;s Flower Shop home page, with lilacs", "dorothy-shop-p", "The Dorothy&rsquo;s hat shop on a phone", flip=True, panel=BRAND["dorothy"])}
-        </div>
+        {look("Arden Collective", "https://arden-collective.vercel.app", "Talent management for social media creators. The brand is an oval seal I drew for them, and the site is built from the same type and colors. In preview.", "arden-creative-d", "The Arden Collective services: Creative and Business on either side of a Full service oval", "arden-contact-p", "The Arden Collective contact page on a phone, with the email inside a pink oval", panel=BRAND["arden"], tag="h2")}
+        {look("Loftus Construction", "https://loftus-construction.vercel.app", "Bridges, culverts, retaining walls, foundations and dams, laid out by type so an engineer can find the work they care about. In preview.", "loftus-record-d", "The Loftus selected record: a table of finished public projects with owner and contract value", "loftus-careers-p", "Loftus careers on a phone: the Bench Strength Program", flip=True, tag="h2")}
+        {look("Lewiston Design &amp; Build", L, "Custom homes in Middle Tennessee, drawn and built by the same firm. Each house has its drawings to download, and on the finishes page a buyer picks a facade, paint, door and roof and watches the house change.", "lewiston-projects-d", "The Lewiston projects page: three houses, each with its plans", "lewiston-process-p", "The Lewiston process on a phone: discovery, site and feasibility, architectural design", panel=BRAND["lewiston"], tag="h2")}
+        {look("Simo&rsquo;s Barbering", "https://www.simosbarbering.com", "The shop&rsquo;s first website, live one week after I met John. The price board, booking, and the hours and directions for 240 Lancaster Ave.", "simos-door-d", "The Simo&rsquo;s shop section: His name on the door, with John at work", "simos-book-p", "The end of the Simo&rsquo;s price board on a phone, and Book a chair", flip=True, panel=BRAND["simos"], tag="h2")}
+        {look("George Gravenstine Agency", "https://georgeinsurance.agency", "An independent agency in Moorestown that quotes across several companies. Auto and home quotes run right on the site, in three to five minutes, through the agency&rsquo;s own quoting system.", "george-home-d", "The George Gravenstine home page: Independent auto, home and business insurance in Moorestown", "george-auto-p", "The George Gravenstine auto insurance page on a phone", tag="h2")}
+        {look("Tiger Digital", "https://www.tigerdigital.marketing", "A marketing agency for people who just bought a business. New brand and a new site in two days.", "tiger-results-d", "Tiger Digital results: Numbers we can back up", "tiger-top-p", "The Tiger Digital home page on a phone: Real growth. No fluff.", flip=True, panel=BRAND["tiger"], tag="h2")}
+        {look("BlueThreadz", "https://www.bluethreadz.com", "Custom embroidery and printing. I redrew the logo and rebuilt the catalog so every garment leads straight to a quote.", "bluethreadz-ordering-d", "BlueThreadz: What people are ordering right now, a row of jackets, hoodies and polos", "bluethreadz-methods-p", "BlueThreadz on a phone: Five ways to put your name on it", panel=BRAND["bluethreadz"], tag="h2")}
+        {look("Dorothy&rsquo;s Flower Shop", "https://www.dorothysflower.shop", "The old shop sign became the mark, then a line of hats and the store that sells them.", "dorothy-home-d", "The Dorothy&rsquo;s Flower Shop home page, with lilacs", "dorothy-shop-p", "The Dorothy&rsquo;s hat shop on a phone", flip=True, panel=BRAND["dorothy"], tag="h2")}
       </div>
     </section>'''
 page("work.html", "/work", "Work | MJL Collective",
@@ -324,12 +332,8 @@ page("work.html", "/work", "Work | MJL Collective",
 tiles = "\n          ".join(
     f'<li><a href="{u}" target="_blank" rel="noopener"><img class="mark-{k}" src="{s}" width="{w}" height="{h}" alt="{n}" loading="lazy"><span class="nm" aria-hidden="true">{n.replace(" Insurance Agency", "")}</span></a></li>'
     for n, u, s, w, h, k in CLIENTS)
-partners = f'''    <section class="dark page-head">
-      <div class="wrap">
-        <h1>Partners.</h1>
-        <p class="lede">The businesses I work with, newest first. Each logo opens the live site.</p>
-      </div>
-    </section>
+partners = glass_head('''<h1>Partners.</h1>
+          <p class="lede">The businesses I work with, newest first. Each logo opens the live site.</p>''') + f'''
     <section class="partners">
       <div class="wrap">
         <ul class="logo-grid">
@@ -341,7 +345,7 @@ page("partners.html", "/partners", "Partners | MJL Collective", "The businesses 
 
 # ------------------------------------------------------------------ services
 def fig(url, shot, alt, name, cap):
-    return f'<figure>{browser(url, shot, alt)}<figcaption><strong>{name}.</strong> {cap}</figcaption></figure>'
+    return f'<figure>{plate(url, shot, alt, "half")}<figcaption><strong>{name}.</strong> {cap}</figcaption></figure>'
 
 def sheet():
     srcs = lambda ext: ", ".join(f"/assets/brand-work/arden-sheet-{w}.{ext} {w}w" for w in (800, 1600))
@@ -351,12 +355,8 @@ def sheet():
             f'alt="The Arden Collective brand sheet: the oval seal in brown and in blush, the leaf mark, avatars and favicon, six colors, and the two typefaces"></picture>'
             f'<figcaption><strong>Arden Collective.</strong> The brand sheet I made for Rachael: the seal, the leaf mark and favicon, the colors and the type the site is built from.</figcaption></figure>')
 
-services = f'''    <section class="dark page-head">
-      <div class="wrap">
-        <h1>The site is where it starts.</h1>
-        <p class="lede">Then I keep it current, and help with the channels that usually go stale.</p>
-      </div>
-    </section>
+services = glass_head('''<h1>The site is where it starts.</h1>
+          <p class="lede">Then I keep it current, and help with the channels that usually go stale.</p>''') + f'''
     <div class="wrap">
       <section class="service" aria-labelledby="s1">
         <div class="words">
@@ -395,40 +395,28 @@ page("services.html", "/services", "Services | MJL Collective",
      "The website and brand first, then keeping it current: hosting, fixes, listings, catalogs, and email and SMS once the base is solid.", services)
 
 # ------------------------------------------------------------------ about
-about = '''    <section class="dark founder-head">
-      <div class="wrap founder">
-        <div class="portrait"><img src="/assets/mitchell.webp" alt="Mitchell Lisa in an MJL Collective cap" width="1122" height="1402" fetchpriority="high"></div>
-        <div class="intro">
-          <h1>Mitchell Lisa</h1>
-          <p class="first">MJL Collective is one person, not an agency. I design and build the site, then run what keeps the presence current.</p>
-          <p>When you reach out, you are talking to me.</p>
-        </div>
-      </div>
-    </section>
+about = glass_head('''<h1>Mitchell Lisa</h1>
+          <p class="lede">MJL Collective is one person, not an agency. I design and build the site, then run what keeps the presence current. When you reach out, you are talking to me.</p>''') + '''
     <section class="founder-body">
       <div class="wrap founder">
+        <div class="portrait"><img src="/assets/mitchell.webp" alt="Mitchell Lisa in an MJL Collective cap" width="1122" height="1402" loading="lazy" decoding="async"></div>
         <div class="text">
           <p>I started the company in 2023, and it&rsquo;s still based in Moorestown, New Jersey.</p>
           <p>Some of my clients are right here in town, like the insurance agency on Church Street. Others are a barbershop in Wayne, Pennsylvania, and a homebuilder in Middle Tennessee.</p>
           <p>Most of them started with a site that was out of date, or no site at all. I start with the brand, build the site, and stay on after launch so it doesn&rsquo;t go stale again.</p>
           <div class="actions">
-            <a class="btn solid dark" href="/contact">Tell me about your business</a>
+            <a class="btn" href="/contact">Tell me about your business</a>
             <a class="link" href="/work">See the work</a>
           </div>
         </div>
-        <figure class="glass-photo"><img src="/assets/glass-stairs.webp" alt="A stairway seen through a wall of fluted glass" width="1920" height="800" loading="lazy"></figure>
       </div>
     </section>'''
 page("about.html", "/about", "About Mitchell Lisa | MJL Collective",
      "Mitchell Lisa runs MJL Collective, a one-person studio in Moorestown, New Jersey that builds websites and brands for local businesses.", about)
 
 # ------------------------------------------------------------------ contact
-contact = '''    <section class="dark page-head">
-      <div class="wrap">
-        <h1>Tell me about the business.</h1>
-        <p class="lede">Say what the business does and where it&rsquo;s stuck. I&rsquo;ll tell you what it needs and what it costs, before anyone signs anything.</p>
-      </div>
-    </section>
+contact = glass_head('''<h1>Tell me about the business.</h1>
+          <p class="lede">Say what the business does and where it&rsquo;s stuck. I&rsquo;ll tell you what it needs and what it costs, before anyone signs anything.</p>''') + '''
     <section class="meet on-light">
       <div class="wrap grid">
         <form class="cf" id="cf" novalidate>
@@ -441,7 +429,7 @@ contact = '''    <section class="dark page-head">
             <label class="full"><span>What do you need help with?</span><textarea name="message" required rows="6" maxlength="4000" placeholder="New site, a rebuild, updates, or email and SMS. Tell me a little about the business."></textarea></label>
           </div>
           <div class="cf-foot">
-            <button class="btn solid dark" type="submit">Send message</button>
+            <button class="btn" type="submit">Send message</button>
             <p class="cf-note" hidden>Something went wrong. <a href="mailto:mitchell@mjlcollective.com?subject=MJL%20Collective%20meeting%20request">Email me directly instead</a>.</p>
           </div>
           <div class="cf-sent" hidden>
@@ -472,7 +460,7 @@ for slug, title, desc in [
     ("terms", "Terms | MJL Collective", "Text message terms for MJL Collective client portal alerts: program, frequency, cost, STOP and HELP, carriers and privacy.")]:
     hd = (C / f"{slug}.head.html").read_text().strip()
     doc = (C / f"{slug}.doc.html").read_text()
-    body = f'''    <section class="dark page-head legal-head">
+    body = f'''    <section class="legal-head">
       <div class="wrap">
         {hd}
       </div>
@@ -486,15 +474,11 @@ for slug, title, desc in [
     page(f"{slug}.html", "/" + slug, title, desc, body)
 
 # ------------------------------------------------------------------ 404
-lost = '''    <section class="dark page-head lost">
-      <div class="wrap">
-        <h1>That page isn&rsquo;t here.</h1>
-        <p class="lede">It may have moved when the site changed. The work is a good place to start.</p>
-        <div class="actions" style="margin-top:30px">
-          <a class="btn solid" href="/work">See the work</a>
-          <a class="link" href="/">Home</a>
-        </div>
-      </div>
-    </section>'''
+lost = glass_head('''<h1>That page isn&rsquo;t here.</h1>
+          <p class="lede">It may have moved when the site changed. The work is a good place to start.</p>
+          <div class="actions">
+            <a class="btn" href="/work">See the work</a>
+            <a class="link" href="/">Home</a>
+          </div>''', "lost")
 page("404.html", "/404", "Page not found | MJL Collective", "This page could not be found.", lost)
 print("built")
