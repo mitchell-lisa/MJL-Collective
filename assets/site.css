@@ -42,9 +42,9 @@ p { margin: 0 0 1em; text-wrap: pretty; }
    pre-blurred copy of the same photograph instead (see .bar-glass), and the
    panes always use their pre-blurred copy (.pane.aligned), so nothing over
    the moving wall asks for a live blur. */
-.bar, .pane, .drawer { background: rgba(244, 240, 233, .95); }
+.bar, .pane { background: rgba(244, 240, 233, .95); }
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-  .bar, .drawer { background: linear-gradient(rgba(255, 255, 255, .16), rgba(255, 255, 255, 0)), rgba(244, 240, 233, .66); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2); }
+  .bar { background: linear-gradient(rgba(255, 255, 255, .16), rgba(255, 255, 255, 0)), rgba(244, 240, 233, .66); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2); }
   .pane { background: rgba(244, 240, 233, .72); -webkit-backdrop-filter: blur(20px) saturate(1.1); backdrop-filter: blur(20px) saturate(1.1); }
 }
 
@@ -65,15 +65,21 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   .bar .home img { height: 24px; }
   .nav { display: none; }
   .bar .tools { display: flex; }
-  .drawer { display: block; position: fixed; left: 0; right: 0; top: var(--barh); bottom: 0; color: var(--ink); padding: 12px var(--gut) 40px; overflow-y: auto; visibility: hidden; opacity: 0; transition: opacity .2s ease, visibility 0s linear .2s; }
+  /* The drawer lives at body level, outside the frosted bar: a backdrop
+     filter on an ancestor would make it the drawer's containing block and
+     clip it to the bar on iOS Safari. Opaque plaster, full screen, above
+     everything; the bar sits on top of it so Close stays in reach. */
+  .drawer { display: block; position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 900; background: #f4f0e9; color: var(--ink); padding: calc(var(--barh) + 12px + env(safe-area-inset-top, 0px)) max(var(--gut), env(safe-area-inset-right, 0px)) calc(40px + env(safe-area-inset-bottom, 0px)) max(var(--gut), env(safe-area-inset-left, 0px)); overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; visibility: hidden; opacity: 0; transition: opacity .2s ease, visibility 0s linear .2s; }
   .drawer.open { visibility: visible; opacity: 1; transition: opacity .2s ease; }
+  html body.menu-open .bar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: #f4f0e9; -webkit-backdrop-filter: none; backdrop-filter: none; padding-top: env(safe-area-inset-top, 0px); }
+  html body.menu-open .bar-glass { display: none; }
   .drawer ul { list-style: none; margin: 0; padding: 0; }
   .drawer li { border-bottom: 1px solid var(--mortar); }
   .drawer a { display: block; padding: 14px 0; font: 400 36px/1.1 var(--display); text-decoration: none; }
   .drawer a[aria-current="page"] { font-style: normal; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 7px; }
   .drawer .mail { margin-top: 28px; font: 400 17px/1.5 var(--serif); color: var(--ink-2); }
   .drawer .mail a { display: inline; font: inherit; padding: 0; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
-  body.menu-open { overflow: hidden; }
+  body.menu-open { overflow: hidden; position: fixed; left: 0; right: 0; width: 100%; }
 }
 @media (max-width: 370px) { .bar .login { display: none; } }
 

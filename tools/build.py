@@ -6,7 +6,7 @@ import json, pathlib, re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 C = ROOT / "tools" / "content"
 SITE = "https://mjlcollective.com"
-V = "20261010i1"  # bump when site.css or site.js changes
+V = "20261010m1"  # bump when site.css or site.js changes
 
 NAV = [("/work", "Work"), ("/partners", "Partners"), ("/services", "Services"), ("/about", "About"), ("/contact", "Contact")]
 
@@ -92,14 +92,14 @@ def bar(cur):
         <button class="menu-btn" type="button" aria-expanded="false" aria-controls="drawer">Menu</button>
       </div>
     </div>
-    <nav class="drawer" id="drawer" aria-label="Menu">
-      <ul>
-        {drawer}
-        <li><a href="/clients">Client login</a></li>
-      </ul>
-      <p class="mail">Or email me at <a href="mailto:mitchell@mjlcollective.com">mitchell@mjlcollective.com</a></p>
-    </nav>
   </header>
+  <nav class="drawer" id="drawer" aria-label="Menu">
+    <ul>
+      {drawer}
+      <li><a href="/clients">Client login</a></li>
+    </ul>
+    <p class="mail">Or email me at <a href="mailto:mitchell@mjlcollective.com">mitchell@mjlcollective.com</a></p>
+  </nav>
 '''
 
 def foot(cur, ask=True):

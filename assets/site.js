@@ -213,20 +213,48 @@
   });
 })();
 
-// Phone menu: the bar's Menu button opens the drawer of links.
+// Phone menu: the bar's Menu button opens the drawer of links. The drawer is
+// a body-level overlay (not inside the frosted bar). While it is open the page
+// underneath is pinned in place, which is the scroll lock iOS Safari honours,
+// and put back exactly where it was on close.
 (function () {
   var btn = document.querySelector(".menu-btn");
   var drawer = document.getElementById("drawer");
   if (!btn || !drawer) return;
-  function set(open) {
+  var body = document.body, root = document.documentElement, y = 0, isOpen = false;
+  function others(on) {
+    for (var el = body.firstElementChild; el; el = el.nextElementSibling) {
+      if (el === drawer || el.tagName === "HEADER" || el.tagName === "SCRIPT") continue;
+      if (on) el.setAttribute("inert", ""); else el.removeAttribute("inert");
+    }
+  }
+  function set(open, keepFocus) {
+    if (open === isOpen) return;
+    isOpen = open;
+    if (open) {
+      y = window.scrollY || root.scrollTop || 0;
+      body.style.top = -y + "px";
+      body.classList.add("menu-open");
+    } else {
+      body.classList.remove("menu-open");
+      body.style.top = "";
+      var sb = root.style.scrollBehavior;
+      root.style.scrollBehavior = "auto";
+      window.scrollTo(0, y);
+      root.style.scrollBehavior = sb;
+    }
     drawer.classList.toggle("open", open);
-    document.body.classList.toggle("menu-open", open);
+    others(open);
     btn.setAttribute("aria-expanded", open ? "true" : "false");
     btn.textContent = open ? "Close" : "Menu";
+    if (open) { var first = drawer.querySelector("a"); if (first) first.focus({ preventScroll: true }); }
+    else if (!keepFocus) btn.focus({ preventScroll: true });
   }
-  btn.addEventListener("click", function () { set(!drawer.classList.contains("open")); });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape") set(false); });
-  addEventListener("resize", function () { if (innerWidth > 900) set(false); });
+  btn.addEventListener("click", function () { set(!isOpen); });
+  drawer.addEventListener("click", function (e) { if (e.target.closest && e.target.closest("a")) set(false, true); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && isOpen) set(false); });
+  addEventListener("resize", function () { if (innerWidth > 900) set(false, true); });
+  addEventListener("pageshow", function () { if (isOpen) set(false, true); });
 })();
 
 // The contact form posts to /api/contact, which emails the submission
