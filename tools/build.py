@@ -6,7 +6,7 @@ import json, pathlib, re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 C = ROOT / "tools" / "content"
 SITE = "https://mjlcollective.com"
-V = "20261009r2"  # bump when site.css or site.js changes
+V = "20261009r3"  # bump when site.css or site.js changes
 
 NAV = [("/work", "Work"), ("/partners", "Partners"), ("/services", "Services"), ("/about", "About"), ("/contact", "Contact")]
 
@@ -361,6 +361,7 @@ about = '''    <section class="dark founder-head">
             <a class="link" href="/work">See the work</a>
           </div>
         </div>
+        <figure class="glass-photo"><img src="/assets/glass-stairs.webp" alt="A stairway seen through a wall of fluted glass" width="1920" height="800" loading="lazy"></figure>
       </div>
     </section>'''
 page("about.html", "/about", "About Mitchell Lisa | MJL Collective",

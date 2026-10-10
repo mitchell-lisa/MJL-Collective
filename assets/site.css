@@ -331,3 +331,39 @@ figcaption strong { font: 600 15px/1.4 var(--sans); color: var(--ink); margin-ri
 
 /* ---------- 404 ---------- */
 .lost { min-height: 50vh; }
+
+/* ---------- glass block: MJL's pattern, drawn in tools/glass.py ----------
+   It sits on the dark heads and the footer as a wall of glass block coming in
+   from the right, and fades out before it reaches the words. Every tone in the
+   tile is a palette color; the lightest pixel is #534d47, so plaster text keeps
+   7.3:1 and mortar text 5.3:1 anywhere on it. */
+section.dark, .opening, .foot { position: relative; isolation: isolate; }
+section.dark::before, .opening::before, .foot::before {
+  content: ""; position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: -1; pointer-events: none;
+  background: url(/assets/glass-dark.svg) right top / 220px 220px repeat;
+  -webkit-mask-image: linear-gradient(to right, transparent 28%, #000 82%);
+  mask-image: linear-gradient(to right, transparent 28%, #000 82%);
+}
+/* home: only the dark part of the opening, never behind the plaster below it */
+.opening.split::before { bottom: auto; height: var(--split); }
+/* footer: the wall stands behind the ask and is gone by the big lockup */
+.foot::before {
+  -webkit-mask-image: linear-gradient(to right, transparent 34%, #000 86%), linear-gradient(to bottom, #000 0, transparent 46%);
+  mask-image: linear-gradient(to right, transparent 34%, #000 86%), linear-gradient(to bottom, #000 0, transparent 46%);
+  -webkit-mask-composite: source-in; mask-composite: intersect;
+}
+@media (max-width: 900px) {
+  section.dark::before, .opening::before, .foot::before { background-size: 150px 150px; }
+  section.dark::before, .opening::before {
+    -webkit-mask-image: linear-gradient(to right, transparent 20%, #000 100%);
+    mask-image: linear-gradient(to right, transparent 20%, #000 100%);
+  }
+}
+/* the Client login door: a small pane of the same glass */
+.nav .sep a, .bar .login { display: inline-block; padding: 9px 14px; border: 1px solid var(--ink-2); background: var(--poured) url(/assets/glass-dark.svg) center / 44px 44px; }
+.nav .sep a:hover, .nav .sep a[aria-current="page"], .bar .login:hover { border-color: var(--mortar); }
+
+/* About: the stair through fluted glass, the photograph the pattern comes from */
+.founder-body .glass-photo { grid-column: 1 / -1; margin: clamp(64px, 7vw, 112px) 0 0; }
+.founder-body .glass-photo img { width: 100%; height: auto; aspect-ratio: 12 / 5; object-fit: cover; }
+@media (max-width: 700px) { .founder-body .glass-photo img { aspect-ratio: 4 / 3; object-position: 58% 50%; } }
