@@ -1,6 +1,7 @@
 /* MJL Collective. One palette, used everywhere:
    poured (dark grounds), ink (text), plaster (page), cement (panels),
    mortar (rules, and secondary text on poured), ink-2 (secondary text on light).
+   One more, --glass, a cool tint of cement, is used only in the glass block.
    No other colors. The client work brings the color. */
 @font-face { font-family: "Instrument Sans"; src: url("/assets/fonts/InstrumentSans-latin.woff2") format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
 @font-face { font-family: "Source Serif 4"; src: url("/assets/fonts/SourceSerif4-latin.woff2") format("woff2"); font-weight: 200 900; font-style: normal; font-display: swap; }
@@ -12,6 +13,7 @@
   --cement: #ebe6dc;
   --mortar: #d5cec2;
   --ink-2: #565047;
+  --glass: #cfdad8; /* the one cool glass tint, for the glass block only */
   --sans: "Instrument Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
   --gut: clamp(20px, 5vw, 64px);
@@ -117,9 +119,10 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 /* ---------- frames: the client sites, as screenshots ---------- */
 .browser { position: relative; display: block; background: var(--ink); border-radius: 10px; overflow: hidden; text-decoration: none; }
 .browser .addr { display: flex; align-items: center; justify-content: center; height: 34px; font: 500 12.5px/1 var(--sans); color: var(--mortar); letter-spacing: 0.01em; white-space: nowrap; overflow: hidden; padding: 0 12px; }
-.browser img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; background: var(--cement); }
+.browser picture, .phone picture { display: block; }
+.browser img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; background: var(--cement); }
 .phone { position: relative; display: block; background: var(--ink); border: 7px solid var(--ink); border-radius: 30px; overflow: hidden; }
-.phone img { width: 100%; aspect-ratio: 390 / 844; object-fit: cover; object-position: top; border-radius: 23px; background: var(--cement); }
+.phone img { width: 100%; height: auto; aspect-ratio: 390 / 844; object-fit: cover; object-position: top; border-radius: 23px; background: var(--cement); }
 a.browser:hover .addr, a.phone:hover + .x { text-decoration: underline; }
 @media (max-width: 720px) {
   .browser { border-radius: 7px; }
@@ -333,37 +336,91 @@ figcaption strong { font: 600 15px/1.4 var(--sans); color: var(--ink); margin-ri
 .lost { min-height: 50vh; }
 
 /* ---------- glass block: MJL's pattern, drawn in tools/glass.py ----------
-   It sits on the dark heads and the footer as a wall of glass block coming in
-   from the right, and fades out before it reaches the words. Every tone in the
-   tile is a palette color; the lightest pixel is #534d47, so plaster text keeps
-   7.3:1 and mortar text 5.3:1 anywhere on it. */
-section.dark, .opening, .foot { position: relative; isolation: isolate; }
-section.dark::before, .opening::before, .foot::before {
+   Two layers. Behind: daylight, a soft glow in the one cool glass tint, and a
+   stair standing on the far side of the wall. In front: the glass block tile,
+   mostly transparent so the glow and the stair show through, diffused further
+   by backdrop-filter where the browser has it.
+   The glass never sits behind words. On wide screens it fills the part of the
+   band the text doesn't reach; on phones it is one course of block at the foot
+   of the band, below the text. The footer has it behind the big lockup.
+   About has the real photograph instead, and the legal pages stay plain. */
+.page-head:not(.legal-head), .opening, .foot .mark-wall { position: relative; isolation: isolate; }
+.page-head:not(.legal-head)::before, .opening::before, .foot .mark-wall::before {
+  content: ""; position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: -2; pointer-events: none;
+  background:
+    url(/assets/glass-stair.svg) right 4% bottom 0 / auto 92%,
+    radial-gradient(ellipse 34% 62% at 84% 26%, rgba(207, 218, 216, .24), rgba(207, 218, 216, 0) 72%),
+    radial-gradient(ellipse 24% 46% at 66% 86%, rgba(244, 240, 233, .08), rgba(244, 240, 233, 0) 70%);
+  background-repeat: no-repeat;
+}
+.page-head:not(.legal-head)::after, .opening::after, .foot .mark-wall::after {
   content: ""; position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: -1; pointer-events: none;
-  background: url(/assets/glass-dark.svg) right top / 220px 220px repeat;
-  -webkit-mask-image: linear-gradient(to right, transparent 28%, #000 82%);
-  mask-image: linear-gradient(to right, transparent 28%, #000 82%);
+  background: url(/assets/glass-dark.svg) right top / 240px 240px repeat;
+  -webkit-mask-image: linear-gradient(to right, transparent 60%, #000 80%);
+  mask-image: linear-gradient(to right, transparent 60%, #000 80%);
 }
-/* home: only the dark part of the opening, never behind the plaster below it */
-.opening.split::before { bottom: auto; height: var(--split); }
-/* footer: the wall stands behind the ask and is gone by the big lockup */
-.foot::before {
-  -webkit-mask-image: linear-gradient(to right, transparent 34%, #000 86%), linear-gradient(to bottom, #000 0, transparent 46%);
-  mask-image: linear-gradient(to right, transparent 34%, #000 86%), linear-gradient(to bottom, #000 0, transparent 46%);
-  -webkit-mask-composite: source-in; mask-composite: intersect;
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .page-head:not(.legal-head)::after, .opening::after, .foot .mark-wall::after { -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
 }
+/* home: only the dark part of the opening, right of the headline */
+.opening.split::before, .opening.split::after { bottom: auto; height: var(--split); }
+.opening::after {
+  -webkit-mask-image: linear-gradient(to right, transparent 70%, #000 86%);
+  mask-image: linear-gradient(to right, transparent 70%, #000 86%);
+}
+@media (max-width: 1100px) { .opening::before, .opening::after { display: none; } }
+/* footer: the lockup stands in front of a band of glass that runs edge to edge */
+.foot .mark-wall { margin: 0 calc(50% - 50vw) clamp(28px, 3vw, 44px); padding: clamp(28px, 4vw, 56px) calc(50vw - 50%); }
+.foot .mark-wall .big-mark { margin: 0; }
+.foot .mark-wall::before { background: radial-gradient(ellipse 36% 42% at 70% 50%, rgba(207, 218, 216, .22), rgba(207, 218, 216, 0) 100%) no-repeat; }
+.foot .mark-wall::after {
+  background-position: center;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
+}
+/* The light moves very slowly, on large screens, when motion is welcome. Only the
+   glow drifts, a fraction of a pixel at a time; the glass and the stair stay put. */
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  .page-head:not(.legal-head)::before, .opening::before { animation: daylight 60s steps(120) infinite alternate; }
+}
+@keyframes daylight { from { background-position: right 4% bottom 0, 0 0, 0 0; } to { background-position: right 4% bottom 0, -90px 0, 60px 0; } }
 @media (max-width: 900px) {
-  section.dark::before, .opening::before, .foot::before { background-size: 150px 150px; }
-  section.dark::before, .opening::before {
-    -webkit-mask-image: linear-gradient(to right, transparent 20%, #000 100%);
-    mask-image: linear-gradient(to right, transparent 20%, #000 100%);
+  .page-head:not(.legal-head) { padding-bottom: 152px; }
+  .page-head:not(.legal-head)::before, .page-head:not(.legal-head)::after { top: auto; height: 108px; }
+  .page-head:not(.legal-head)::before { background: radial-gradient(ellipse 60% 120% at 70% 40%, rgba(207, 218, 216, .24), rgba(207, 218, 216, 0) 72%) no-repeat; }
+  .page-head:not(.legal-head)::after, .foot .mark-wall::after {
+    background-size: 168px 168px; background-position: center bottom;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%);
+    mask-image: linear-gradient(to bottom, transparent, #000 30%);
+  }
+  .foot .mark-wall::after {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
   }
 }
 /* the Client login door: a small pane of the same glass */
-.nav .sep a, .bar .login { display: inline-block; padding: 9px 14px; border: 1px solid var(--ink-2); background: var(--poured) url(/assets/glass-dark.svg) center / 44px 44px; }
+.nav .sep a, .bar .login { display: inline-block; padding: 9px 14px; border: 1px solid var(--ink-2); background: linear-gradient(135deg, rgba(244, 240, 233, .16), rgba(244, 240, 233, 0) 46%), radial-gradient(circle at 78% 22%, rgba(207, 218, 216, .26), rgba(207, 218, 216, 0) 70%), var(--poured); box-shadow: inset 1px 1px 0 rgba(244, 240, 233, .22), inset -1px -1px 0 rgba(28, 26, 23, .55); }
 .nav .sep a:hover, .nav .sep a[aria-current="page"], .bar .login:hover { border-color: var(--mortar); }
 
 /* About: the stair through fluted glass, the photograph the pattern comes from */
 .founder-body .glass-photo { grid-column: 1 / -1; margin: clamp(64px, 7vw, 112px) 0 0; }
 .founder-body .glass-photo img { width: 100%; height: auto; aspect-ratio: 12 / 5; object-fit: cover; }
 @media (max-width: 700px) { .founder-body .glass-photo img { aspect-ratio: 4 / 3; object-position: 58% 50%; } }
+
+/* ---------- brand work, shown beside the site it belongs to ---------- */
+.brand-panel { margin-top: 28px; padding: 22px; background: var(--cement); }
+.brand-panel .marks { display: flex; align-items: center; flex-wrap: wrap; gap: 16px 20px; }
+.brand-panel .marks img { width: auto; flex: none; }
+.brand-panel .marks .tall { height: 112px; }
+@media (max-width: 900px) { .brand-panel .marks .tall { height: 96px; } }
+.brand-panel .marks .wide { height: auto; width: min(100%, 200px); }
+.brand-panel .marks .icon { height: 44px; border-radius: 10px; }
+.brand-panel .marks .px { image-rendering: auto; }
+.brand-panel .was { opacity: 1; display: inline-flex; padding-right: 2px; }
+.brand-panel .to { font: 400 22px/1 var(--sans); color: var(--ink-2); }
+.brand-panel p { margin: 16px 0 0; font-size: 16px; line-height: 1.55; color: var(--ink-2); }
+.swatches { list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 16px; font: 500 13px/1.2 var(--sans); color: var(--ink); }
+.swatches li { display: flex; align-items: center; gap: 7px; }
+.swatches i { width: 18px; height: 18px; display: block; box-shadow: inset 0 0 0 1px rgba(28, 26, 23, .18); }
+.project.wide .brand-panel { grid-column: 1 / -1; }
+.sheet img { width: 100%; height: auto; }

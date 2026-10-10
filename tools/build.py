@@ -6,7 +6,7 @@ import json, pathlib, re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 C = ROOT / "tools" / "content"
 SITE = "https://mjlcollective.com"
-V = "20261009r3"  # bump when site.css or site.js changes
+V = "20261009r5"  # bump when site.css or site.js changes
 
 NAV = [("/work", "Work"), ("/partners", "Partners"), ("/services", "Services"), ("/about", "About"), ("/contact", "Contact")]
 
@@ -111,7 +111,7 @@ def foot(cur, ask=True):
   <footer class="foot">
     <div class="wrap">
       {askblock}
-      <img class="big-mark" src="/assets/lockup-plaster.svg" alt="MJL Collective" width="552" height="143" loading="lazy">
+      <div class="mark-wall"><img class="big-mark" src="/assets/lockup-plaster.svg" alt="MJL Collective" width="552" height="143" loading="lazy"></div>
       <div class="rows">
         <ul>
           {items}
@@ -135,29 +135,75 @@ def img(src, alt, w, h, eager=False):
     lz = 'fetchpriority="high"' if eager else 'loading="lazy" decoding="async"'
     return f'<img src="{src}" alt="{alt}" width="{w}" height="{h}" {lz}>'
 
-def browser(url, shot, alt, eager=False):
-    return f'<a class="browser" href="{url}" target="_blank" rel="noopener"><span class="addr">{host(url)}</span>{img("/assets/shots/"+shot+".webp", alt, 1600, 1000, eager)}</a>'
+# Client captures: desktop 1440x900 at 2x, phone 390x844 at 3x (tools/export_shots.py),
+# served as AVIF with a WebP fallback, at three widths each.
+SHOT_W = {"d": (1200, 1800, 2880), "p": (360, 720, 1080)}
+SIZES = {"lead": "(min-width: 1100px) min(60vw, 860px), 100vw", "project": "(min-width: 900px) min(72vw, 1040px), 100vw",
+         "wide": "(min-width: 900px) min(82vw, 1160px), 100vw", "pair": "(min-width: 900px) min(56vw, 800px), 100vw",
+         "phone": "(min-width: 900px) min(16vw, 230px), 28vw"}
+
+def pic(shot, alt, sizes, eager=False):
+    kind = shot.rsplit("-", 1)[1]
+    ws = SHOT_W[kind]
+    w, h = (1440, 900) if kind == "d" else (390, 844)
+    src = lambda ext: ", ".join(f"/assets/shots/{shot}-{x}.{ext} {x}w" for x in ws)
+    lz = 'fetchpriority="high"' if eager else 'loading="lazy" decoding="async"'
+    return (f'<picture><source type="image/avif" srcset="{src("avif")}" sizes="{sizes}">'
+            f'<img src="/assets/shots/{shot}-{ws[1]}.webp" srcset="{src("webp")}" sizes="{sizes}" alt="{alt}" width="{w}" height="{h}" {lz}></picture>')
+
+def browser(url, shot, alt, eager=False, sizes="pair"):
+    return f'<a class="browser" href="{url}" target="_blank" rel="noopener"><span class="addr">{host(url)}</span>{pic(shot, alt, SIZES[sizes], eager)}</a>'
 
 def phone(url, shot, alt, eager=False):
-    return f'<a class="phone" href="{url}" target="_blank" rel="noopener" tabindex="-1">{img("/assets/shots/"+shot+".webp", alt, 600, 1298, eager)}</a>'
+    return f'<a class="phone" href="{url}" target="_blank" rel="noopener" tabindex="-1">{pic(shot, alt, SIZES["phone"], eager)}</a>'
 
-def stage(url, d, dalt, p, palt, flip=False, eager=False):
-    return f'<div class="stage{" flip" if flip else ""}">{browser(url, d, dalt, eager)}{phone(url, p, palt, eager)}</div>'
+def stage(url, d, dalt, p, palt, flip=False, eager=False, sizes="project"):
+    return f'<div class="stage{" flip" if flip else ""}">{browser(url, d, dalt, eager, sizes)}{phone(url, p, palt, eager)}</div>'
 
-def about_it(name, url, text, tag="h3"):
-    return f'<div class="about-it"><{tag}>{name}</{tag}><p>{text}</p><a class="link" href="{url}" target="_blank" rel="noopener">Visit {host(url)}</a></div>'
+# Brand panels: only brand work MJL actually did, shown next to the site it belongs to.
+def bimg(src, alt, w, h, cls=""):
+    return f'<img{" class=" + chr(34) + cls + chr(34) if cls else ""} src="/assets/brand-work/{src}" alt="{alt}" width="{w}" height="{h}" loading="lazy" decoding="async">'
 
-def project(cls, name, url, text, d, dalt, p, palt, flip=False):
+def swatches(items):
+    lis = "".join(f'<li><i style="background:{c}"></i>{n}</li>' for n, c in items)
+    return f'<ul class="swatches">{lis}</ul>'
+
+def brand(marks, note, extra=""):
+    return f'<div class="brand-panel"><div class="marks">{marks}</div>{extra}<p>{note}</p></div>'
+
+def then(before, after):
+    return f'<span class="was">{before}</span><span class="to" aria-hidden="true">&rarr;</span>{after}'
+
+BRAND = {
+  "arden": brand(bimg("arden-seal.svg", "The Arden Collective oval seal", 120, 145, "tall") + bimg("arden-icon.svg", "The Arden favicon: the oak sprig on an oak green tile", 48, 48, "icon"),
+                 "I drew the seal and the leaf mark, chose the four colors and the two typefaces, Libre Caslon Display and Albert Sans, and built the site from them.",
+                 swatches([("Blush", "#F8F3F2"), ("Rose", "#DAA1AA"), ("Sage", "#62766D"), ("Brown", "#3B2E27")])),
+  "lewiston": brand(bimg("lewiston-badge.webp", "The Lewiston lion badge", 160, 160, "tall") + bimg("lewiston-icon-180.png", "The Lewiston app icon", 60, 60, "icon") + bimg("lewiston-fav-32.png", "The Lewiston favicon at 32 pixels", 32, 32, "px") + bimg("lewiston-fav-16.png", "The Lewiston favicon at 16 pixels", 16, 16, "px"),
+                    "The lion badge is theirs. I cut it down into the favicon and app icon, so it still reads at 16 pixels in a browser tab."),
+  "simos": brand(bimg("simos-wordmark.webp", "The Simo&rsquo;s Barbering wordmark", 600, 334, "wide") + bimg("simos-pole-256.png", "The barber pole favicon", 48, 48, "icon"),
+                 "John&rsquo;s wordmark, cut out clean for the header, and the barber pole as the favicon. The wallpaper pattern on the site is redrawn from a photograph of the real one in the shop."),
+  "tiger": brand(then(bimg("tiger-before.webp", "The old Tiger Digital mark", 126, 174, "tall"), bimg("tiger-seal.webp", "The new Tiger Digital seal", 160, 160, "tall")),
+                 "The old mark, and the seal that replaced it."),
+  "bluethreadz": brand(then(bimg("bluethreadz-before.webp", "The old BlueThreadz logo", 760, 250, "wide"), bimg("bluethreadz-wordmark.webp", "The redrawn BlueThreadz wordmark", 600, 80, "wide")),
+                       "The logo before and after I redrew it."),
+  "dorothy": brand(bimg("dorothy-sign.webp", "The Dorothy&rsquo;s Flower Shop mark, taken from the old shop sign", 160, 160, "tall"),
+                   "The old shop sign, made into the mark."),
+}
+
+def about_it(name, url, text, tag="h3", panel=""):
+    return f'<div class="about-it"><{tag}>{name}</{tag}><p>{text}</p><a class="link" href="{url}" target="_blank" rel="noopener">Visit {host(url)}</a>{panel}</div>'
+
+def project(cls, name, url, text, d, dalt, p, palt, flip=False, panel=""):
     return f'''<article class="project {cls}">
-          {stage(url, d, dalt, p, palt, flip)}
-          {about_it(name, url, text)}
+          {stage(url, d, dalt, p, palt, flip, sizes="wide" if "wide" in cls else "project")}
+          {about_it(name, url, text, panel=panel)}
         </article>'''
 
-def pair_item(name, url, text, d=None, dalt="", p=None, palt="", flip=False):
-    if d and p: art = stage(url, d, dalt, p, palt, flip)
+def pair_item(name, url, text, d=None, dalt="", p=None, palt="", flip=False, panel=""):
+    if d and p: art = stage(url, d, dalt, p, palt, flip, sizes="pair")
     elif d: art = browser(url, d, dalt)
     else: art = f'<div class="solo-phone">{phone(url, p, palt)}</div>'
-    return f'<article class="item">{art}{about_it(name, url, text)}</article>'
+    return f'<article class="item">{art}{about_it(name, url, text, panel=panel)}</article>'
 
 def carousel():
     def li(c, hidden):
@@ -204,7 +250,7 @@ home = f'''    <section class="opening">
           </div>
         </div>
         <div class="lead">
-          {stage(L, "lewiston-home-d", "The Lewiston Design and Build home page on a laptop: Custom homes in Middle Tennessee", "lewiston-process-p", "The Lewiston process on a phone: discovery, site and feasibility, architectural design, selections", eager=True)}
+          {stage(L, "lewiston-finishes-d", "The Lewiston finishes page on a laptop: a stone house above the facade, paint, door and roof choices", "lewiston-top-p", "The Lewiston home page on a phone: Custom homes in Middle Tennessee", eager=True, sizes="lead")}
         </div>
       </div>
     </section>
@@ -219,10 +265,10 @@ home = f'''    <section class="opening">
         <div class="section-head">
           <h2 id="recent-h">The newest sites.</h2>
         </div>
-        {project("", "Arden Collective", "https://arden-collective.vercel.app", "Talent management for social media creators. I drew the oval seal and built the site around it. The site is in preview.", "arden-home-d", "The Arden Collective home page: Boutique talent management for social media creators", "arden-business-p", "The Arden Collective business services and contact section on a phone")}
-        {project("right", "Loftus Construction", "https://loftus-construction.vercel.app", "A heavy civil contractor in Cinnaminson, New Jersey, building bridges since 1994. The new site is written for the people who hire them, like PennDOT and NJDOT, and is in preview.", "loftus-home-d", "The Loftus Construction home page: Design-build, preconstruction, construction", "loftus-projects-p", "The Loftus Construction project list on a phone", flip=True)}
+        {project("", "Arden Collective", "https://arden-collective.vercel.app", "Talent management for social media creators. I drew the oval seal and built the site around it. The site is in preview.", "arden-home-d", "The Arden Collective home page, with the oval seal: Boutique talent management for social media creators", "arden-business-p", "The Arden Collective business services on a phone, down to Creators and brands, say hello")}
+        {project("right", "Loftus Construction", "https://loftus-construction.vercel.app", "A heavy civil contractor in Cinnaminson, New Jersey, building bridges since 1994. The new site is written for the people who hire them, like PennDOT and NJDOT, and is in preview.", "loftus-build-d", "What Loftus builds: bridges, culverts and retaining walls, each with a photo of finished work", "loftus-top-p", "The Loftus home page on a phone: the wordmark and the train, Design-build, preconstruction, construction", flip=True)}
         <div class="pair">
-          {pair_item("George Gravenstine Agency", "https://georgeinsurance.agency", "An independent insurance agency on North Church Street, here in Moorestown. Auto, home and business insurance, with the agency&rsquo;s own quoting system built into the site.", "george-home-d", "The George Gravenstine Agency home page: Independent auto, home and business insurance in Moorestown", "george-agency-p", "The George Gravenstine Agency business insurance and community section on a phone")}
+          {pair_item("George Gravenstine Agency", "https://georgeinsurance.agency/quote", "An independent insurance agency on North Church Street, here in Moorestown. Auto and home quotes run on the site, through the agency&rsquo;s own quoting system.", d="george-quote-d", dalt="The George Gravenstine quote page: Start a quote")}
           {pair_item("Simo&rsquo;s Barbering", "https://www.simosbarbering.com", "A traditional barbershop on Lancaster Ave in Wayne. The shop&rsquo;s first website, live one week after I met John.", d="simos-menu-d", dalt="The Simo&rsquo;s Barbering price board on the website")}
         </div>
         <div class="after-projects">
@@ -257,17 +303,17 @@ work = f'''    <section class="dark page-head">
     </section>
     <section class="projects">
       <div class="wrap">
-        {project("wide", "Arden Collective", "https://arden-collective.vercel.app", "Talent management for social media creators. The brand is an oval seal I drew for them, and the site is built from the same type and colors. In preview.", "arden-services-d", "The Arden Collective services section: Creative and Business, Full service", "arden-contact-p", "The Arden Collective contact page on a phone, with the pink oval seal")}
-        {project("right", "Loftus Construction", "https://loftus-construction.vercel.app", "Bridges, culverts, retaining walls, foundations and dams, laid out by type so an engineer can find the work they care about. In preview.", "loftus-work-d", "The Loftus Construction capabilities, listed by type with photos of finished bridges", "loftus-people-p", "The Loftus leadership bios on a phone", flip=True)}
-        {project("", "Lewiston Design &amp; Build", L, "Custom homes in Middle Tennessee, drawn and built by the same firm. Each house has its drawings to download, and on the finishes page a buyer picks a facade, paint, door and roof and watches the house change.", "lewiston-team-d", "The Lewiston about page: Who we are, with Jason and Henry Lewiston", "lewiston-swatches-p", "The Lewiston finishes page on a phone: paint, door and roof colors")}
+        {project("wide", "Arden Collective", "https://arden-collective.vercel.app", "Talent management for social media creators. The brand is an oval seal I drew for them, and the site is built from the same type and colors. In preview.", "arden-creative-d", "The Arden Collective services: Creative and Business on either side of a Full service oval", "arden-contact-p", "The Arden Collective contact page on a phone, with the email inside a pink oval", panel=BRAND["arden"])}
+        {project("right", "Loftus Construction", "https://loftus-construction.vercel.app", "Bridges, culverts, retaining walls, foundations and dams, laid out by type so an engineer can find the work they care about. In preview.", "loftus-record-d", "The Loftus selected record: a table of finished public projects with owner and contract value", "loftus-careers-p", "Loftus careers on a phone: the Bench Strength Program", flip=True)}
+        {project("", "Lewiston Design &amp; Build", L, "Custom homes in Middle Tennessee, drawn and built by the same firm. Each house has its drawings to download, and on the finishes page a buyer picks a facade, paint, door and roof and watches the house change.", "lewiston-projects-d", "The Lewiston projects page: three houses, each with its plans", "lewiston-process-p", "The Lewiston process on a phone: discovery, site and feasibility, architectural design", panel=BRAND["lewiston"])}
         <div class="pair mirror">
-          {pair_item("Simo&rsquo;s Barbering", "https://www.simosbarbering.com", "The shop&rsquo;s first website, live one week after I met John. The price board, booking, and the hours and directions for 240 Lancaster Ave.", d="simos-visit-d", dalt="The Simo&rsquo;s visit section: 240 Lancaster Ave, the hours for each day and a map")}
-          {pair_item("George Gravenstine Agency", "https://georgeinsurance.agency", "An independent agency in Moorestown that quotes across several companies. Auto and home quotes run right on the site, in three to five minutes, through the agency&rsquo;s own quoting system.", "george-quote-d", "The George Gravenstine quote form", "george-quote-p", "The George Gravenstine quote form on a phone", flip=True)}
+          {pair_item("Simo&rsquo;s Barbering", "https://www.simosbarbering.com", "The shop&rsquo;s first website, live one week after I met John. The price board, booking, and the hours and directions for 240 Lancaster Ave.", "simos-door-d", "The Simo&rsquo;s shop section: His name on the door, with John at work", "simos-book-p", "The end of the Simo&rsquo;s price board on a phone, and Book a chair", panel=BRAND["simos"])}
+          {pair_item("George Gravenstine Agency", "https://georgeinsurance.agency", "An independent agency in Moorestown that quotes across several companies. Auto and home quotes run right on the site, in three to five minutes, through the agency&rsquo;s own quoting system.", "george-home-d", "The George Gravenstine home page: Independent auto, home and business insurance in Moorestown", "george-auto-p", "The George Gravenstine auto insurance page on a phone", flip=True)}
         </div>
-        {project("wide", "Tiger Digital", "https://www.tigerdigital.marketing", "A marketing agency for people who just bought a business. New brand and a new site in two days.", "tiger-home-d", "The Tiger Digital home page: Real growth. No fluff.", "tiger-results-p", "Tiger Digital service results on a phone")}
+        {project("wide", "Tiger Digital", "https://www.tigerdigital.marketing", "A marketing agency for people who just bought a business. New brand and a new site in two days.", "tiger-results-d", "Tiger Digital results: Numbers we can back up", "tiger-top-p", "The Tiger Digital home page on a phone: Real growth. No fluff.", panel=BRAND["tiger"])}
         <div class="pair">
-          {pair_item("BlueThreadz", "https://www.bluethreadz.com", "Custom embroidery and printing. I redrew the logo and rebuilt the catalog so every garment leads straight to a quote.", "bluethreadz-home-d", "The BlueThreadz home page: Build your brand in style", "bluethreadz-quote-p", "The BlueThreadz quote form on a phone")}
-          {pair_item("Dorothy&rsquo;s Flower Shop", "https://www.dorothysflower.shop", "The old shop sign became the mark, then a line of hats and the store that sells them.", "dorothy-home-d", "The Dorothy&rsquo;s Flower Shop home page, with lilacs", "dorothy-shop-p", "The Dorothy&rsquo;s hat shop on a phone", flip=True)}
+          {pair_item("BlueThreadz", "https://www.bluethreadz.com", "Custom embroidery and printing. I redrew the logo and rebuilt the catalog so every garment leads straight to a quote.", "bluethreadz-ordering-d", "BlueThreadz: What people are ordering right now, a row of jackets, hoodies and polos", "bluethreadz-methods-p", "BlueThreadz on a phone: Five ways to put your name on it", panel=BRAND["bluethreadz"])}
+          {pair_item("Dorothy&rsquo;s Flower Shop", "https://www.dorothysflower.shop", "The old shop sign became the mark, then a line of hats and the store that sells them.", "dorothy-home-d", "The Dorothy&rsquo;s Flower Shop home page, with lilacs", "dorothy-shop-p", "The Dorothy&rsquo;s hat shop on a phone", flip=True, panel=BRAND["dorothy"])}
         </div>
       </div>
     </section>'''
@@ -296,6 +342,15 @@ page("partners.html", "/partners", "Partners | MJL Collective", "The businesses 
 # ------------------------------------------------------------------ services
 def fig(url, shot, alt, name, cap):
     return f'<figure>{browser(url, shot, alt)}<figcaption><strong>{name}.</strong> {cap}</figcaption></figure>'
+
+def sheet():
+    srcs = lambda ext: ", ".join(f"/assets/brand-work/arden-sheet-{w}.{ext} {w}w" for w in (800, 1600))
+    sz = "(min-width: 900px) min(56vw, 800px), 100vw"
+    return (f'<figure class="sheet"><picture><source type="image/avif" srcset="{srcs("avif")}" sizes="{sz}">'
+            f'<img src="/assets/brand-work/arden-sheet-1600.webp" srcset="{srcs("webp")}" sizes="{sz}" width="1600" height="1352" loading="lazy" decoding="async" '
+            f'alt="The Arden Collective brand sheet: the oval seal in brown and in blush, the leaf mark, avatars and favicon, six colors, and the two typefaces"></picture>'
+            f'<figcaption><strong>Arden Collective.</strong> The brand sheet I made for Rachael: the seal, the leaf mark and favicon, the colors and the type the site is built from.</figcaption></figure>')
+
 services = f'''    <section class="dark page-head">
       <div class="wrap">
         <h1>The site is where it starts.</h1>
@@ -309,7 +364,7 @@ services = f'''    <section class="dark page-head">
           <p>The mark, the site, mobile, and clear calls to action. Live in days.</p>
           <p>Tiger Digital went from a new brand to a new site in two days. Simo&rsquo;s had its first website a week after I met the owner.</p>
         </div>
-        <div class="shot">{fig(L, "lewiston-finishes-d", "The Lewiston finishes page: Design the exterior, with a stone house", "Lewiston Design &amp; Build", "The finishes page. Pick a facade, a paint color, a front door and a roof, and the house updates as you choose.")}</div>
+        <div class="shot">{sheet()}</div>
       </section>
       <section class="service flip" aria-labelledby="s2">
         <div class="words">
@@ -324,7 +379,7 @@ services = f'''    <section class="dark page-head">
           <h2 id="s3">Show up where it matters</h2>
           <p>Company LinkedIn or other channels. Listings, catalogs and simple presence systems. Light automation so what is true offline stays true online.</p>
         </div>
-        <div class="shot">{fig("https://www.bluethreadz.com/products", "bluethreadz-products-d", "The BlueThreadz catalog: Pick the garment. We&rsquo;ll put your name on it.", "BlueThreadz", "The catalog. Every brand and garment they carry, each one a step away from a quote.")}</div>
+        <div class="shot">{fig("https://www.bluethreadz.com/products", "bluethreadz-catalog-d", "The BlueThreadz catalog: Pick the garment. We&rsquo;ll put your name on it.", "BlueThreadz", "The catalog. Every brand and garment they carry, each one a step away from a quote.")}</div>
       </section>
       <section class="service text-only" aria-labelledby="s4">
         <div class="words">
