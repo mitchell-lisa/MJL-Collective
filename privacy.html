@@ -17,14 +17,38 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The MJL Collective mark">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon.png">
+  <link rel="icon" type="image/svg+xml" href="/assets/monogram-small.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <script>try{if(!localStorage.getItem("mjl-seen")&&!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.className+=" intro";localStorage.setItem("mjl-seen","1")}catch(e){}</script>
   <link rel="preload" href="/assets/fonts/InstrumentSerif-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/InstrumentSans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/SourceSerif4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/site.css?v=20261010b1">
+  <link rel="stylesheet" href="/assets/site.css?v=20261010c1">
 </head>
 <body>
+  <div class="intro-mark" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" focusable="false">
+<defs>
+<linearGradient id="mg-rim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fdfcfa"/><stop offset=".5" stop-color="#ebe6dc"/><stop offset="1" stop-color="#d5cec2"/></linearGradient>
+<linearGradient id="mg-face" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e3ddd2"/><stop offset=".45" stop-color="#f4f0e9"/><stop offset="1" stop-color="#fbf9f5"/></linearGradient>
+<linearGradient id="mg-bevel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b9b0a2"/><stop offset=".5" stop-color="#d5cec2" stop-opacity=".4"/><stop offset="1" stop-color="#fff"/></linearGradient>
+<linearGradient id="mg-spec" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<clipPath id="mg-in"><rect x="70" y="70" width="372" height="372" rx="26"/></clipPath>
+</defs>
+<rect x="12" y="12" width="488" height="488" rx="46" fill="url(#mg-rim)"/>
+<rect x="13.5" y="13.5" width="485" height="485" rx="44.5" fill="none" stroke="#d5cec2" stroke-width="3"/>
+<rect x="70" y="70" width="372" height="372" rx="26" fill="url(#mg-face)"/>
+<g clip-path="url(#mg-in)" fill="none" stroke="#fff" stroke-linecap="round">
+<path d="M40 150 C 110 120, 170 190, 250 150 S 400 120, 480 160" stroke-width="10" stroke-opacity=".55"/>
+<path d="M40 300 C 120 270, 190 340, 270 300 S 410 270, 480 310" stroke-width="8" stroke-opacity=".4"/>
+<path d="M40 400 C 120 380, 200 430, 280 395 S 420 380, 480 410" stroke-width="6" stroke-opacity=".35"/>
+</g>
+<g transform="translate(121.4 153.9) scale(1.36)" fill="none" stroke="#1c1a17" stroke-width="14" stroke-linejoin="miter" stroke-miterlimit="6"><path d="M7,110 V10 L54,80 L101,10 V118 A28,28 0 0 1 73,146 H54"/><path d="M131,10 V103 H191"/></g>
+<rect x="70" y="70" width="372" height="372" rx="26" fill="none" stroke="url(#mg-bevel)" stroke-width="6"/>
+<path d="M60 40 H 300" stroke="url(#mg-spec)" stroke-width="5" stroke-linecap="round"/>
+<path d="M40 64 V 260" stroke="url(#mg-spec)" stroke-width="4" stroke-linecap="round"/>
+</svg></div>
   <a class="skip" href="#main">Skip to the content</a>
   <header class="bar" id="top">
     <div class="wrap">
@@ -254,12 +278,15 @@
       <div class="ask">
         <h2>Tell me about the business.</h2>
         <div>
-          <p>I&rsquo;ll tell you what it needs and what it costs, before anyone signs anything.</p>
+          <p>I&rsquo;ll tell you what it needs and what it costs.</p>
           <a class="btn" href="/contact">Write to me</a>
           <a class="mail" href="mailto:mitchell@mjlcollective.com">mitchell@mjlcollective.com</a>
         </div>
       </div>
-      <img class="big-mark" src="/assets/lockup-ink.svg" alt="MJL Collective" width="552" height="143" loading="lazy">
+      <div class="sign">
+        <img class="sign-block" src="/assets/monogram.svg" alt="" width="512" height="512" loading="lazy">
+        <img class="sign-lock" src="/assets/lockup-ink.svg" alt="MJL Collective" width="552" height="143" loading="lazy">
+      </div>
       <div class="rows">
         <ul>
           <li><a href="/work">Work</a></li>
@@ -278,6 +305,6 @@
     </div>
   </footer>
 
-  <script src="/assets/site.js?v=20261010b1"></script>
+  <script src="/assets/site.js?v=20261010c1"></script>
 </body>
 </html>

@@ -81,63 +81,84 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .lede { font-size: clamp(18px, 1.35vw, 21px); color: var(--ink-2); max-width: 40ch; }
 
 /* ---------- the glass block photograph ----------
-   One photograph, used once on a page. It sits clear; panes of frosted glass
-   carry the words over it. As the page scrolls on, the photograph frosts over
-   (site.js sets --f), and the work below comes up clear. */
+   Mitchell's photograph of a real glass block wall, squared up so every block
+   sits on a true grid. It sits clear. Frosted glass carries the words. Every
+   change on scroll is opacity or transform only; the blur is drawn ahead of
+   time (assets/glass/frost-*.webp), so it is cheap and the same in every browser. */
 .gp { position: absolute; inset: 0; display: block; }
 .gp img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; max-width: none; }
-/* The frosted state is the same photograph, diffused ahead of time, so the
-   change from clear to frosted is only a fade: cheap, and the same in every browser. */
-.frost { position: absolute; inset: 0; pointer-events: none; opacity: var(--f, 0); background: linear-gradient(rgba(244, 240, 233, .42), rgba(244, 240, 233, .42)), url(/assets/glass/glass-frost-wide.webp) center / cover no-repeat; }
-@media (max-width: 700px) { .frost { background-image: linear-gradient(rgba(244, 240, 233, .42), rgba(244, 240, 233, .42)), url(/assets/glass/glass-frost-tall.webp); } }
-.pane { padding: clamp(28px, 3.4vw, 52px); max-width: 780px; box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset, 0 30px 80px -40px rgba(28, 26, 23, .35); }
-.pane h1 { font-size: clamp(46px, 6vw, 96px); }
-.pane .lede { margin: 22px 0 0; color: var(--ink-2); }
+.frost { position: absolute; inset: 0; pointer-events: none; opacity: var(--f, 0); background: url(/assets/glass/frost-band.webp) center / cover no-repeat; }
+@media (max-width: 700px) { .frost { background-image: url(/assets/glass/frost-tall.webp); } }
+.pane { padding: clamp(28px, 3.4vw, 52px); max-width: 780px; box-shadow: 0 1px 0 rgba(255, 255, 255, .7) inset, 0 0 0 1px rgba(255, 255, 255, .35) inset, 0 30px 80px -40px rgba(28, 26, 23, .3); }
+/* site.js lines the frosted copy of the photograph up behind each pane, so
+   the pane is a piece of the same wall, frosted, in every browser */
+.pane.aligned { -webkit-backdrop-filter: none; backdrop-filter: none; background: linear-gradient(rgba(248, 246, 241, .5), rgba(248, 246, 241, .5)), var(--fi) var(--fx) var(--fy) / var(--fw) var(--fh) no-repeat; }
+.pane h1 { font-size: clamp(48px, 6.4vw, 104px); }
+.pane .lede { margin: 22px 0 0; color: var(--ink-2); font-size: clamp(19px, 1.5vw, 23px); }
 .pane .actions { margin-top: 30px; }
+/* the lens: a soft circle around the pointer where the frost lifts (desktop only) */
+.lens { position: absolute; inset: 0; pointer-events: none; opacity: var(--l, 0); -webkit-mask-image: radial-gradient(circle var(--lr, 150px) at var(--mx, -999px) var(--my, -999px), #000 35%, transparent 100%); mask-image: radial-gradient(circle var(--lr, 150px) at var(--mx, -999px) var(--my, -999px), #000 35%, transparent 100%); }
+.lens img { width: 100%; height: 100%; object-fit: cover; max-width: none; }
 
 /* the bar runs over the photograph at the top of a page */
-.glass-head, .through { margin-top: calc(var(--barh) * -1 - 1px); }
+.glass-head, .enter { margin-top: calc(var(--barh) * -1 - 1px); }
 .glass-head { position: relative; isolation: isolate; overflow: hidden; min-height: min(78vh, 760px); display: flex; align-items: flex-end; padding: calc(var(--barh) + 64px) 0 clamp(36px, 5vw, 72px); }
 .glass-head .wrap { position: relative; }
+.glass-head .lens { z-index: 0; }
 .glass-head.lost { min-height: min(88vh, 820px); }
 @media (max-width: 700px) {
-  .glass-head { min-height: 0; padding: calc(var(--barh) + 42vw) 0 20px; }
+  .glass-head { min-height: 0; padding: calc(var(--barh) + 46vw) 0 20px; }
   .glass-head .pane { padding: 26px 22px 28px; }
-  .pane h1 { font-size: clamp(40px, 11vw, 56px); }
+  .pane h1 { font-size: clamp(42px, 12vw, 60px); }
 }
 
-/* home: the photograph stays put while the page moves through it. Clear, then
-   the glass frosts and the newest site comes up through it, then the site is clear.
-   site.js adds .live and sets --p from 0 to 1; without it everything stacks. */
-.through { position: relative; }
-.through-stage { position: relative; isolation: isolate; overflow: hidden; }
-.through-words { position: relative; padding-top: calc(var(--barh) + clamp(80px, 14vh, 160px)); padding-bottom: clamp(40px, 8vh, 96px); }
-.through-words .pane { max-width: 860px; }
-.through-words h1 { font-size: clamp(44px, 5.6vw, 92px); }
-.through-work { position: relative; padding-top: clamp(48px, 6vw, 96px); padding-bottom: clamp(56px, 7vw, 112px); background: var(--plaster); max-width: none; }
-.lead-box { max-width: var(--max); margin: 0 auto; }
-.lead { position: relative; padding-right: 14%; }
-.lead .plate.p { position: absolute; right: 0; bottom: -6%; width: 15%; }
-.credit { margin: clamp(28px, 4vw, 52px) 0 0; font-size: 16px; color: var(--ink-2); max-width: 70ch; }
-.credit strong { font: 400 22px/1.2 var(--display); color: var(--ink); margin-right: 4px; }
+/* ---------- home: the entrance ----------
+   The wall, clear. It frosts over, then the blocks clear one at a time and a
+   client site is there behind them. site.js adds .live and drives --f (frost),
+   --m (mortar), --w (words out) and --c (credit in); each block gets its own
+   opacity. Without .live (no script, or reduced motion) it is a still page:
+   the wall with the words on it, then the site below. */
+.enter { position: relative; }
+.enter-stage { position: relative; isolation: isolate; display: flex; flex-direction: column; }
+.enter-stage > .behind { order: 2; }
+.enter-stage > .enter-credit { order: 3; }
+.wall-box { position: absolute; left: 0; right: 0; top: 0; height: 100vh; height: 100svh; min-height: 560px; overflow: hidden; }
+.wall { position: absolute; left: 50%; top: 50%; width: max(100vw, calc(100svh * var(--a))); height: max(100svh, calc(100vw / var(--a))); transform: translate(-50%, -50%); }
+.wall .clear, .wall .clear img { display: block; width: 100%; height: 100%; max-width: none; }
+.wall .cells, .wall .mortar { position: absolute; inset: 0; display: none; }
+.wall .cells i { position: absolute; display: block; background-image: url(/assets/glass/frost-wall.webp); background-repeat: no-repeat; }
+.wall-tall .cells i { background-image: url(/assets/glass/frost-tall.webp); }
+.wall .mortar { background: url(/assets/glass/mortar-wall.svg) 0 0 / 100% 100% no-repeat; opacity: var(--m, 0); }
+.wall-tall .mortar { background-image: url(/assets/glass/mortar-tall.svg); }
+.wall-tall { display: none; }
+@media (max-width: 700px) { .wall-wall { display: none; } .wall-tall { display: block; } }
+.enter-words { position: relative; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding-top: calc(var(--barh) + 40px); padding-bottom: clamp(40px, 9vh, 110px); }
+.enter-words .pane { max-width: 860px; }
+.behind { display: block; position: relative; max-width: var(--max); margin: clamp(64px, 8vw, 120px) auto 0; width: calc(100% - var(--gut) * 2); box-shadow: 0 0 0 1px var(--hair), 0 40px 80px -48px rgba(28, 26, 23, .45); }
+.behind img { width: 100%; height: auto; }
+.enter-credit { position: relative; padding-top: 28px; }
+.credit { margin: 0; font-size: 16px; color: var(--ink-2); }
+.credit strong { font: 400 24px/1.2 var(--display); color: var(--ink); margin-right: 4px; }
 .credit .link { margin-left: 8px; white-space: nowrap; }
-.through.live { height: 280vh; height: 280svh; }
-.through.live .through-stage { position: sticky; top: 0; height: 100vh; height: 100svh; }
-.through.live .through-words { position: absolute; left: 0; right: 0; top: 0; opacity: calc(1 - var(--w, 0)); transform: translate3d(0, calc(var(--w, 0) * -40px), 0); }
-.through.live .through-work { position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; padding-top: calc(var(--barh) + 24px); padding-bottom: 24px; background: none; opacity: var(--s, 0); transform: translate3d(0, calc((1 - var(--s, 0)) * 48px), 0); }
-.through.live .lead-box { width: min(100%, calc((100vh - var(--barh) - 250px) * 1.6 / 0.86)); width: min(100%, calc((100svh - var(--barh) - 250px) * 1.6 / 0.86)); filter: blur(calc(var(--v, 1) * 16px)); }
-.through.live.clear .lead-box { filter: none; }
-.through.live .credit { background: rgba(244, 240, 233, .86); padding: 16px 20px; }
+.enter.live { height: 440vh; height: 440svh; }
+.enter.live .enter-stage { position: sticky; top: 0; height: 100vh; height: 100svh; min-height: 560px; overflow: hidden; }
+.enter.live .wall-box { inset: 0; height: auto; min-height: 0; }
+.enter.live .wall .cells, .enter.live .wall .mortar { display: block; }
+.enter.live .wall .cells { opacity: var(--f, 0); }
+.enter.live.frosted .wall .clear { visibility: hidden; }
+.enter.live .behind { position: absolute; left: 0; right: 0; top: var(--barh); bottom: 0; width: auto; max-width: none; margin: 0; box-shadow: none; z-index: -1; }
+.enter.live .behind picture, .enter.live .behind img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
+.enter.live .enter-words { position: absolute; left: 0; right: 0; top: 0; bottom: 0; min-height: 0; opacity: calc(1 - var(--w, 0)); transform: translate3d(0, calc(var(--w, 0) * -36px), 0); }
+.enter.live.past-words .enter-words { visibility: hidden; }
+.enter.live .enter-credit { position: absolute; left: 0; right: 0; bottom: clamp(20px, 4vh, 40px); padding: 0; display: flex; opacity: var(--c, 0); transform: translate3d(0, calc((1 - var(--c, 0)) * 16px), 0); }
+.enter.live:not(.at-end) .enter-credit { pointer-events: none; }
+.enter.live .credit { background: rgba(248, 246, 241, .9); padding: 14px 20px; box-shadow: 0 20px 50px -30px rgba(28, 26, 23, .4); }
 @media (max-width: 700px) {
-  .through-words { padding-top: calc(var(--barh) + 48vw); }
-  .through-words .pane { padding: 26px 22px 28px; }
-  .through-words h1 { font-size: clamp(36px, 10vw, 50px); }
-  .through.live .through-words { top: auto; bottom: 0; }
-  .lead { padding-right: 18%; }
-  .lead .plate.p { width: 26%; }
-  .through.live .lead-box { width: 100%; }
+  .enter-words .pane { padding: 26px 22px 28px; }
+  .enter-words h1 { font-size: clamp(40px, 11.5vw, 56px); }
   .credit { font-size: 15px; }
-  .credit strong { font-size: 20px; }
+  .credit strong { font-size: 21px; display: block; }
+  .credit .link { margin-left: 0; display: inline-block; margin-top: 6px; }
 }
 
 /* ---------- plates: the client sites, shown like prints ---------- */
@@ -152,34 +173,35 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .plate.focus picture { filter: blur(calc(var(--f, 0) * 10px)); opacity: calc(1 - var(--f, 0) * .3); }
 .plate.focus.clear picture { filter: none; opacity: 1; }
 
-/* ---------- the lookbook ---------- */
-.looks { padding: clamp(72px, 9vw, 150px) 0 clamp(80px, 10vw, 160px); }
-.looks-h { font-size: clamp(40px, 4.6vw, 76px); margin-bottom: clamp(48px, 6vw, 96px); }
-.look { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(16px, 2vw, 32px); }
-.look + .look { margin-top: clamp(110px, 13vw, 220px); }
-.look > .plate.d { grid-column: 1 / span 10; }
-.look.flip > .plate.d { grid-column: 3 / span 10; }
-.look .side { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: clamp(16px, 2vw, 32px); margin-top: clamp(40px, 4.4vw, 72px); align-items: start; }
-.look .side .plate.p { grid-column: 1 / span 2; }
-.look .side .words { grid-column: 4 / span 6; padding-top: 6px; }
-.look.flip .side .plate.p { grid-column: 11 / span 2; grid-row: 1; }
-.look.flip .side .words { grid-column: 4 / span 6; grid-row: 1; }
-.look h2, .look h3 { font-size: clamp(34px, 3.2vw, 52px); margin-bottom: 18px; }
-.look p { color: var(--ink-2); max-width: 52ch; }
-.look .link { overflow-wrap: anywhere; }
-.after-looks { margin-top: clamp(96px, 11vw, 180px); padding-top: 32px; border-top: 1px solid var(--mortar); display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 14px 32px; }
-.after-looks p { margin: 0; font: 400 clamp(26px, 2.4vw, 38px)/1.15 var(--display); }
-@media (max-width: 900px) {
-  .look, .look .side { display: block; }
-  .look .side { display: grid; grid-template-columns: 34% 1fr; column-gap: 20px; }
-  .look .side .plate.p, .look.flip .side .plate.p { grid-column: 1; grid-row: 1; }
-  .look .side .words, .look.flip .side .words { grid-column: 2; grid-row: 1; padding-top: 0; }
-}
-@media (max-width: 560px) {
-  .look .side { display: block; }
-  .look .side .plate.p { width: 52%; }
-  .look.flip .side .plate.p { margin-left: auto; }
-  .look .side .words { margin-top: 32px; }
+/* ---------- the exhibition: one room per client ----------
+   On a large screen each room fills the screen and the next one slides up
+   over it while the last one settles back (site.js sets --o and --k).
+   On phones, and for reduced motion, the rooms simply stack. */
+.room { background: var(--plaster); border-top: 1px solid var(--mortar); padding: clamp(72px, 10vw, 120px) 0; }
+.room-in { width: 100%; max-width: calc(var(--max) + var(--gut) * 2); margin: 0 auto; padding: 0 var(--gut); }
+.room-art { position: relative; }
+.room-art.has-p { padding-right: 16%; }
+.room-art .plate.p { position: absolute; right: 0; bottom: -8%; width: 24%; }
+.room-words { margin-top: clamp(40px, 8vw, 64px); }
+.room h2 { font-size: clamp(50px, 6.4vw, 124px); line-height: .94; }
+.room-words > p { font: 400 clamp(20px, 1.6vw, 26px)/1.4 var(--serif); color: var(--ink-2); max-width: 24ch; margin: 22px 0 28px; }
+.room-words .link { display: inline-block; margin-top: 4px; }
+.marks { display: flex; align-items: center; flex-wrap: wrap; gap: 16px 22px; margin-bottom: 30px; }
+.marks .mk { width: auto; flex: none; }
+.marks .tall { height: clamp(96px, 9vw, 128px); }
+.marks .wide { width: min(100%, 240px); height: auto; }
+.marks .px { width: 32px; height: 32px; }
+.marks .swatches { flex-basis: 100%; margin: 0; }
+@media (min-width: 901px) and (min-height: 620px) and (prefers-reduced-motion: no-preference) {
+  .room { position: sticky; top: 0; height: 100vh; height: 100svh; padding: var(--barh) 0 0; display: flex; align-items: center; border-top: 0; box-shadow: 0 -1px 0 var(--mortar), 0 -40px 80px -60px rgba(28, 26, 23, .35); }
+  .room-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 30%); column-gap: clamp(40px, 5vw, 96px); align-items: center; opacity: var(--o, 1); transform: translate3d(0, var(--y, 0px), 0) scale(var(--k, 1)); transform-origin: 50% 30%; }
+  .room.flip .room-in { grid-template-columns: minmax(300px, 30%) minmax(0, 1fr); }
+  .room.flip .room-art { order: 2; }
+  .room-art { width: min(100%, calc((100svh - var(--barh) - 150px) * 1.6)); justify-self: center; }
+  .room-art.has-p { padding-right: 0; width: min(100%, calc((100svh - var(--barh) - 150px) * 1.6)); }
+  .room-art.has-p > .plate.d { margin-right: 9%; }
+  .room-art .plate.p { width: 16%; bottom: -7%; }
+  .room-words { margin-top: 0; }
 }
 
 /* ---------- plain bands ---------- */
@@ -190,6 +212,8 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .two h2 { font-size: clamp(40px, 4.6vw, 76px); }
 .two p { font-size: clamp(18px, 1.3vw, 20px); color: var(--ink-2); }
 .two .actions { margin-top: 30px; }
+.band.last h2 { font-size: clamp(46px, 6.6vw, 112px); max-width: 15ch; }
+.band.last .actions { margin-top: clamp(32px, 4vw, 52px); }
 @media (max-width: 900px) { .two { display: block; } .two > :last-child { margin-top: 28px; } }
 
 /* ---------- logos, newest client first ---------- */
@@ -316,7 +340,9 @@ figcaption strong { font: 400 21px/1.2 var(--display); color: var(--ink); margin
 .foot .ask p { font: 400 18px/1.6 var(--serif); color: var(--ink-2); margin-bottom: 26px; }
 .foot .ask .mail { display: block; margin-top: 18px; font: 500 14px/1.4 var(--sans); }
 @media (max-width: 900px) { .foot .ask { display: block; } .foot .ask div { margin-top: 26px; } }
-.foot .big-mark { display: block; width: clamp(180px, 20vw, 260px); height: auto; margin: 0 0 32px; }
+.foot .sign { display: flex; align-items: center; gap: clamp(16px, 2vw, 26px); margin: 0 0 34px; }
+.foot .sign-block { width: clamp(60px, 6vw, 84px); height: auto; filter: drop-shadow(0 14px 22px rgba(28, 26, 23, .14)); }
+.foot .sign-lock { width: clamp(150px, 15vw, 210px); height: auto; }
 .foot .rows { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 20px 40px; padding-top: 22px; border-top: 1px solid var(--mortar); font-size: 13.5px; }
 .foot .rows ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 28px; }
 .foot .rows a { text-decoration: none; }
@@ -324,19 +350,48 @@ figcaption strong { font: 400 21px/1.2 var(--display); color: var(--ink); margin
 .foot .legal { color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 6px 22px; }
 .foot .legal a { color: var(--ink); }
 
-/* ---------- brand work, shown beside the site it belongs to ---------- */
-.brand-panel { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--mortar); }
-.brand-panel .marks { display: flex; align-items: center; flex-wrap: wrap; gap: 16px 20px; }
-.brand-panel .marks img { width: auto; flex: none; }
-.brand-panel .marks .tall { height: 112px; }
-@media (max-width: 900px) { .brand-panel .marks .tall { height: 96px; } }
-.brand-panel .marks .wide { height: auto; width: min(100%, 200px); }
-.brand-panel .marks .icon { height: 44px; border-radius: 10px; }
-.brand-panel .marks .px { image-rendering: auto; }
-.brand-panel .was { opacity: 1; display: inline-flex; padding-right: 2px; }
-.brand-panel .to { font: 400 22px/1 var(--sans); color: var(--ink-2); }
-.brand-panel p { margin: 16px 0 0; font-size: 16px; line-height: 1.55; color: var(--ink-2); }
 .swatches { list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 16px; font: 500 13px/1.2 var(--sans); color: var(--ink); }
 .swatches li { display: flex; align-items: center; gap: 7px; }
 .swatches i { width: 18px; height: 18px; display: block; box-shadow: inset 0 0 0 1px rgba(28, 26, 23, .18); }
 .sheet img { width: 100%; height: auto; box-shadow: 0 0 0 1px var(--hair); }
+
+/* ---------- before and after ----------
+   A real range input lies over the frame, so it drags with a finger or a
+   mouse and moves with the arrow keys. */
+.ba { margin: 0; }
+.ba-frame { position: relative; overflow: hidden; background: var(--cement); box-shadow: 0 0 0 1px var(--hair), 0 40px 80px -48px rgba(28, 26, 23, .45); touch-action: pan-y; }
+.ba-site .ba-frame { aspect-ratio: 16 / 10; }
+.ba-site picture, .ba-site img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
+.ba-after, .ba-before { position: absolute; inset: 0; }
+.ba-before { clip-path: inset(0 calc(100% - var(--x)) 0 0); }
+.ba-mark .ba-frame { aspect-ratio: 4 / 3; width: min(100%, 320px); }
+.ba-mark.wide .ba-frame { aspect-ratio: 2 / 1; width: min(100%, 380px); }
+.ba-mark .ba-after, .ba-mark .ba-before { display: flex; align-items: center; justify-content: center; padding: 14%; background: var(--cement); }
+.ba-mark.wide .ba-after, .ba-mark.wide .ba-before { padding: 10%; }
+.ba-mark .mk { max-width: 100%; max-height: 100%; width: auto; height: auto; }
+.ba-mark.wide .mk { width: 100%; }
+.ba-line { position: absolute; top: 0; bottom: 0; left: var(--x); width: 2px; margin-left: -1px; background: #fbf9f5; box-shadow: 0 0 0 1px rgba(28, 26, 23, .12); pointer-events: none; }
+.ba-line span { position: absolute; top: 50%; left: 50%; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; background: rgba(251, 249, 245, .94); box-shadow: 0 0 0 1px rgba(28, 26, 23, .14), 0 10px 30px -10px rgba(28, 26, 23, .5); }
+.ba-line span::before, .ba-line span::after { content: ""; position: absolute; top: 50%; width: 7px; height: 7px; margin-top: -4px; border: solid var(--ink); border-width: 0 0 1.5px 1.5px; }
+.ba-line span::before { left: 12px; transform: rotate(45deg); }
+.ba-line span::after { right: 12px; transform: rotate(-135deg); }
+.ba-mark .ba-line span { width: 36px; height: 36px; margin: -18px 0 0 -18px; }
+.ba-mark .ba-line span::before { left: 9px; } .ba-mark .ba-line span::after { right: 9px; }
+.ba-frame:focus-within .ba-line span { outline: 2px solid var(--ink); outline-offset: 3px; }
+.ba-tag { position: absolute; top: 12px; font: 500 12px/1 var(--sans); letter-spacing: .02em; color: var(--ink); background: rgba(251, 249, 245, .9); padding: 7px 9px; pointer-events: none; }
+.ba-tag.b { left: 12px; } .ba-tag.a { right: 12px; }
+.ba-mark .ba-tag { top: 8px; padding: 5px 7px; font-size: 11px; } .ba-mark .ba-tag.b { left: 8px; } .ba-mark .ba-tag.a { right: 8px; }
+.ba-range { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; -webkit-appearance: none; appearance: none; background: transparent; touch-action: pan-y; }
+.ba-range::-webkit-slider-thumb { -webkit-appearance: none; width: 56px; height: 2000px; }
+.ba-range::-moz-range-thumb { width: 56px; height: 2000px; border: 0; }
+.ba figcaption { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 4px 22px; font: 400 14px/1.45 var(--sans); color: var(--ink-2); max-width: none; }
+.ba figcaption a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--mortar); }
+.room-words .ba { margin-bottom: 30px; }
+
+/* ---------- the monogram: a first-visit hello, under a second ---------- */
+.intro-mark { display: none; }
+html.intro .intro-mark { display: flex; position: fixed; inset: 0; z-index: 200; align-items: center; justify-content: center; background: var(--plaster); pointer-events: none; animation: intro-out .9s ease forwards; }
+html.intro .intro-mark svg { width: clamp(96px, 13vw, 160px); height: auto; animation: intro-in .9s cubic-bezier(.2, .7, .2, 1) forwards; }
+@keyframes intro-in { 0% { opacity: 0; transform: scale(.94); } 38% { opacity: 1; transform: scale(1); } 100% { opacity: 1; transform: scale(1.015); } }
+@keyframes intro-out { 0%, 58% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
+@media (prefers-reduced-motion: reduce) { html.intro .intro-mark { display: none; } }
