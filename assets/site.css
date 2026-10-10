@@ -130,31 +130,31 @@ html.over-enter .bar { -webkit-backdrop-filter: none; backdrop-filter: none; bac
 .wall-box { position: absolute; left: 0; right: 0; top: 0; height: 100vh; height: 100svh; min-height: 560px; overflow: hidden; }
 .wall { position: absolute; left: 50%; top: 50%; width: max(100vw, calc(100svh * var(--a))); height: max(100svh, calc(100vw / var(--a))); transform: translate(-50%, -50%); }
 .wall .clear, .wall .clear img { display: block; width: 100%; height: 100%; max-width: none; }
-.wall .frosted, .wall .mortar { position: absolute; inset: 0; display: none; }
-.wall .frosted { background: url(/assets/glass/frost-wall.webp) 0 0 / 100% 100% no-repeat; }
-.wall-tall .frosted { background-image: url(/assets/glass/frost-tall.webp); }
-.wall .mortar { background: url(/assets/glass/mortar-wall.svg) 0 0 / 100% 100% no-repeat; }
-.wall-tall .mortar { background-image: url(/assets/glass/mortar-tall.svg); }
+.wall .frosted { position: absolute; inset: 0; display: none; }
+/* the frost with the mortar already drawn into it (one bitmap, baked from
+   mortar-*.svg over frost-*.webp), so the crossfade is a single plain layer */
+.wall .frosted { background: url(/assets/glass/frost-wall-m.webp) 0 0 / 100% 100% no-repeat; }
+.wall-tall .frosted { background-image: url(/assets/glass/frost-tall-m.webp); }
 .wall-tall { display: none; }
 @media (max-width: 700px) { .wall-wall { display: none; } .wall-tall { display: block; } }
 .enter-words { position: relative; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding-top: calc(var(--barh) + 40px); padding-bottom: clamp(40px, 9vh, 110px); }
 .enter-words .pane { max-width: 860px; }
 /* the print: a client site, framed, on the wall */
-.print { position: relative; margin: clamp(64px, 8vw, 120px) auto clamp(48px, 6vw, 96px); width: min(64vw, 1180px); }
+.print { position: relative; margin: clamp(64px, 8vw, 120px) auto clamp(48px, 6vw, 96px); width: min(64vw, 1180px, calc((100svh - var(--barh) - 170px) * 1.6)); }
 .print-frame { display: block; line-height: 0; background: var(--plaster); box-shadow: 0 0 0 1px rgba(28, 26, 23, .14), 0 2px 6px rgba(28, 26, 23, .06), 0 40px 90px -40px rgba(28, 26, 23, .45); }
-.print-frame img { width: 100%; height: auto; aspect-ratio: 2880 / 1120; object-fit: cover; }
+.print-frame img { display: block; width: 100%; height: auto; aspect-ratio: 1440 / 900; object-fit: contain; }
 .print figcaption { margin: 18px 0 0; max-width: none; font: 400 14px/1.5 var(--sans); color: #3f3a33; text-align: center; }
 .print figcaption strong { font-weight: 500; color: var(--ink); }
 .print figcaption a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--mortar); text-underline-offset: 4px; margin-left: 6px; white-space: nowrap; }
 @media (max-width: 700px) {
-  .print { width: 86vw; }
-  .print-frame img { aspect-ratio: 1170 / 1188; }
+  .print { width: min(86vw, calc((100svh - var(--barh) - 200px) * 390 / 844)); }
+  .print-frame img { aspect-ratio: 390 / 844; }
   .print figcaption { font-size: 13px; padding: 0 4px; }
 }
 .enter.live { height: 200vh; height: 200svh; }
 .enter.live .enter-stage { position: sticky; top: 0; height: 100vh; height: 100svh; min-height: 560px; overflow: hidden; display: block; }
 .enter.live .wall-box { inset: 0; height: auto; min-height: 0; }
-.enter.live .wall .frosted, .enter.live .wall .mortar { display: block; opacity: var(--f, 0); will-change: opacity; }
+.enter.live .wall .frosted { display: block; opacity: var(--f, 0); will-change: opacity; }
 .enter.live.frosted .wall .clear { visibility: hidden; }
 .enter.live .enter-words { position: absolute; left: 0; right: 0; top: 0; bottom: 0; min-height: 0; opacity: calc(1 - var(--w, 0)); transform: translate3d(0, calc(var(--w, 0) * -36px), 0); will-change: opacity, transform; }
 .enter.live.past-words .enter-words { visibility: hidden; }
@@ -170,11 +170,12 @@ html.over-enter .bar { -webkit-backdrop-filter: none; backdrop-filter: none; bac
 .plate { position: relative; display: block; text-decoration: none; background: var(--cement); box-shadow: 0 0 0 1px var(--hair), 0 40px 80px -48px rgba(28, 26, 23, .45); }
 .plate picture { display: block; }
 .plate img { width: 100%; height: auto; display: block; }
-.plate.d img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
-.plate.p { border-radius: 22px; overflow: hidden; }
-.plate.p img { aspect-ratio: 390 / 844; object-fit: cover; object-position: top; }
-.plate img.cut, .ba-site img.cut { object-fit: cover; object-position: 50% 100%; }
-@media (max-width: 700px) { .plate.p { border-radius: 14px; } }
+.plate.d img { aspect-ratio: 1440 / 900; object-fit: contain; }
+/* the phone is a dark bezel around a square-cornered screen, so no corner of
+   the capture is ever rounded off */
+.plate.p { padding: 5px; border-radius: 14px; background: var(--ink); }
+.plate.p img { aspect-ratio: 390 / 844; object-fit: contain; background: #fff; }
+@media (max-width: 700px) { .plate.p { padding: 3px; border-radius: 9px; } }
 /* coming into focus: a plate is soft as it rises into view and settles clear */
 .plate.focus picture { opacity: calc(1 - var(--f, 0) * .6); transform: translate3d(0, calc(var(--f, 0) * 18px), 0); }
 .plate.focus.clear picture { opacity: 1; transform: none; }
@@ -187,8 +188,8 @@ html.over-enter .bar { -webkit-backdrop-filter: none; backdrop-filter: none; bac
 .room { background: var(--plaster); border-top: 1px solid var(--mortar); padding: clamp(72px, 10vw, 120px) 0; }
 .room-in { width: 100%; max-width: calc(var(--max) + var(--gut) * 2); margin: 0 auto; padding: 0 var(--gut); }
 .room-art { position: relative; }
-.room-art.has-p { padding-right: 16%; }
-.room-art .plate.p { position: absolute; right: 0; bottom: -8%; width: 24%; }
+/* desktop and phone side by side, bottoms aligned, never overlapping */
+.room-art.has-p { display: grid; grid-template-columns: 76fr 20fr; column-gap: 4%; align-items: end; padding-right: 0; }
 .room-words { margin-top: clamp(40px, 8vw, 64px); }
 .room h2 { font-size: clamp(46px, 5.2vw, 96px); line-height: .96; }
 .room-words > p { font: 400 clamp(20px, 1.6vw, 26px)/1.4 var(--serif); color: var(--ink-2); max-width: 24ch; margin: 22px 0 28px; }
@@ -207,10 +208,8 @@ html.over-enter .bar { -webkit-backdrop-filter: none; backdrop-filter: none; bac
   .room.covered { visibility: hidden; }
   .room.flip .room-in { grid-template-columns: minmax(280px, 32%) minmax(0, 1fr); }
   .room.flip .room-art { order: 2; }
-  .room-art { width: min(100%, calc((100svh - var(--barh) - 260px) * 1.75)); justify-self: center; }
-  .room-art.has-p { padding-right: 0; width: min(100%, calc((100svh - var(--barh) - 260px) * 1.75)); }
-  .room-art.has-p > .plate.d { margin-right: 9%; }
-  .room-art .plate.p { width: 16%; bottom: -7%; }
+  .room-art { width: min(100%, calc((100svh - var(--barh) - 260px) * 1.6)); justify-self: center; }
+  .room-art.has-p { width: min(100%, calc((100svh - var(--barh) - 260px) * 2.1)); }
   .room-words { margin-top: 0; }
   .room-words .ba-mark .ba-frame { width: min(100%, 260px, calc(22svh * 4 / 3)); }
   .room-words .ba-mark.wide .ba-frame { width: min(100%, 340px, calc(16svh * 2)); }
@@ -240,7 +239,6 @@ html.over-enter .bar { -webkit-backdrop-filter: none; backdrop-filter: none; bac
 .trusted-row { position: relative; padding: 18px 0; border-top: 1px solid var(--mortar); border-bottom: 1px solid var(--mortar); --cols: 2.4; --gap: 12px; --dur: 60s; }
 .trusted-view { overflow: hidden; container-type: inline-size; -webkit-mask-image: linear-gradient(to right, transparent, #000 40px, #000 calc(100% - 40px), transparent); mask-image: linear-gradient(to right, transparent, #000 40px, #000 calc(100% - 40px), transparent); }
 .trusted-track { display: flex; width: max-content; animation: trusted-scroll var(--dur) linear infinite; will-change: transform; }
-.trusted-row:hover .trusted-track, .trusted-row:focus-within .trusted-track { animation-play-state: paused; }
 .trusted-track ul { list-style: none; margin: 0; padding: 0; display: flex; flex: 0 0 auto; }
 .trusted-track li { flex: 0 0 auto; box-sizing: content-box; padding-right: var(--gap); width: calc((89vw - var(--gap) * (var(--cols) - 1)) / var(--cols)); width: calc((100cqw - var(--gap) * (var(--cols) - 1)) / var(--cols)); }
 @keyframes trusted-scroll { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-50%, 0, 0); } }
@@ -377,8 +375,8 @@ figcaption strong { font: 400 21px/1.2 var(--display); color: var(--ink); margin
    mouse and moves with the arrow keys. */
 .ba { margin: 0; }
 .ba-frame { position: relative; overflow: hidden; background: var(--cement); box-shadow: 0 0 0 1px var(--hair), 0 40px 80px -48px rgba(28, 26, 23, .45); touch-action: pan-y; }
-.ba-site .ba-frame { aspect-ratio: 16 / 10; }
-.ba-site picture, .ba-site img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
+.ba-site .ba-frame { aspect-ratio: 1440 / 900; }
+.ba-site picture, .ba-site img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .ba-after, .ba-before { position: absolute; inset: 0; }
 .ba-before { clip-path: inset(0 calc(100% - var(--x)) 0 0); }
 .ba-mark .ba-frame { aspect-ratio: 4 / 3; width: min(100%, 320px); }

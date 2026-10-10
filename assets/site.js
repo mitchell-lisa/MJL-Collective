@@ -96,7 +96,7 @@
     var k = last.get(el) || {}; if (k[name] === val) return;
     k[name] = val; last.set(el, k); el.style[name] = val;
   }
-  var E = enter ? { words: enter.querySelector(".enter-words"), print: enter.querySelector(".print"), frost: $$(".wall .frosted, .wall .mortar", enter) } : null;
+  var E = enter ? { words: enter.querySelector(".enter-words"), print: enter.querySelector(".print"), frost: $$(".wall .frosted", enter) } : null;
   var headFrost = head ? head.querySelector(".frost") : null;
   function flag(el, cls, on) { if (el.classList.contains(cls) !== on) el.classList.toggle(cls, on); }
 
@@ -131,7 +131,9 @@
       var w = ease(0, .18, p), f = ease(.04, .34, p), c = ease(.36, .66, p);
       put(E.words, "opacity", (1 - w).toFixed(3));
       put(E.words, "transform", "translate3d(0," + (-36 * w).toFixed(1) + "px,0)");
-      E.frost.forEach(function (el) { put(el, "opacity", f.toFixed(3)); });
+      // never fully 0: the frost layer stays rastered and decoded from load, so
+      // the first scroll frame does not wait on it
+      E.frost.forEach(function (el) { put(el, "opacity", Math.max(f, .002).toFixed(3)); });
       put(E.print, "opacity", c.toFixed(3));
       put(E.print, "transform", "translate3d(-50%,calc(-50% + " + ((1 - c) * 28).toFixed(1) + "px),0)");
       flag(enter, "frosted", f > .995);

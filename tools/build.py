@@ -6,7 +6,7 @@ import json, pathlib, re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 C = ROOT / "tools" / "content"
 SITE = "https://mjlcollective.com"
-V = "20261010f1"  # bump when site.css or site.js changes
+V = "20261010g1"  # bump when site.css or site.js changes
 
 NAV = [("/work", "Work"), ("/partners", "Partners"), ("/services", "Services"), ("/about", "About"), ("/contact", "Contact")]
 
@@ -33,7 +33,6 @@ def head(path, title, desc, extra=""):
           "@context": "https://schema.org", "@type": "ProfessionalService", "name": "MJL Collective LLC",
           "alternateName": "MJL Collective", "url": SITE, "email": "mitchell@mjlcollective.com", "image": SITE + "/assets/og.png",
           "description": desc, "founder": {"@type": "Person", "name": "Mitchell Lisa"},
-          "address": {"@type": "PostalAddress", "addressLocality": "Moorestown", "addressRegion": "NJ", "addressCountry": "US"},
           "knowsAbout": ["web design", "brand identity", "logo design", "website maintenance", "email and SMS marketing"]}) + "</script>\n  "
     return f'''<!doctype html>
 <html lang="en">
@@ -122,7 +121,7 @@ def foot(cur, ask=True):
           <li><a href="/clients">Client login</a></li>
         </ul>
         <div class="legal">
-          <span>MJL Collective LLC, Moorestown, New Jersey</span>
+          <span>MJL Collective LLC</span>
           <span><a href="/privacy"{' aria-current="page"' if cur=="/privacy" else ""}>Privacy</a></span>
           <span><a href="/terms"{' aria-current="page"' if cur=="/terms" else ""}>Terms</a></span>
         </div>
@@ -146,18 +145,6 @@ SIZES = {"lead": "(min-width: 900px) min(62vw, 940px), 88vw", "look": "(min-widt
          "half": "(min-width: 900px) min(56vw, 800px), 100vw", "phone": "(min-width: 900px) 220px, 52vw",
          "lead-phone": "(min-width: 900px) 170px, 26vw"}
 
-# Pixels (at 1x) taken off the top of each capture so the client's own
-# navigation never sits under MJL's. The bottom of the frame stays put.
-CUT = {"arden-home-d": 96, "bluethreadz-catalog-d": 66, "bluethreadz-ordering-d": 66, "dorothy-home-d": 40,
-       "george-home-d": 126, "george-team-d": 126, "lewiston-projects-d": 86, "loftus-build-d": 78,
-       "loftus-home-d": 126, "loftus-old-d": 126, "simos-door-d": 102, "tiger-home-d": 82, "tiger-results-d": 82,
-       "arden-contact-p": 46, "bluethreadz-methods-p": 48, "dorothy-shop-p": 52, "george-auto-p": 121,
-       "lewiston-process-p": 77, "loftus-top-p": 86, "simos-book-p": 66, "tiger-top-p": 65}
-
-def cutattr(shot, w, h):
-    c = CUT.get(shot, 0)
-    return f' class="cut" style="aspect-ratio:{w}/{h - c}"' if c else ""
-
 def pic(shot, alt, sizes, eager=False):
     kind = shot.rsplit("-", 1)[1]
     ws = SHOT_W[kind]
@@ -165,7 +152,7 @@ def pic(shot, alt, sizes, eager=False):
     src = lambda ext: ", ".join(f"/assets/shots/{shot}-{x}.{ext} {x}w" for x in ws)
     lz = 'fetchpriority="high"' if eager else 'loading="lazy" decoding="async"'
     return (f'<picture><source type="image/avif" srcset="{src("avif")}" sizes="{sizes}">'
-            f'<img src="/assets/shots/{shot}-{ws[1]}.webp" srcset="{src("webp")}" sizes="{sizes}" alt="{alt}" width="{w}" height="{h}"{cutattr(shot, w, h)} {lz}></picture>')
+            f'<img src="/assets/shots/{shot}-{ws[1]}.webp" srcset="{src("webp")}" sizes="{sizes}" alt="{alt}" width="{w}" height="{h}" {lz}></picture>')
 
 def plate(url, shot, alt, sizes="look", eager=False, focus=True):
     kind = "d" if shot.endswith("-d") else "p"
@@ -232,15 +219,14 @@ def wall(crop, eager):
     return f'''<div class="wall wall-{crop}" style="--a:{g["w"] / g["h"]:.4f}" aria-hidden="true">
           <picture class="clear"><source media="{skip}" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><source type="image/avif" srcset="{gsrc(crop, "avif")}" sizes="{sizes}"><img src="/assets/glass/glass-{crop}-{GW[crop][1]}.webp" srcset="{gsrc(crop, "webp")}" sizes="{sizes}" alt="" width="{g["w"]}" height="{g["h"]}" {lz}></picture>
           <div class="frosted"></div>
-          <div class="mortar"></div>
         </div>'''
 
 for _c in ("wall", "tall", "band"): mortar_svg(_c)
 
 # Before and after: only where MJL really replaced something, and only with a
 # real before (the old file from the repo history, or the Wayback Machine).
-def ba(name, before, after, bcap, acap, kind="site", ratio=""):
-    st = f";aspect-ratio:{ratio}" if ratio else ""
+def ba(name, before, after, bcap, acap, kind="site"):
+    st = ""
     return f'''<figure class="ba ba-{kind}">
             <div class="ba-frame" style="--x:50%{st}">
               <div class="ba-after">{after}</div>
@@ -257,7 +243,7 @@ def shotpic(shot, alt, sizes, folder="shots"):
     w, h = (1440, 900) if kind == "d" else (390, 844)
     src = lambda ext: ", ".join(f"/assets/{folder}/{shot}-{x}.{ext} {x}w" for x in ws)
     return (f'<picture><source type="image/avif" srcset="{src("avif")}" sizes="{sizes}">'
-            f'<img src="/assets/{folder}/{shot}-{ws[1]}.webp" srcset="{src("webp")}" sizes="{sizes}" alt="{alt}" width="{w}" height="{h}"{cutattr(shot, w, h)} loading="lazy" decoding="async"></picture>')
+            f'<img src="/assets/{folder}/{shot}-{ws[1]}.webp" srcset="{src("webp")}" sizes="{sizes}" alt="{alt}" width="{w}" height="{h}" loading="lazy" decoding="async"></picture>')
 
 def mark(src, alt, w, h, cls=""):
     return f'<img class="mk{(" " + cls) if cls else ""}" src="{src}" alt="{alt}" width="{w}" height="{h}" loading="lazy" decoding="async">'
@@ -314,14 +300,14 @@ def page(name, path, title, desc, body, ask=True, extra=""):
 
 # ------------------------------------------------------------------ home
 L = "https://lewistondesignbuild.com"
-# Behind the glass: the cover of the concept site for Annie Culbertson's styling
+# Behind the glass: the top of the site for Annie Culbertson's styling
 # studio (not a client yet, so she is not in the logos or on Partners).
 ANNIE = "https://annie-culbertson-concept.vercel.app"
-print_ = (f'<picture><source media="(max-width: 700px)" type="image/avif" srcset="/assets/shots/annie-print-p-400.avif 400w, /assets/shots/annie-print-p-800.avif 800w, /assets/shots/annie-print-p-1170.avif 1170w" sizes="86vw">'
-          f'<source media="(max-width: 700px)" type="image/webp" srcset="/assets/shots/annie-print-p-400.webp 400w, /assets/shots/annie-print-p-800.webp 800w, /assets/shots/annie-print-p-1170.webp 1170w" sizes="86vw">'
-          f'<source type="image/avif" srcset="/assets/shots/annie-print-d-1200.avif 1200w, /assets/shots/annie-print-d-1800.avif 1800w, /assets/shots/annie-print-d-2880.avif 2880w" sizes="(min-width: 701px) min(64vw, 1180px), 86vw">'
-          f'<img src="/assets/shots/annie-print-d-1800.webp" srcset="/assets/shots/annie-print-d-1200.webp 1200w, /assets/shots/annie-print-d-1800.webp 1800w, /assets/shots/annie-print-d-2880.webp 2880w" sizes="(min-width: 701px) min(64vw, 1180px), 86vw" '
-          f'alt="The ABC Styling cover: Annie in a black cape at a carved wooden door, beside the ABC Styling wordmark on oxblood" width="1440" height="560" loading="lazy" decoding="async" fetchpriority="low"></picture>')
+print_ = (f'<picture><source media="(max-width: 700px)" type="image/avif" srcset="/assets/shots/annie-top-p-360.avif 360w, /assets/shots/annie-top-p-720.avif 720w, /assets/shots/annie-top-p-1080.avif 1080w" sizes="70vw">'
+          f'<source media="(max-width: 700px)" type="image/webp" srcset="/assets/shots/annie-top-p-360.webp 360w, /assets/shots/annie-top-p-720.webp 720w, /assets/shots/annie-top-p-1080.webp 1080w" sizes="70vw">'
+          f'<source type="image/avif" srcset="/assets/shots/annie-top-d-1200.avif 1200w, /assets/shots/annie-top-d-1800.avif 1800w, /assets/shots/annie-top-d-2880.avif 2880w" sizes="(min-width: 701px) min(64vw, 1180px), 70vw">'
+          f'<img src="/assets/shots/annie-top-d-1800.webp" srcset="/assets/shots/annie-top-d-1200.webp 1200w, /assets/shots/annie-top-d-1800.webp 1800w, /assets/shots/annie-top-d-2880.webp 2880w" sizes="(min-width: 701px) min(64vw, 1180px), 70vw" '
+          f'alt="The top of the ABC Styling site: Annie in a black cape beside the ABC Styling wordmark on oxblood, under the site&rsquo;s menu" width="1440" height="900" loading="lazy" decoding="async" fetchpriority="low"></picture>')
 home = f'''    <section class="enter" aria-labelledby="hello">
       <div class="enter-stage">
         <div class="wall-box">
@@ -340,7 +326,7 @@ home = f'''    <section class="enter" aria-labelledby="hello">
         </div>
         <figure class="print">
           <a class="print-frame" href="{ANNIE}" target="_blank" rel="noopener">{print_}</a>
-          <figcaption><strong>ABC Styling.</strong> A concept for Annie Culbertson, a stylist in New York. <a href="{ANNIE}" target="_blank" rel="noopener">See the concept</a></figcaption>
+          <figcaption><strong>ABC Styling.</strong> A site for Annie Culbertson, a stylist in New York. <a href="{ANNIE}" target="_blank" rel="noopener">See the site</a></figcaption>
         </figure>
       </div>
     </section>
@@ -348,20 +334,20 @@ home = f'''    <section class="enter" aria-labelledby="hello">
     {carousel()}
 
     <section class="rooms" aria-label="The newest sites">
-      {room("Arden Collective", "https://arden-collective.vercel.app", "I drew the oval seal, then built the site from it.", "arden-home-d", "The Arden Collective home page, with the oval seal: Boutique talent management for social media creators", "arden-business-p", "The Arden Collective business services on a phone", tag="h2", link="See the preview")}
-      {room("Loftus Construction", "https://loftus-construction.vercel.app", "Bridges since 1994, laid out for the engineers who hire them.", "loftus-build-d", "What Loftus builds: bridges, culverts and retaining walls, each with a photo of finished work", "loftus-top-p", "The Loftus home page on a phone", tag="h2", flip=True, link="See the preview")}
+      {room("Arden Collective", "https://arden-collective.vercel.app", "I drew the oval seal, then built the site from it.", "arden-home-d", "The Arden Collective home page, with the oval seal: Boutique talent management for social media creators", "arden-contact-p", "The Arden Collective contact page on a phone, with the pink seal", tag="h2", link="See the preview")}
+      {room("Loftus Construction", "https://loftus-construction.vercel.app", "Bridges since 1994, laid out for the engineers who hire them.", "loftus-home-d", "The Loftus home page: a steam train on a bridge under Design-build, preconstruction, construction", "loftus-top-p", "The Loftus home page on a phone", tag="h2", flip=True, link="See the preview")}
     </section>
     <div class="more-work wrap"><a class="link" href="/work">See all the work</a></div>
 
     </section>'''
 page("index.html", "/", "MJL Collective | Websites and brands for local businesses",
-     "Mitchell Lisa builds websites and brands for local businesses, then keeps them current. MJL Collective, Moorestown, New Jersey.", home)
+     "Mitchell Lisa builds websites and brands for local businesses, then keeps them current.", home)
 
 # ------------------------------------------------------------------ work
 loftus_ba = ba("Loftus Construction",
     shotpic("loftus-old-d", "The Loftus Construction website before: a dark header with the wordmark, a train photo in a slider, and three columns of text", ROOM_SIZES),
     shotpic("loftus-home-d", "The new Loftus Construction website: the same train, full width, under Design-build, preconstruction, construction", ROOM_SIZES),
-    'loftusconstruction.com, from the <a href="https://web.archive.org/web/20260513061451/http://loftusconstruction.com/" target="_blank" rel="noopener">Wayback Machine, May 2026</a>', "the preview I built", ratio="1440/774")
+    'loftusconstruction.com, from the <a href="https://web.archive.org/web/20260513061451/http://loftusconstruction.com/" target="_blank" rel="noopener">Wayback Machine, May 2026</a>', "the preview I built")
 tiger_ba = ba("Tiger Digital mark",
     mark("/assets/brand-work/tiger-before.webp", "The old Tiger Digital mark", 126, 174),
     mark("/assets/brand-work/tiger-seal.webp", "The Tiger Digital seal I drew", 160, 160),
@@ -373,14 +359,14 @@ blue_ba = ba("BlueThreadz logo",
 work = glass_head('''<h1>The work.</h1>
           <p class="lede">Every site opens live. Try them on your phone too.</p>''') + f'''
     <section class="rooms" aria-label="Client sites, newest first">
-      {room("Arden Collective", "https://arden-collective.vercel.app", "An oval seal I drew, and a site built from its type and color.", "arden-creative-d", "The Arden Collective services: Creative and Business on either side of a Full service oval", "arden-contact-p", "The Arden Collective contact page on a phone", side='<div class="marks">' + mark("/assets/brand-work/arden-seal.svg", "The Arden Collective oval seal", 120, 145, "tall") + mark("/assets/brand-work/arden-icon.svg", "The Arden favicon: the seal on an oak green tile", 64, 64, "icon") + '</div>', link="See the preview", rid="arden")}
+      {room("Arden Collective", "https://arden-collective.vercel.app", "An oval seal I drew, and a site built from its type and color.", "arden-contact-d", "The Arden Collective contact page, with the email address inside the pink oval seal", "arden-top-p", "The Arden Collective home page on a phone", side='<div class="marks">' + mark("/assets/brand-work/arden-seal.svg", "The Arden Collective oval seal", 120, 145, "tall") + mark("/assets/brand-work/arden-icon.svg", "The Arden favicon: the seal on an oak green tile", 64, 64, "icon") + '</div>', link="See the preview", rid="arden")}
       {room("Loftus Construction", "https://loftus-construction.vercel.app", "The site they have now, and the one I built for the engineers who hire them.", None, "", art=loftus_ba, flip=True, link="See the preview")}
-      {room("Lewiston Design &amp; Build", L, "Every house has its plans, and buyers try the finishes before they call.", "lewiston-projects-d", "The Lewiston projects page: three houses, each with its plans", "lewiston-process-p", "The Lewiston process on a phone", side='<div class="marks">' + mark("/assets/brand-work/lewiston-badge.webp", "The Lewiston lion badge, which I cut down into the favicon", 160, 160, "tall") + mark("/assets/brand-work/lewiston-fav-32.png", "The Lewiston favicon at 32 pixels", 32, 32, "px") + '</div>')}
-      {room("Simo&rsquo;s Barbering", "https://www.simosbarbering.com", "The shop&rsquo;s first website, live a week after I met John.", "simos-door-d", "The Simo&rsquo;s shop section: His name on the door, with John at work", "simos-book-p", "The Simo&rsquo;s price board on a phone, and Book a chair", flip=True, side='<div class="marks">' + mark("/assets/brand-work/simos-wordmark.webp", "The Simo&rsquo;s Barbering wordmark, cut out clean for the header", 600, 334, "wide") + '</div>')}
-      {room("George Gravenstine Agency", "https://georgeinsurance.agency", "Auto and home quotes right on the site, in three to five minutes.", "george-home-d", "The George Gravenstine home page: Independent auto, home and business insurance in Moorestown", "george-auto-p", "The George Gravenstine auto insurance page on a phone")}
+      {room("Lewiston Design &amp; Build", L, "Every house has its plans, and buyers try the finishes before they call.", "lewiston-projects-d", "The Lewiston projects page: three houses, each with its plans", "lewiston-top-p", "The Lewiston home page on a phone: Custom homes in Middle Tennessee", side='<div class="marks">' + mark("/assets/brand-work/lewiston-badge.webp", "The Lewiston lion badge, which I cut down into the favicon", 160, 160, "tall") + mark("/assets/brand-work/lewiston-fav-32.png", "The Lewiston favicon at 32 pixels", 32, 32, "px") + '</div>')}
+      {room("Simo&rsquo;s Barbering", "https://www.simosbarbering.com", "The shop&rsquo;s first website, live a week after I met John.", "simos-top-d", "The top of the Simo&rsquo;s site: the price board under the Simo&rsquo;s wordmark", "simos-top-p", "The Simo&rsquo;s site on a phone, with the price board", flip=True, side='<div class="marks">' + mark("/assets/brand-work/simos-wordmark.webp", "The Simo&rsquo;s Barbering wordmark, cut out clean for the header", 600, 334, "wide") + '</div>')}
+      {room("George Gravenstine Agency", "https://georgeinsurance.agency", "Auto and home quotes right on the site, in three to five minutes.", "george-home-d", "The George Gravenstine home page: Independent auto, home and business insurance", "george-auto-p", "The George Gravenstine auto insurance page on a phone")}
       {room("Tiger Digital", "https://www.tigerdigital.marketing", "Joe&rsquo;s agency got a new seal and a new site in two days.", "tiger-home-d", "The Tiger Digital home page: Real growth. No fluff. Under the new seal", "tiger-top-p", "The Tiger Digital home page on a phone", flip=True, side=tiger_ba, rid="tiger")}
-      {room("BlueThreadz", "https://www.bluethreadz.com", "I redrew the logo and rebuilt the catalog so every garment leads to a quote.", "bluethreadz-ordering-d", "BlueThreadz: What people are ordering right now, a row of jackets, hoodies and polos", "bluethreadz-methods-p", "BlueThreadz on a phone: Five ways to put your name on it", side=blue_ba)}
-      {room("Dorothy&rsquo;s Flower Shop", "https://www.dorothysflower.shop", "The old shop sign became the mark, then a line of hats.", "dorothy-home-d", "The Dorothy&rsquo;s Flower Shop home page, with lilacs", "dorothy-shop-p", "The Dorothy&rsquo;s hat shop on a phone", flip=True, side='<div class="marks">' + mark("/assets/brand-work/dorothy-sign.webp", "The Dorothy&rsquo;s Flower Shop mark, taken from the old shop sign", 160, 160, "tall") + '</div>')}
+      {room("BlueThreadz", "https://www.bluethreadz.com", "I redrew the logo and rebuilt the catalog so every garment leads to a quote.", "bluethreadz-home-d", "The BlueThreadz home page: Build your brand in style", "bluethreadz-quote-p", "The BlueThreadz quote form on a phone: Tell us about your order", side=blue_ba)}
+      {room("Dorothy&rsquo;s Flower Shop", "https://www.dorothysflower.shop", "The old shop sign became the mark, then a line of hats.", "dorothy-home-d", "The Dorothy&rsquo;s Flower Shop home page, a full screen of lilacs", "dorothy-shop-p", "The Dorothy&rsquo;s hat shop on a phone", flip=True, side='<div class="marks">' + mark("/assets/brand-work/dorothy-sign.webp", "The Dorothy&rsquo;s Flower Shop mark, taken from the old shop sign", 160, 160, "tall") + '</div>')}
     </section>'''
 page("work.html", "/work", "Work | MJL Collective",
      "Client sites by MJL Collective, newest first: Arden Collective, Loftus Construction, Lewiston Design & Build, Simo's Barbering, George Gravenstine Agency, Tiger Digital, BlueThreadz and Dorothy's Flower Shop.", work)
@@ -413,7 +399,7 @@ services = glass_head('''<h1>The site is where it starts.</h1>
           <p>The mark, the site, and a clear next step for the customer. Live in days.</p>
           <a class="link" href="/work#tiger">The Tiger Digital before and after</a>
         </div>
-        <div class="shot">{fig("https://www.tigerdigital.marketing", "tiger-results-d", "Tiger Digital results: Numbers we can back up", "Tiger Digital", "A new seal and a new site in two days.")}</div>
+        <div class="shot">{fig("https://www.tigerdigital.marketing", "tiger-services-d", "The Tiger Digital services page: Smarter coverage. Better spend. Real local results.", "Tiger Digital", "A new seal and a new site in two days.")}</div>
       </section>
       <section class="service flip" aria-labelledby="s2">
         <div class="words">
@@ -450,9 +436,10 @@ about = glass_head('''<h1>Mitchell Lisa</h1>
       <div class="wrap founder">
         <div class="portrait"><img src="/assets/mitchell.webp" alt="Mitchell Lisa in an MJL Collective cap" width="1122" height="1402" loading="lazy" decoding="async"></div>
         <div class="text">
-          <p>I started the company in 2023, and it&rsquo;s still based in Moorestown, New Jersey.</p>
-          <p>Some of my clients are right here in town, like the insurance agency on Church Street. Others are a barbershop in Wayne, Pennsylvania, and a homebuilder in Middle Tennessee.</p>
-          <p>Most of them started with a site that was out of date, or no site at all. I start with the brand, build the site, and stay on after launch so it doesn&rsquo;t go stale again.</p>
+          <p>I build every site myself, and usually the brand it sits on too: the logo, the type and the colors.</p>
+          <p>Once it&rsquo;s live, I keep it current. When your hours change, a price goes up or you add a service, you send me a note and I make the change.</p>
+          <p>There&rsquo;s nobody in the middle. You email or text me, and I&rsquo;m the one who answers and the one who does the work.</p>
+          <p>My clients include an insurance agency, a barbershop and a homebuilder. Most of them came to me with a site that was out of date, or no site at all.</p>
           <div class="actions">
             <a class="btn" href="/contact">Tell me about your business</a>
             <a class="link" href="/work">See the work</a>
@@ -461,7 +448,7 @@ about = glass_head('''<h1>Mitchell Lisa</h1>
       </div>
     </section>'''
 page("about.html", "/about", "About Mitchell Lisa | MJL Collective",
-     "Mitchell Lisa runs MJL Collective, a one-person studio in Moorestown, New Jersey that builds websites and brands for local businesses.", about)
+     "Mitchell Lisa runs MJL Collective, a one-person studio that builds websites and brands for local businesses and keeps them current.", about)
 
 # ------------------------------------------------------------------ contact
 contact = glass_head('''<h1>Tell me about the business.</h1>
