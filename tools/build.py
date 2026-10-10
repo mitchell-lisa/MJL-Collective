@@ -6,7 +6,7 @@ import json, pathlib, re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 C = ROOT / "tools" / "content"
 SITE = "https://mjlcollective.com"
-V = "20261010d1"  # bump when site.css or site.js changes
+V = "20261010f1"  # bump when site.css or site.js changes
 
 NAV = [("/work", "Work"), ("/partners", "Partners"), ("/services", "Services"), ("/about", "About"), ("/contact", "Contact")]
 
@@ -146,6 +146,18 @@ SIZES = {"lead": "(min-width: 900px) min(62vw, 940px), 88vw", "look": "(min-widt
          "half": "(min-width: 900px) min(56vw, 800px), 100vw", "phone": "(min-width: 900px) 220px, 52vw",
          "lead-phone": "(min-width: 900px) 170px, 26vw"}
 
+# Pixels (at 1x) taken off the top of each capture so the client's own
+# navigation never sits under MJL's. The bottom of the frame stays put.
+CUT = {"arden-home-d": 96, "bluethreadz-catalog-d": 66, "bluethreadz-ordering-d": 66, "dorothy-home-d": 40,
+       "george-home-d": 126, "george-team-d": 126, "lewiston-projects-d": 86, "loftus-build-d": 78,
+       "loftus-home-d": 126, "loftus-old-d": 126, "simos-door-d": 102, "tiger-home-d": 82, "tiger-results-d": 82,
+       "arden-contact-p": 46, "bluethreadz-methods-p": 48, "dorothy-shop-p": 52, "george-auto-p": 121,
+       "lewiston-process-p": 77, "loftus-top-p": 86, "simos-book-p": 66, "tiger-top-p": 65}
+
+def cutattr(shot, w, h):
+    c = CUT.get(shot, 0)
+    return f' class="cut" style="aspect-ratio:{w}/{h - c}"' if c else ""
+
 def pic(shot, alt, sizes, eager=False):
     kind = shot.rsplit("-", 1)[1]
     ws = SHOT_W[kind]
@@ -153,7 +165,7 @@ def pic(shot, alt, sizes, eager=False):
     src = lambda ext: ", ".join(f"/assets/shots/{shot}-{x}.{ext} {x}w" for x in ws)
     lz = 'fetchpriority="high"' if eager else 'loading="lazy" decoding="async"'
     return (f'<picture><source type="image/avif" srcset="{src("avif")}" sizes="{sizes}">'
-            f'<img src="/assets/shots/{shot}-{ws[1]}.webp" srcset="{src("webp")}" sizes="{sizes}" alt="{alt}" width="{w}" height="{h}" {lz}></picture>')
+            f'<img src="/assets/shots/{shot}-{ws[1]}.webp" srcset="{src("webp")}" sizes="{sizes}" alt="{alt}" width="{w}" height="{h}"{cutattr(shot, w, h)} {lz}></picture>')
 
 def plate(url, shot, alt, sizes="look", eager=False, focus=True):
     kind = "d" if shot.endswith("-d") else "p"
@@ -211,33 +223,6 @@ def mortar_svg(crop):
     out.append('</g></svg>')
     (ROOT / "assets" / "glass" / f"mortar-{crop}.svg").write_text("".join(out))
 
-def cells(crop, seed):
-    """One frosted pane per block. Each clears on its own as the page scrolls:
-    from the middle of the wall outwards, a little out of step, like glass
-    warming in the sun. site.js reads data-t (when it starts to clear); the
-    fades overlap so it reads as one soft wave."""
-    import random
-    rnd = random.Random(seed)
-    g = GRID[crop]; xs, ys = g["xs"], g["ys"]
-    nx, ny = len(xs) - 1, len(ys) - 1
-    cx, cy = 50, 46
-    items = []
-    for j in range(ny):
-        for i in range(nx):
-            l, w = xs[i], xs[i + 1] - xs[i]; t, h = ys[j], ys[j + 1] - ys[j]
-            mx, my = l + w / 2, t + h / 2
-            d = (((mx - cx) / 50) ** 2 + ((my - cy) / 50 * g["h"] / g["w"]) ** 2) ** .5
-            items.append((l, t, w, h, d))
-    lo = min(i[4] for i in items); hi = max(i[4] for i in items)
-    out = []
-    for l, t, w, h, d in items:
-        k = (d - lo) / (hi - lo)
-        bs = f"{100 * 100 / w:.3f}% {100 * 100 / h:.3f}%"
-        bx = 0 if w >= 100 else l / (100 - w) * 100
-        by = 0 if h >= 100 else t / (100 - h) * 100
-        out.append(f'<i style="left:{l:.3f}%;top:{t:.3f}%;width:{w + .05:.3f}%;height:{h + .05:.3f}%;background-size:{bs};background-position:{bx:.3f}% {by:.3f}%" data-t="{k:.3f}"></i>')
-    return "".join(out)
-
 def wall(crop, eager):
     g = GRID[crop]
     lz = 'fetchpriority="high"' if eager else 'loading="lazy" decoding="async"'
@@ -246,7 +231,7 @@ def wall(crop, eager):
     skip = "(max-width: 700px)" if crop == "wall" else "(min-width: 701px)"
     return f'''<div class="wall wall-{crop}" style="--a:{g["w"] / g["h"]:.4f}" aria-hidden="true">
           <picture class="clear"><source media="{skip}" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><source type="image/avif" srcset="{gsrc(crop, "avif")}" sizes="{sizes}"><img src="/assets/glass/glass-{crop}-{GW[crop][1]}.webp" srcset="{gsrc(crop, "webp")}" sizes="{sizes}" alt="" width="{g["w"]}" height="{g["h"]}" {lz}></picture>
-          <div class="cells">{cells(crop, 7 if crop == "wall" else 11)}</div>
+          <div class="frosted"></div>
           <div class="mortar"></div>
         </div>'''
 
@@ -254,9 +239,10 @@ for _c in ("wall", "tall", "band"): mortar_svg(_c)
 
 # Before and after: only where MJL really replaced something, and only with a
 # real before (the old file from the repo history, or the Wayback Machine).
-def ba(name, before, after, bcap, acap, kind="site"):
+def ba(name, before, after, bcap, acap, kind="site", ratio=""):
+    st = f";aspect-ratio:{ratio}" if ratio else ""
     return f'''<figure class="ba ba-{kind}">
-            <div class="ba-frame" style="--x:50%">
+            <div class="ba-frame" style="--x:50%{st}">
               <div class="ba-after">{after}</div>
               <div class="ba-before">{before}</div>
               <span class="ba-tag b" aria-hidden="true">Before</span><span class="ba-tag a" aria-hidden="true">After</span>
@@ -271,7 +257,7 @@ def shotpic(shot, alt, sizes, folder="shots"):
     w, h = (1440, 900) if kind == "d" else (390, 844)
     src = lambda ext: ", ".join(f"/assets/{folder}/{shot}-{x}.{ext} {x}w" for x in ws)
     return (f'<picture><source type="image/avif" srcset="{src("avif")}" sizes="{sizes}">'
-            f'<img src="/assets/{folder}/{shot}-{ws[1]}.webp" srcset="{src("webp")}" sizes="{sizes}" alt="{alt}" width="{w}" height="{h}" loading="lazy" decoding="async"></picture>')
+            f'<img src="/assets/{folder}/{shot}-{ws[1]}.webp" srcset="{src("webp")}" sizes="{sizes}" alt="{alt}" width="{w}" height="{h}"{cutattr(shot, w, h)} loading="lazy" decoding="async"></picture>')
 
 def mark(src, alt, w, h, cls=""):
     return f'<img class="mk{(" " + cls) if cls else ""}" src="{src}" alt="{alt}" width="{w}" height="{h}" loading="lazy" decoding="async">'
@@ -331,14 +317,13 @@ L = "https://lewistondesignbuild.com"
 # Behind the glass: the cover of the concept site for Annie Culbertson's styling
 # studio (not a client yet, so she is not in the logos or on Partners).
 ANNIE = "https://annie-culbertson-concept.vercel.app"
-behind = (f'<picture><source media="(max-width: 700px)" type="image/avif" srcset="/assets/shots/annie-cover-p-720.avif 720w, /assets/shots/annie-cover-p-1080.avif 1080w" sizes="100vw">'
-          f'<source media="(max-width: 700px)" type="image/webp" srcset="/assets/shots/annie-cover-p-720.webp 720w, /assets/shots/annie-cover-p-1080.webp 1080w" sizes="100vw">'
-          f'<source type="image/avif" srcset="/assets/shots/annie-cover-d-1800.avif 1800w, /assets/shots/annie-cover-d-2880.avif 2880w" sizes="100vw">'
-          f'<img src="/assets/shots/annie-cover-d-1800.webp" srcset="/assets/shots/annie-cover-d-1800.webp 1800w, /assets/shots/annie-cover-d-2880.webp 2880w" sizes="100vw" '
-          f'alt="The ABC Styling cover: Annie in a black cape at a carved wooden door, beside the ABC Styling wordmark on oxblood" width="1440" height="900" loading="lazy" decoding="async" fetchpriority="low"></picture>')
+print_ = (f'<picture><source media="(max-width: 700px)" type="image/avif" srcset="/assets/shots/annie-print-p-400.avif 400w, /assets/shots/annie-print-p-800.avif 800w, /assets/shots/annie-print-p-1170.avif 1170w" sizes="86vw">'
+          f'<source media="(max-width: 700px)" type="image/webp" srcset="/assets/shots/annie-print-p-400.webp 400w, /assets/shots/annie-print-p-800.webp 800w, /assets/shots/annie-print-p-1170.webp 1170w" sizes="86vw">'
+          f'<source type="image/avif" srcset="/assets/shots/annie-print-d-1200.avif 1200w, /assets/shots/annie-print-d-1800.avif 1800w, /assets/shots/annie-print-d-2880.avif 2880w" sizes="(min-width: 701px) min(64vw, 1180px), 86vw">'
+          f'<img src="/assets/shots/annie-print-d-1800.webp" srcset="/assets/shots/annie-print-d-1200.webp 1200w, /assets/shots/annie-print-d-1800.webp 1800w, /assets/shots/annie-print-d-2880.webp 2880w" sizes="(min-width: 701px) min(64vw, 1180px), 86vw" '
+          f'alt="The ABC Styling cover: Annie in a black cape at a carved wooden door, beside the ABC Styling wordmark on oxblood" width="1440" height="560" loading="lazy" decoding="async" fetchpriority="low"></picture>')
 home = f'''    <section class="enter" aria-labelledby="hello">
       <div class="enter-stage">
-        <a class="behind" href="{ANNIE}" target="_blank" rel="noopener" tabindex="-1">{behind}</a>
         <div class="wall-box">
         {wall("wall", True)}
         {wall("tall", True)}
@@ -353,9 +338,10 @@ home = f'''    <section class="enter" aria-labelledby="hello">
             </div>
           </div>
         </div>
-        <div class="wrap enter-credit">
-          <p class="credit"><strong>ABC Styling.</strong> A concept for Annie Culbertson, a stylist in New York. <a class="link" href="{ANNIE}" target="_blank" rel="noopener">See the concept</a></p>
-        </div>
+        <figure class="print">
+          <a class="print-frame" href="{ANNIE}" target="_blank" rel="noopener">{print_}</a>
+          <figcaption><strong>ABC Styling.</strong> A concept for Annie Culbertson, a stylist in New York. <a href="{ANNIE}" target="_blank" rel="noopener">See the concept</a></figcaption>
+        </figure>
       </div>
     </section>
 
@@ -375,7 +361,7 @@ page("index.html", "/", "MJL Collective | Websites and brands for local business
 loftus_ba = ba("Loftus Construction",
     shotpic("loftus-old-d", "The Loftus Construction website before: a dark header with the wordmark, a train photo in a slider, and three columns of text", ROOM_SIZES),
     shotpic("loftus-home-d", "The new Loftus Construction website: the same train, full width, under Design-build, preconstruction, construction", ROOM_SIZES),
-    'loftusconstruction.com, from the <a href="https://web.archive.org/web/20260513061451/http://loftusconstruction.com/" target="_blank" rel="noopener">Wayback Machine, May 2026</a>', "the preview I built")
+    'loftusconstruction.com, from the <a href="https://web.archive.org/web/20260513061451/http://loftusconstruction.com/" target="_blank" rel="noopener">Wayback Machine, May 2026</a>', "the preview I built", ratio="1440/774")
 tiger_ba = ba("Tiger Digital mark",
     mark("/assets/brand-work/tiger-before.webp", "The old Tiger Digital mark", 126, 174),
     mark("/assets/brand-work/tiger-seal.webp", "The Tiger Digital seal I drew", 160, 160),

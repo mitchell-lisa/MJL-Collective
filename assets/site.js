@@ -44,30 +44,23 @@
   var head = document.querySelector(".glass-head");
   var plates = $$(".plate.focus");
   var rooms = $$(".room");
-  var cellsets = [];
-  if (enter && !still) {
-    enter.classList.add("live");
-    $$(".wall", enter).forEach(function (w) {
-      var list = $$(".cells i", w).map(function (el) { return { el: el, t: parseFloat(el.getAttribute("data-t")) || 0, o: -1 }; });
-      cellsets.push({ wall: w, cells: list });
-    });
-  }
+  if (enter && !still) enter.classList.add("live");
   // Lens: a soft circle around the pointer where the frost lifts. Desktop only.
   var lenses = [];
   if (fine && !still) {
     var hosts = [];
-    if (enter) $$(".wall", enter).forEach(function (w) { hosts.push({ box: w, src: w.querySelector(".clear"), after: w.querySelector(".cells"), host: enter }); });
+    if (enter) $$(".wall", enter).forEach(function (w) { hosts.push({ box: w, src: w.querySelector(".clear"), after: w.querySelector(".frosted"), host: enter }); });
     if (head) hosts.push({ box: head, src: head.querySelector(".gp"), after: head.querySelector(".frost"), host: head });
     hosts.forEach(function (h) {
       if (!h.src || !h.after) return;
       var l = document.createElement("div"); l.className = "lens"; l.setAttribute("aria-hidden", "true");
       var c = h.src.cloneNode(true); c.removeAttribute("class");
-      $$("img", c).forEach(function (i) { i.removeAttribute("fetchpriority"); i.setAttribute("alt", ""); });
+      $$("img", c).forEach(function (i) { i.removeAttribute("fetchpriority"); i.setAttribute("alt", ""); i.setAttribute("loading", "lazy"); });
       l.appendChild(c);
       h.after.parentNode.insertBefore(l, h.after.nextSibling);
-      lenses.push({ el: l, box: h.box, host: h.host });
+      lenses.push({ el: l, box: h.box, host: h.host, last: "" });
     });
-    var mx = -999, my = -999, lq = false;
+    var mx = -999, my = -999, lq = false, lensOn = false;
     function moveLens() {
       lq = false;
       lenses.forEach(function (L) {
@@ -76,9 +69,36 @@
         L.el.style.setProperty("--my", (my - r.top).toFixed(0) + "px");
       });
     }
-    addEventListener("pointermove", function (e) { mx = e.clientX; my = e.clientY; if (!lq) { lq = true; requestAnimationFrame(moveLens); } }, { passive: true });
+    addEventListener("pointermove", function (e) { mx = e.clientX; my = e.clientY; if (!lensOn) { lensOn = true; lenses.forEach(function (L) { L.el.classList.add("on"); }); } if (!lq) { lq = true; requestAnimationFrame(moveLens); } }, { passive: true });
     document.addEventListener("pointerleave", function () { mx = my = -999; moveLens(); });
   }
+
+  // Everything below runs once per frame at most and reads nothing from the
+  // layout while scrolling: positions are measured on load and resize, and
+  // each frame only does arithmetic on scrollY and writes opacity/transform.
+  var G = { vh: innerHeight, enterTop: 0, enterH: 1, headTop: 0, headH: 1, roomTops: [], roomsOn: false };
+  function measure() {
+    var sy = scrollY;
+    G.vh = innerHeight;
+    if (enter) { var r = enter.getBoundingClientRect(); G.enterTop = r.top + sy; G.enterH = r.height; }
+    if (head) { var h = head.getBoundingClientRect(); G.headTop = h.top + sy; G.headH = h.height; }
+    G.roomsOn = rooms.length > 0 && !still && innerWidth > 900 && G.vh >= 620;
+    if (rooms.length) {
+      var box = rooms[0].parentNode.getBoundingClientRect().top + sy, acc = 0;
+      G.roomTops = rooms.map(function (el) { var t = box + acc; acc += el.offsetHeight; return t; });
+    }
+  }
+  var last = new Map();
+  // write real properties on the element that moves, not inherited custom
+  // properties on a parent, so a scroll frame never restyles a whole subtree
+  function put(el, name, val) {
+    if (!el) return;
+    var k = last.get(el) || {}; if (k[name] === val) return;
+    k[name] = val; last.set(el, k); el.style[name] = val;
+  }
+  var E = enter ? { words: enter.querySelector(".enter-words"), print: enter.querySelector(".print"), frost: $$(".wall .frosted, .wall .mortar", enter) } : null;
+  var headFrost = head ? head.querySelector(".frost") : null;
+  function flag(el, cls, on) { if (el.classList.contains(cls) !== on) el.classList.toggle(cls, on); }
 
   var seen = new Set();
   if ("IntersectionObserver" in window && !still) {
@@ -86,73 +106,81 @@
       es.forEach(function (e) { if (e.isIntersecting) seen.add(e.target); else seen.delete(e.target); });
       tick();
     }, { rootMargin: "10% 0px" });
-    plates.forEach(function (el) { el.style.setProperty("--f", "1"); io.observe(el); });
+    plates.forEach(function (el) { var pc = el.querySelector("picture"); if (pc) { pc.style.opacity = ".4"; pc.style.transform = "translate3d(0,18px,0)"; } io.observe(el); });
+  }
+  // decode pictures a screen or two before they arrive, so no frame waits on it
+  if ("IntersectionObserver" in window) {
+    var pre = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var img = e.target; pre.unobserve(img);
+        var go = function () { if (img.decode) img.decode().catch(function () {}); };
+        if (img.complete) go(); else img.addEventListener("load", go, { once: true });
+      });
+    }, { rootMargin: "200% 0px" });
+    $$(".room img, .plate img, .print img, .ba img, .lens img").forEach(function (i) { pre.observe(i); });
   }
 
   var queued = false;
   function frame() {
     queued = false;
-    var vh = innerHeight;
+    var sy = scrollY, vh = G.vh;
+    if (enter) flag(document.documentElement, "over-enter", sy < G.enterTop + G.enterH - 40);
     if (enter && !still) {
-      var r = enter.getBoundingClientRect();
-      var p = clamp(-r.top / Math.max(1, r.height - vh));
-      var st = enter.style;
-      // one screen of scroll: the words lift away as the wall frosts, then the
-      // frost lifts off in one soft wave from the middle and the mortar fades
-      var w = ease(0, .16, p), f = ease(0, .26, p);
-      var m = f * (1 - ease(.36, .6, p)), c = ease(.78, .92, p);
-      st.setProperty("--w", w.toFixed(3));
-      st.setProperty("--f", f.toFixed(3));
-      st.setProperty("--m", m.toFixed(3));
-      st.setProperty("--c", c.toFixed(3));
-      enter.classList.toggle("frosted", f > .995);
-      enter.classList.toggle("past-words", w > .995);
-      enter.classList.toggle("at-end", c > .5);
-      cellsets.forEach(function (set) {
-        if (set.wall.offsetWidth === 0) return;
-        for (var i = 0; i < set.cells.length; i++) {
-          var cl = set.cells[i];
-          var a = .3 + cl.t * .14;
-          var o = 1 - ease(a, a + .3, p);
-          o = Math.round(o * 50) / 50;
-          if (o !== cl.o) { cl.o = o; cl.el.style.opacity = o; }
-        }
-      });
-      lenses.forEach(function (L) { if (L.host === enter) L.el.style.setProperty("--l", (f * (1 - ease(.26, .34, p))).toFixed(3)); });
+      var p = clamp((sy - G.enterTop) / Math.max(1, G.enterH - vh));
+      var w = ease(0, .18, p), f = ease(.04, .34, p), c = ease(.36, .66, p);
+      put(E.words, "opacity", (1 - w).toFixed(3));
+      put(E.words, "transform", "translate3d(0," + (-36 * w).toFixed(1) + "px,0)");
+      E.frost.forEach(function (el) { put(el, "opacity", f.toFixed(3)); });
+      put(E.print, "opacity", c.toFixed(3));
+      put(E.print, "transform", "translate3d(-50%,calc(-50% + " + ((1 - c) * 28).toFixed(1) + "px),0)");
+      flag(enter, "frosted", f > .995);
+      flag(enter, "past-words", w > .995);
+      flag(enter, "showing", p > .2);
+      flag(enter, "at-end", c > .6);
+      lenses.forEach(function (L) { if (L.host === enter) put(L.el, "opacity", (f * (1 - c)).toFixed(3)); });
     }
     if (head && !still) {
-      var h = head.getBoundingClientRect();
-      var hf = ease(0, .9, -h.top / Math.max(1, h.height));
-      head.style.setProperty("--f", hf.toFixed(3));
-      lenses.forEach(function (L) { if (L.host === head) L.el.style.setProperty("--l", hf.toFixed(3)); });
+      var hf = ease(0, .9, (sy - G.headTop) / Math.max(1, G.headH));
+      put(headFrost, "opacity", hf.toFixed(3));
+      lenses.forEach(function (L) { if (L.host === head) put(L.el, "opacity", hf.toFixed(3)); });
     }
-    seen.forEach(function (el) {
-      var b = el.getBoundingClientRect();
-      var cc = (b.top + Math.min(b.height, vh) * .35) / vh;
-      var ff = ease(.62, .98, cc);
-      el.style.setProperty("--f", ff.toFixed(3));
-      el.classList.toggle("clear", ff === 0);
-    });
+    if (seen.size) {
+      var reads = [];
+      seen.forEach(function (el) { reads.push([el, el.getBoundingClientRect()]); });
+      reads.forEach(function (rb) {
+        var b = rb[1], cc = (b.top + Math.min(b.height, vh) * .35) / vh, ff = ease(.62, .98, cc);
+        var pic = rb[0].querySelector("picture");
+        put(pic, "opacity", (1 - ff * .6).toFixed(3));
+        put(pic, "transform", "translate3d(0," + (ff * 18).toFixed(1) + "px,0)");
+        flag(rb[0], "clear", ff === 0);
+      });
+    }
     // the exhibition: the next room comes up over this one, which settles back
-    if (rooms.length && !still && innerWidth > 900 && vh >= 620) {
+    if (G.roomsOn) {
       for (var k = 0; k < rooms.length; k++) {
+        var top = G.roomTops[k] - sy;
+        var nxt = k + 1 < rooms.length ? G.roomTops[k + 1] - sy : vh * 2;
+        var near = top < vh * 1.2 && nxt > -vh * .2;
+        flag(rooms[k], "near", near);
+        // a room the next one has fully covered stays stuck underneath; stop painting it
+        flag(rooms[k], "covered", nxt <= 0);
+        if (!near) continue;
+        var come = ease(0, 1, 1 - Math.max(0, top) / vh);
+        var go = ease(0, 1, 1 - nxt / vh);
         var rin = rooms[k].firstElementChild;
-        var top = rooms[k].getBoundingClientRect().top;
-        var nxt = rooms[k + 1] ? rooms[k + 1].getBoundingClientRect().top : vh * 2;
-        var come = ease(0, 1, 1 - top / vh);             // 0 while below the fold, 1 once it fills the screen
-        var go = ease(0, 1, 1 - nxt / vh);               // 1 once the next room covers it
-        var o = (.35 + .65 * come) * (1 - .9 * go);
-        rin.style.setProperty("--o", o.toFixed(3));
-        rin.style.setProperty("--y", ((1 - come) * 60).toFixed(1) + "px");
-        rin.style.setProperty("--k", (1 - .05 * go).toFixed(4));
+        put(rin, "opacity", ((.4 + .6 * come) * (1 - .88 * go)).toFixed(3));
+        put(rin, "transform", "translate3d(0," + ((1 - come) * 48).toFixed(1) + "px,0)");
       }
     }
   }
   function tick() { if (!queued) { queued = true; requestAnimationFrame(frame); } }
   addEventListener("scroll", tick, { passive: true });
-  addEventListener("resize", function () { align(); tick(); });
-  addEventListener("load", align);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(align);
+  var rq = false;
+  addEventListener("resize", function () { if (rq) return; rq = true; requestAnimationFrame(function () { rq = false; measure(); align(); frame(); }); }, { passive: true });
+  addEventListener("load", function () { measure(); align(); frame(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { measure(); align(); frame(); });
+  measure();
   align();
   frame();
 })();
