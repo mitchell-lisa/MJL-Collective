@@ -4,10 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Services | MJL Collective</title>
-  <meta name="description" content="Website and brand first, then the work that keeps a local business present online.">
+  <meta name="description" content="The website and brand first, then keeping it current: hosting, fixes, listings, catalogs, and email and SMS once the base is solid.">
   <link rel="canonical" href="https://mjlcollective.com/services">
+  <meta name="theme-color" content="#2b2825">
   <meta property="og:title" content="Services | MJL Collective">
-  <meta property="og:description" content="Website and brand first, then the work that keeps a local business present online.">
+  <meta property="og:description" content="The website and brand first, then keeping it current: hosting, fixes, listings, catalogs, and email and SMS once the base is solid.">
   <meta property="og:url" content="https://mjlcollective.com/services">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="MJL Collective">
@@ -18,65 +19,98 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Archivo:wght@500;700;800&display=swap">
-  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="preload" href="/assets/fonts/InstrumentSans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/SourceSerif4-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/site.css?v=20261009r2">
 </head>
-<body class="sub">
-  <header class="bar topbar" id="top">
+<body>
+  <a class="skip" href="#main">Skip to the content</a>
+  <header class="bar" id="top">
     <div class="wrap">
-      <a class="home" href="/" aria-label="MJL Collective, home"><picture><source media="(max-width: 640px)" srcset="/assets/mark-glyph-dark.png" width="256" height="192"><img class="mark" src="/assets/mark-dark.png" alt="MJL Collective" width="1024" height="265"></picture></a>
-      <nav aria-label="Main">
+      <a class="home" href="/" aria-label="MJL Collective, home"><img src="/assets/lockup-plaster.svg" alt="MJL Collective" width="552" height="143"></a>
+      <nav class="nav" aria-label="Main">
         <ul>
           <li><a href="/work">Work</a></li>
           <li><a href="/partners">Partners</a></li>
           <li><a href="/services" aria-current="page">Services</a></li>
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
-          <li><a href="/clients">Client login</a></li>
+          <li class="sep"><a href="/clients">Client login</a></li>
         </ul>
       </nav>
+      <div class="tools">
+        <a class="login" href="/clients">Client login</a>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="drawer">Menu</button>
+      </div>
     </div>
+    <nav class="drawer" id="drawer" aria-label="Menu">
+      <ul>
+        <li><a href="/work">Work</a></li>
+        <li><a href="/partners">Partners</a></li>
+        <li><a href="/services" aria-current="page">Services</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/clients">Client login</a></li>
+      </ul>
+      <p class="mail">Or email me at <a href="mailto:mitchell@mjlcollective.com">mitchell@mjlcollective.com</a></p>
+    </nav>
   </header>
 
-  <main>
-    <section class="page-head">
+  <main id="main">
+    <section class="dark page-head">
       <div class="wrap">
-        <h1>How the presence works.</h1>
-        <p>The website is where it starts. Then the updates and channels that usually go stale.</p>
+        <h1>The site is where it starts.</h1>
+        <p class="lede">Then I keep it current, and help with the channels that usually go stale.</p>
       </div>
     </section>
-    <section id="services">
-      <div class="wrap offer">
-        <article class="offer-lead">
-          <p class="label">Where it starts</p>
-          <h2>Website and brand</h2>
+    <div class="wrap">
+      <section class="service" aria-labelledby="s1">
+        <div class="words">
+          <h2 id="s1">Website and brand</h2>
           <p>The mark, the site, mobile, and clear calls to action. Live in days.</p>
-        </article>
-        <div class="offer-list">
-          <article class="offer-item">
-            <h3>Keep it current</h3>
-            <p>Text a change and it ships. Hosting, fixes, and catalog, listing, or team updates, without the owner chasing anyone.</p>
-          </article>
-          <article class="offer-item">
-            <h3>Show up where it matters</h3>
-            <p>Company LinkedIn or other channels. Listings, catalogs, and simple presence systems. Light automation so what is true offline stays true online.</p>
-          </article>
-          <article class="offer-item">
-            <h3>Bring people back</h3>
-            <p>Email and SMS once the base is solid. When search needs a specialist, I bring in search specialists I trust.</p>
-          </article>
+          <p>Tiger Digital went from a new brand to a new site in two days. Simo&rsquo;s had its first website a week after I met the owner.</p>
         </div>
-      </div>
-    </section>
+        <div class="shot"><figure><a class="browser" href="https://lewistondesignbuild.com" target="_blank" rel="noopener"><span class="addr">lewistondesignbuild.com</span><img src="/assets/shots/lewiston-finishes-d.webp" alt="The Lewiston finishes page: Design the exterior, with a stone house" width="1600" height="1000" loading="lazy" decoding="async"></a><figcaption><strong>Lewiston Design &amp; Build.</strong> The finishes page. Pick a facade, a paint color, a front door and a roof, and the house updates as you choose.</figcaption></figure></div>
+      </section>
+      <section class="service flip" aria-labelledby="s2">
+        <div class="words">
+          <h2 id="s2">Keep it current</h2>
+          <p>Text a change and it ships. Hosting, fixes, and catalog, listing or team updates, without the owner chasing anyone.</p>
+          <p>Clients send requests through the client portal and get my reply there, with a text when I answer if they want one.</p>
+        </div>
+        <div class="shot"><figure><a class="browser" href="https://georgeinsurance.agency/team" target="_blank" rel="noopener"><span class="addr">georgeinsurance.agency/team</span><img src="/assets/shots/george-team-d.webp" alt="The George Gravenstine team page" width="1600" height="1000" loading="lazy" decoding="async"></a><figcaption><strong>George Gravenstine Agency.</strong> The team page. When someone joins the office, they show up here.</figcaption></figure></div>
+      </section>
+      <section class="service" aria-labelledby="s3">
+        <div class="words">
+          <h2 id="s3">Show up where it matters</h2>
+          <p>Company LinkedIn or other channels. Listings, catalogs and simple presence systems. Light automation so what is true offline stays true online.</p>
+        </div>
+        <div class="shot"><figure><a class="browser" href="https://www.bluethreadz.com/products" target="_blank" rel="noopener"><span class="addr">bluethreadz.com/products</span><img src="/assets/shots/bluethreadz-products-d.webp" alt="The BlueThreadz catalog: Pick the garment. We&rsquo;ll put your name on it." width="1600" height="1000" loading="lazy" decoding="async"></a><figcaption><strong>BlueThreadz.</strong> The catalog. Every brand and garment they carry, each one a step away from a quote.</figcaption></figure></div>
+      </section>
+      <section class="service text-only" aria-labelledby="s4">
+        <div class="words">
+          <h2 id="s4">Bring people back</h2>
+        </div>
+        <div class="more">
+          <p>Email and SMS once the base is solid. When search needs a specialist, I bring in search specialists I trust.</p>
+          <a class="link" href="/contact">Ask me what your business needs</a>
+        </div>
+      </section>
+    </div>
   </main>
 
   <footer class="foot">
-    <div class="bar">
-      <div class="wrap">
-        <a class="home" href="/" aria-label="MJL Collective, home"><img class="mark" src="/assets/mark-white.png" alt="MJL Collective" width="1024" height="265"></a>
-        <nav aria-label="Footer">
+    <div class="wrap">
+      <div class="ask">
+        <h2>Tell me about the business.</h2>
+        <div>
+          <p>I&rsquo;ll tell you what it needs and what it costs, before anyone signs anything.</p>
+          <a class="btn solid" href="/contact">Write to me</a>
+          <a class="mail" href="mailto:mitchell@mjlcollective.com">mitchell@mjlcollective.com</a>
+        </div>
+      </div>
+      <img class="big-mark" src="/assets/lockup-plaster.svg" alt="MJL Collective" width="552" height="143" loading="lazy">
+      <div class="rows">
         <ul>
           <li><a href="/work">Work</a></li>
           <li><a href="/partners">Partners</a></li>
@@ -85,15 +119,15 @@
           <li><a href="/contact">Contact</a></li>
           <li><a href="/clients">Client login</a></li>
         </ul>
-      </nav>
+        <div class="legal">
+          <span>MJL Collective LLC, Moorestown, New Jersey</span>
+          <span><a href="/privacy">Privacy</a></span>
+          <span><a href="/terms">Terms</a></span>
+        </div>
       </div>
-    </div>
-    <div class="wrap legal">
-      <span>MJL Collective LLC, Moorestown, New Jersey</span>
-      <span><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · <a href="mailto:mitchell@mjlcollective.com">mitchell@mjlcollective.com</a></span>
     </div>
   </footer>
 
-  <script src="/assets/site.js"></script>
+  <script src="/assets/site.js?v=20261009r2"></script>
 </body>
 </html>

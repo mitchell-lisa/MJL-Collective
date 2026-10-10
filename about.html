@@ -3,11 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>About | MJL Collective</title>
-  <meta name="description" content="Mitchell Lisa. One person, not an agency, running the digital presence of local businesses.">
+  <title>About Mitchell Lisa | MJL Collective</title>
+  <meta name="description" content="Mitchell Lisa runs MJL Collective, a one-person studio in Moorestown, New Jersey that builds websites and brands for local businesses.">
   <link rel="canonical" href="https://mjlcollective.com/about">
-  <meta property="og:title" content="About | MJL Collective">
-  <meta property="og:description" content="Mitchell Lisa. One person, not an agency, running the digital presence of local businesses.">
+  <meta name="theme-color" content="#2b2825">
+  <meta property="og:title" content="About Mitchell Lisa | MJL Collective">
+  <meta property="og:description" content="Mitchell Lisa runs MJL Collective, a one-person studio in Moorestown, New Jersey that builds websites and brands for local businesses.">
   <meta property="og:url" content="https://mjlcollective.com/about">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="MJL Collective">
@@ -18,46 +19,81 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Archivo:wght@500;700;800&display=swap">
-  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="preload" href="/assets/fonts/InstrumentSans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/SourceSerif4-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/site.css?v=20261009r2">
 </head>
-<body class="sub">
-  <header class="bar topbar" id="top">
+<body>
+  <a class="skip" href="#main">Skip to the content</a>
+  <header class="bar" id="top">
     <div class="wrap">
-      <a class="home" href="/" aria-label="MJL Collective, home"><picture><source media="(max-width: 640px)" srcset="/assets/mark-glyph-dark.png" width="256" height="192"><img class="mark" src="/assets/mark-dark.png" alt="MJL Collective" width="1024" height="265"></picture></a>
-      <nav aria-label="Main">
+      <a class="home" href="/" aria-label="MJL Collective, home"><img src="/assets/lockup-plaster.svg" alt="MJL Collective" width="552" height="143"></a>
+      <nav class="nav" aria-label="Main">
         <ul>
           <li><a href="/work">Work</a></li>
           <li><a href="/partners">Partners</a></li>
           <li><a href="/services">Services</a></li>
           <li><a href="/about" aria-current="page">About</a></li>
           <li><a href="/contact">Contact</a></li>
-          <li><a href="/clients">Client login</a></li>
+          <li class="sep"><a href="/clients">Client login</a></li>
         </ul>
       </nav>
+      <div class="tools">
+        <a class="login" href="/clients">Client login</a>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="drawer">Menu</button>
+      </div>
     </div>
+    <nav class="drawer" id="drawer" aria-label="Menu">
+      <ul>
+        <li><a href="/work">Work</a></li>
+        <li><a href="/partners">Partners</a></li>
+        <li><a href="/services">Services</a></li>
+        <li><a href="/about" aria-current="page">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/clients">Client login</a></li>
+      </ul>
+      <p class="mail">Or email me at <a href="mailto:mitchell@mjlcollective.com">mitchell@mjlcollective.com</a></p>
+    </nav>
   </header>
 
-  <main>
-    <section id="about" class="about">
-      <div class="wrap">
-        <div class="portrait"><img src="/assets/mitchell.webp" alt="Mitchell Lisa" width="1122" height="1402"></div>
-        <div>
-          <p class="label">The person behind it</p>
+  <main id="main">
+    <section class="dark founder-head">
+      <div class="wrap founder">
+        <div class="portrait"><img src="/assets/mitchell.webp" alt="Mitchell Lisa in an MJL Collective cap" width="1122" height="1402" fetchpriority="high"></div>
+        <div class="intro">
           <h1>Mitchell Lisa</h1>
-          <p>MJL Collective is one person, not an agency. I design and build the site, then run what keeps the presence current. When you reach out, you are talking to me.</p>
+          <p class="first">MJL Collective is one person, not an agency. I design and build the site, then run what keeps the presence current.</p>
+          <p>When you reach out, you are talking to me.</p>
+        </div>
+      </div>
+    </section>
+    <section class="founder-body">
+      <div class="wrap founder">
+        <div class="text">
+          <p>I started the company in 2023, and it&rsquo;s still based in Moorestown, New Jersey.</p>
+          <p>Some of my clients are right here in town, like the insurance agency on Church Street. Others are a barbershop in Wayne, Pennsylvania, and a homebuilder in Middle Tennessee.</p>
+          <p>Most of them started with a site that was out of date, or no site at all. I start with the brand, build the site, and stay on after launch so it doesn&rsquo;t go stale again.</p>
+          <div class="actions">
+            <a class="btn solid dark" href="/contact">Tell me about your business</a>
+            <a class="link" href="/work">See the work</a>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="foot">
-    <div class="bar">
-      <div class="wrap">
-        <a class="home" href="/" aria-label="MJL Collective, home"><img class="mark" src="/assets/mark-white.png" alt="MJL Collective" width="1024" height="265"></a>
-        <nav aria-label="Footer">
+    <div class="wrap">
+      <div class="ask">
+        <h2>Tell me about the business.</h2>
+        <div>
+          <p>I&rsquo;ll tell you what it needs and what it costs, before anyone signs anything.</p>
+          <a class="btn solid" href="/contact">Write to me</a>
+          <a class="mail" href="mailto:mitchell@mjlcollective.com">mitchell@mjlcollective.com</a>
+        </div>
+      </div>
+      <img class="big-mark" src="/assets/lockup-plaster.svg" alt="MJL Collective" width="552" height="143" loading="lazy">
+      <div class="rows">
         <ul>
           <li><a href="/work">Work</a></li>
           <li><a href="/partners">Partners</a></li>
@@ -66,15 +102,15 @@
           <li><a href="/contact">Contact</a></li>
           <li><a href="/clients">Client login</a></li>
         </ul>
-      </nav>
+        <div class="legal">
+          <span>MJL Collective LLC, Moorestown, New Jersey</span>
+          <span><a href="/privacy">Privacy</a></span>
+          <span><a href="/terms">Terms</a></span>
+        </div>
       </div>
-    </div>
-    <div class="wrap legal">
-      <span>MJL Collective LLC, Moorestown, New Jersey</span>
-      <span><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · <a href="mailto:mitchell@mjlcollective.com">mitchell@mjlcollective.com</a></span>
     </div>
   </footer>
 
-  <script src="/assets/site.js"></script>
+  <script src="/assets/site.js?v=20261009r2"></script>
 </body>
 </html>

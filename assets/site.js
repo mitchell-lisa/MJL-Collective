@@ -1,31 +1,35 @@
-// The pinned bar goes solid as soon as the page leaves the top.
+// Home opening: end the dark band partway down the Lewiston frames so they run
+// out into the page, but never above the end of the headline block.
 (function () {
-  var bar = document.getElementById("top");
-  function onScroll() { bar.classList.toggle("solid", window.scrollY > 24); }
-  addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
+  var open = document.querySelector(".opening");
+  if (!open) return;
+  var lead = open.querySelector(".lead .browser"), words = open.querySelector(".words");
+  function fit() {
+    var top = open.getBoundingClientRect().top;
+    var l = lead.getBoundingClientRect(), w = words.getBoundingClientRect();
+    var split = Math.max(l.top - top + l.height * 0.62, w.bottom - top);
+    open.style.setProperty("--split", Math.round(split) + "px");
+    open.classList.add("split");
+  }
+  if ("ResizeObserver" in window) new ResizeObserver(fit).observe(open); else addEventListener("resize", fit);
+  addEventListener("load", fit);
+  fit();
 })();
 
-// Scale each preview iframe so the render fits its frame. The render width is
-// --vw on the frame, which the stylesheet drops to a phone width on small
-// screens, so a phone visitor sees the client's mobile layout rather than a
-// shrunken desktop one. Computed in JS because container-query units are not
-// applied reliably in every mobile WebKit view; the cqw value is the fallback.
+// Phone menu: the bar's Menu button opens the drawer of links.
 (function () {
-  var screens = document.querySelectorAll(".screen");
-  function fit() {
-    for (var i = 0; i < screens.length; i++) {
-      var base = parseFloat(getComputedStyle(screens[i]).getPropertyValue("--vw")) || 1280;
-      screens[i].style.setProperty("--s", (screens[i].clientWidth / base).toFixed(4));
-    }
+  var btn = document.querySelector(".menu-btn");
+  var drawer = document.getElementById("drawer");
+  if (!btn || !drawer) return;
+  function set(open) {
+    drawer.classList.toggle("open", open);
+    document.body.classList.toggle("menu-open", open);
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+    btn.textContent = open ? "Close" : "Menu";
   }
-  if ("ResizeObserver" in window) {
-    var ro = new ResizeObserver(fit);
-    for (var i = 0; i < screens.length; i++) ro.observe(screens[i]);
-  } else {
-    addEventListener("resize", fit);
-  }
-  fit();
+  btn.addEventListener("click", function () { set(!drawer.classList.contains("open")); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") set(false); });
+  addEventListener("resize", function () { if (innerWidth > 900) set(false); });
 })();
 
 // The contact form posts to /api/contact, which emails the submission

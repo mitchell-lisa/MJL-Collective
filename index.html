@@ -3,11 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MJL Collective</title>
-  <meta name="description" content="Digital presence for local businesses. The website is where it starts.">
+  <title>MJL Collective | Websites and brands for local businesses</title>
+  <meta name="description" content="Mitchell Lisa builds websites and brands for local businesses, then keeps them current. MJL Collective, Moorestown, New Jersey.">
   <link rel="canonical" href="https://mjlcollective.com/">
-  <meta property="og:title" content="MJL Collective">
-  <meta property="og:description" content="Digital presence for local businesses. The website is where it starts.">
+  <meta name="theme-color" content="#2b2825">
+  <meta property="og:title" content="MJL Collective | Websites and brands for local businesses">
+  <meta property="og:description" content="Mitchell Lisa builds websites and brands for local businesses, then keeps them current. MJL Collective, Moorestown, New Jersey.">
   <meta property="og:url" content="https://mjlcollective.com/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="MJL Collective">
@@ -18,76 +19,92 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"MJL Collective LLC","alternateName":"MJL Collective","url":"https://mjlcollective.com","email":"mitchell@mjlcollective.com","description":"Digital presence for local businesses. The website is where it starts.","founder":{"@type":"Person","name":"Mitchell Lisa"},"address":{"@type":"PostalAddress","addressLocality":"Moorestown","addressRegion":"NJ","addressCountry":"US"},"knowsAbout":["digital presence","brand identity","web design","website maintenance","listings and catalogs","email marketing"]}</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Archivo:wght@500;700;800&display=swap">
-  <link rel="stylesheet" href="/assets/site.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "ProfessionalService", "name": "MJL Collective LLC", "alternateName": "MJL Collective", "url": "https://mjlcollective.com", "email": "mitchell@mjlcollective.com", "image": "https://mjlcollective.com/assets/og.png", "description": "Mitchell Lisa builds websites and brands for local businesses, then keeps them current. MJL Collective, Moorestown, New Jersey.", "founder": {"@type": "Person", "name": "Mitchell Lisa"}, "address": {"@type": "PostalAddress", "addressLocality": "Moorestown", "addressRegion": "NJ", "addressCountry": "US"}, "knowsAbout": ["web design", "brand identity", "logo design", "website maintenance", "email and SMS marketing"]}</script>
+  <link rel="preload" href="/assets/fonts/InstrumentSans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/SourceSerif4-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/site.css?v=20261009r2">
 </head>
 <body>
-  <header class="bar topbar" id="top">
+  <a class="skip" href="#main">Skip to the content</a>
+  <header class="bar" id="top">
     <div class="wrap">
-      <a class="home" href="/" aria-label="MJL Collective, home"><picture class="mark-lite"><source media="(max-width: 640px)" srcset="/assets/mark-glyph-white.png" width="256" height="192"><img class="mark" src="/assets/mark-white.png" alt="MJL Collective" width="1024" height="265"></picture><picture class="mark-ink" aria-hidden="true"><source media="(max-width: 640px)" srcset="/assets/mark-glyph-dark.png" width="256" height="192"><img class="mark" src="/assets/mark-dark.png" alt="" width="1024" height="265"></picture></a>
-      <nav aria-label="Main">
+      <a class="home" href="/" aria-label="MJL Collective, home"><img src="/assets/lockup-plaster.svg" alt="MJL Collective" width="552" height="143"></a>
+      <nav class="nav" aria-label="Main">
         <ul>
           <li><a href="/work">Work</a></li>
           <li><a href="/partners">Partners</a></li>
           <li><a href="/services">Services</a></li>
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
-          <li><a href="/clients">Client login</a></li>
+          <li class="sep"><a href="/clients">Client login</a></li>
         </ul>
       </nav>
+      <div class="tools">
+        <a class="login" href="/clients">Client login</a>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="drawer">Menu</button>
+      </div>
     </div>
+    <nav class="drawer" id="drawer" aria-label="Menu">
+      <ul>
+        <li><a href="/work">Work</a></li>
+        <li><a href="/partners">Partners</a></li>
+        <li><a href="/services">Services</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/clients">Client login</a></li>
+      </ul>
+      <p class="mail">Or email me at <a href="mailto:mitchell@mjlcollective.com">mitchell@mjlcollective.com</a></p>
+    </nav>
   </header>
 
-  <section class="hero">
-    <picture><source media="(max-width: 640px)" srcset="/assets/glass-narrow.webp"><img class="bg" src="/assets/glass.webp" alt="" aria-hidden="true"></picture>
-    <div class="shade"></div>
-    <div class="hero-inner">
-      <div class="wrap">
-        <h1>Digital presence for local businesses.</h1>
-        <div><a class="cta" href="/contact">Request a meeting</a></div>
-      </div>
-    </div>
-  </section>
-
-  <main>
-    <section class="statement">
-      <div class="wrap">
-        <h2>The website is where it starts.</h2>
-        <p>Brand, updates, and the channels that usually go stale. When you reach out, you are talking to Mitchell.</p>
+  <main id="main">
+    <section class="opening">
+      <div class="wrap hero">
+        <h1>Websites and brands for local businesses. I build them, then I keep them current.</h1>
+        <div class="words">
+          <p class="lede">I&rsquo;m Mitchell Lisa, and MJL Collective is my studio in Moorestown, New Jersey. Everything on this page is a site I built. Open any of them and click around.</p>
+          <div class="actions">
+            <a class="btn solid" href="/contact">Tell me about your business</a>
+            <a class="link" href="/work">See all the work</a>
+          </div>
+        </div>
+        <div class="lead">
+          <div class="stage"><a class="browser" href="https://lewistondesignbuild.com" target="_blank" rel="noopener"><span class="addr">lewistondesignbuild.com</span><img src="/assets/shots/lewiston-home-d.webp" alt="The Lewiston Design and Build home page on a laptop: Custom homes in Middle Tennessee" width="1600" height="1000" fetchpriority="high"></a><a class="phone" href="https://lewistondesignbuild.com" target="_blank" rel="noopener" tabindex="-1"><img src="/assets/shots/lewiston-process-p.webp" alt="The Lewiston process on a phone: discovery, site and feasibility, architectural design, selections" width="600" height="1298" fetchpriority="high"></a></div>
+        </div>
       </div>
     </section>
+    <div class="wrap hero-after">
+      <p class="credit"><span><strong>Lewiston Design &amp; Build.</strong> Custom homes in Middle Tennessee. Every project has its plans to download, and buyers can try out finishes on the house before they call.</span> <a class="link" href="https://lewistondesignbuild.com" target="_blank" rel="noopener">Visit lewistondesignbuild.com</a></p>
+    </div>
 
-    <section class="trusted" aria-label="Trusted by">
+    <section class="clients" aria-labelledby="clients-h">
       <div class="wrap">
-        <div class="trusted-head">
-          <p>Trusted by</p>
-          <a href="/work">Work</a>
+        <div class="clients-head">
+          <h2 id="clients-h">The businesses I work with, newest first.</h2>
+          <a class="link" href="/partners">Every logo, with a link to the site</a>
         </div>
         <div class="trusted-row">
           <div class="trusted-view">
             <div class="trusted-track">
               <ul>
-                <li><a href="https://arden-collective.vercel.app" target="_blank" rel="noopener"><img class="mark-stack" src="/assets/logos/arden-seal-small.svg" width="827" height="985" style="--lw:44.9%;--lh:80.2%" alt="Arden Collective"></a></li>
-                <li><a href="https://loftus-construction.vercel.app" target="_blank" rel="noopener"><img class="mark-wide" src="/assets/logos/loftus.webp?v=20261009" width="1191" height="277" style="--lw:94.0%;--lh:32.8%" alt="Loftus Construction"></a></li>
-                <li><a href="https://lewistondesignbuild.com" target="_blank" rel="noopener"><img class="mark-stack" src="/assets/logos/lewiston.webp" width="508" height="508" style="--lw:49.0%;--lh:73.5%" alt="Lewiston Design &amp; Build"></a></li>
-                <li><a href="https://www.simosbarbering.com" target="_blank" rel="noopener"><img class="mark-wide" src="/assets/logos/simos.webp?v=20261002" width="1022" height="556" style="--lw:66.4%;--lh:54.2%" alt="Simo&rsquo;s Barbering"></a></li>
-                <li><a href="https://georgeinsurance.agency" target="_blank" rel="noopener"><img class="mark-wide" src="/assets/logos/george.webp" width="781" height="391" style="--lw:69.2%;--lh:52.0%" alt="George Gravenstine Insurance Agency"></a></li>
-                <li><a href="https://www.tigerdigital.marketing" target="_blank" rel="noopener"><img class="mark-stack" src="/assets/logos/tiger.webp" width="560" height="560" style="--lw:49.0%;--lh:73.5%" alt="Tiger Digital"></a></li>
-                <li><a href="https://www.bluethreadz.com" target="_blank" rel="noopener"><img class="mark-wide" src="/assets/logos/bluethreadz.webp" width="1000" height="132" style="--lw:94.0%;--lh:18.6%" alt="BlueThreadz"></a></li>
-                <li><a href="https://www.dorothysflower.shop" target="_blank" rel="noopener"><img class="mark-stack" src="/assets/logos/dorothy.webp" width="700" height="1337" style="--lw:30.0%;--lh:86.0%" alt="Dorothy&rsquo;s Flower Shop"></a></li>
+              <li><a href="https://arden-collective.vercel.app" target="_blank" rel="noopener"><img class="mark-stack" src="/assets/logos/arden-seal-small.svg" width="827" height="985" alt="Arden Collective" loading="lazy"></a></li>
+              <li><a href="https://loftus-construction.vercel.app" target="_blank" rel="noopener"><img class="mark-wide" src="/assets/logos/loftus.webp?v=20261009" width="1191" height="277" alt="Loftus Construction" loading="lazy"></a></li>
+              <li><a href="https://lewistondesignbuild.com" target="_blank" rel="noopener"><img class="mark-stack" src="/assets/logos/lewiston.webp" width="508" height="508" alt="Lewiston Design &amp; Build" loading="lazy"></a></li>
+              <li><a href="https://www.simosbarbering.com" target="_blank" rel="noopener"><img class="mark-wide" src="/assets/logos/simos.webp?v=20261002" width="1022" height="556" alt="Simo&rsquo;s Barbering" loading="lazy"></a></li>
+              <li><a href="https://georgeinsurance.agency" target="_blank" rel="noopener"><img class="mark-wide" src="/assets/logos/george.webp" width="781" height="391" alt="George Gravenstine Insurance Agency" loading="lazy"></a></li>
+              <li><a href="https://www.tigerdigital.marketing" target="_blank" rel="noopener"><img class="mark-stack" src="/assets/logos/tiger.webp" width="560" height="560" alt="Tiger Digital" loading="lazy"></a></li>
+              <li><a href="https://www.bluethreadz.com" target="_blank" rel="noopener"><img class="mark-wide" src="/assets/logos/bluethreadz.webp" width="1000" height="132" alt="BlueThreadz" loading="lazy"></a></li>
+              <li><a href="https://www.dorothysflower.shop" target="_blank" rel="noopener"><img class="mark-stack" src="/assets/logos/dorothy.webp" width="700" height="1337" alt="Dorothy&rsquo;s Flower Shop" loading="lazy"></a></li>
               </ul>
               <ul aria-hidden="true">
-                <li><a href="https://arden-collective.vercel.app" target="_blank" rel="noopener" tabindex="-1"><img class="mark-stack" src="/assets/logos/arden-seal-small.svg" width="827" height="985" style="--lw:44.9%;--lh:80.2%" alt=""></a></li>
-                <li><a href="https://loftus-construction.vercel.app" target="_blank" rel="noopener" tabindex="-1"><img class="mark-wide" src="/assets/logos/loftus.webp?v=20261009" width="1191" height="277" style="--lw:94.0%;--lh:32.8%" alt=""></a></li>
-                <li><a href="https://lewistondesignbuild.com" target="_blank" rel="noopener" tabindex="-1"><img class="mark-stack" src="/assets/logos/lewiston.webp" width="508" height="508" style="--lw:49.0%;--lh:73.5%" alt=""></a></li>
-                <li><a href="https://www.simosbarbering.com" target="_blank" rel="noopener" tabindex="-1"><img class="mark-wide" src="/assets/logos/simos.webp?v=20261002" width="1022" height="556" style="--lw:66.4%;--lh:54.2%" alt=""></a></li>
-                <li><a href="https://georgeinsurance.agency" target="_blank" rel="noopener" tabindex="-1"><img class="mark-wide" src="/assets/logos/george.webp" width="781" height="391" style="--lw:69.2%;--lh:52.0%" alt=""></a></li>
-                <li><a href="https://www.tigerdigital.marketing" target="_blank" rel="noopener" tabindex="-1"><img class="mark-stack" src="/assets/logos/tiger.webp" width="560" height="560" style="--lw:49.0%;--lh:73.5%" alt=""></a></li>
-                <li><a href="https://www.bluethreadz.com" target="_blank" rel="noopener" tabindex="-1"><img class="mark-wide" src="/assets/logos/bluethreadz.webp" width="1000" height="132" style="--lw:94.0%;--lh:18.6%" alt=""></a></li>
-                <li><a href="https://www.dorothysflower.shop" target="_blank" rel="noopener" tabindex="-1"><img class="mark-stack" src="/assets/logos/dorothy.webp" width="700" height="1337" style="--lw:30.0%;--lh:86.0%" alt=""></a></li>
+              <li><a href="https://arden-collective.vercel.app" target="_blank" rel="noopener" tabindex="-1"><img class="mark-stack" src="/assets/logos/arden-seal-small.svg" width="827" height="985" alt="" loading="lazy"></a></li>
+              <li><a href="https://loftus-construction.vercel.app" target="_blank" rel="noopener" tabindex="-1"><img class="mark-wide" src="/assets/logos/loftus.webp?v=20261009" width="1191" height="277" alt="" loading="lazy"></a></li>
+              <li><a href="https://lewistondesignbuild.com" target="_blank" rel="noopener" tabindex="-1"><img class="mark-stack" src="/assets/logos/lewiston.webp" width="508" height="508" alt="" loading="lazy"></a></li>
+              <li><a href="https://www.simosbarbering.com" target="_blank" rel="noopener" tabindex="-1"><img class="mark-wide" src="/assets/logos/simos.webp?v=20261002" width="1022" height="556" alt="" loading="lazy"></a></li>
+              <li><a href="https://georgeinsurance.agency" target="_blank" rel="noopener" tabindex="-1"><img class="mark-wide" src="/assets/logos/george.webp" width="781" height="391" alt="" loading="lazy"></a></li>
+              <li><a href="https://www.tigerdigital.marketing" target="_blank" rel="noopener" tabindex="-1"><img class="mark-stack" src="/assets/logos/tiger.webp" width="560" height="560" alt="" loading="lazy"></a></li>
+              <li><a href="https://www.bluethreadz.com" target="_blank" rel="noopener" tabindex="-1"><img class="mark-wide" src="/assets/logos/bluethreadz.webp" width="1000" height="132" alt="" loading="lazy"></a></li>
+              <li><a href="https://www.dorothysflower.shop" target="_blank" rel="noopener" tabindex="-1"><img class="mark-stack" src="/assets/logos/dorothy.webp" width="700" height="1337" alt="" loading="lazy"></a></li>
               </ul>
             </div>
           </div>
@@ -95,24 +112,57 @@
       </div>
     </section>
 
-    <section class="index" aria-label="Site index">
+    <section class="projects" aria-labelledby="recent-h" style="padding-top:clamp(40px,5vw,72px)">
       <div class="wrap">
-        <ul>
-          <li><a href="/work"><span class="name">Work</span><span class="line">Identity and the live site.</span></a></li>
-          <li><a href="/partners"><span class="name">Partners</span><span class="line">The logos, each linked to the live site.</span></a></li>
-          <li><a href="/services"><span class="name">Services</span><span class="line">The site, then what keeps the presence current.</span></a></li>
-          <li><a href="/about"><span class="name">About</span><span class="line">One person, not an agency.</span></a></li>
-          <li><a href="/contact"><span class="name">Contact</span><span class="line">Tell me about the business.</span></a></li>
-        </ul>
+        <div class="section-head">
+          <h2 id="recent-h">The newest sites.</h2>
+        </div>
+        <article class="project ">
+          <div class="stage"><a class="browser" href="https://arden-collective.vercel.app" target="_blank" rel="noopener"><span class="addr">arden-collective.vercel.app</span><img src="/assets/shots/arden-home-d.webp" alt="The Arden Collective home page: Boutique talent management for social media creators" width="1600" height="1000" loading="lazy" decoding="async"></a><a class="phone" href="https://arden-collective.vercel.app" target="_blank" rel="noopener" tabindex="-1"><img src="/assets/shots/arden-business-p.webp" alt="The Arden Collective business services and contact section on a phone" width="600" height="1298" loading="lazy" decoding="async"></a></div>
+          <div class="about-it"><h3>Arden Collective</h3><p>Talent management for social media creators. I drew the oval seal and built the site around it. The site is in preview.</p><a class="link" href="https://arden-collective.vercel.app" target="_blank" rel="noopener">Visit arden-collective.vercel.app</a></div>
+        </article>
+        <article class="project right">
+          <div class="stage flip"><a class="browser" href="https://loftus-construction.vercel.app" target="_blank" rel="noopener"><span class="addr">loftus-construction.vercel.app</span><img src="/assets/shots/loftus-home-d.webp" alt="The Loftus Construction home page: Design-build, preconstruction, construction" width="1600" height="1000" loading="lazy" decoding="async"></a><a class="phone" href="https://loftus-construction.vercel.app" target="_blank" rel="noopener" tabindex="-1"><img src="/assets/shots/loftus-projects-p.webp" alt="The Loftus Construction project list on a phone" width="600" height="1298" loading="lazy" decoding="async"></a></div>
+          <div class="about-it"><h3>Loftus Construction</h3><p>A heavy civil contractor in Cinnaminson, New Jersey, building bridges since 1994. The new site is written for the people who hire them, like PennDOT and NJDOT, and is in preview.</p><a class="link" href="https://loftus-construction.vercel.app" target="_blank" rel="noopener">Visit loftus-construction.vercel.app</a></div>
+        </article>
+        <div class="pair">
+          <article class="item"><div class="stage"><a class="browser" href="https://georgeinsurance.agency" target="_blank" rel="noopener"><span class="addr">georgeinsurance.agency</span><img src="/assets/shots/george-home-d.webp" alt="The George Gravenstine Agency home page: Independent auto, home and business insurance in Moorestown" width="1600" height="1000" loading="lazy" decoding="async"></a><a class="phone" href="https://georgeinsurance.agency" target="_blank" rel="noopener" tabindex="-1"><img src="/assets/shots/george-agency-p.webp" alt="The George Gravenstine Agency business insurance and community section on a phone" width="600" height="1298" loading="lazy" decoding="async"></a></div><div class="about-it"><h3>George Gravenstine Agency</h3><p>An independent insurance agency on North Church Street, here in Moorestown. Auto, home and business insurance, with the agency&rsquo;s own quoting system built into the site.</p><a class="link" href="https://georgeinsurance.agency" target="_blank" rel="noopener">Visit georgeinsurance.agency</a></div></article>
+          <article class="item"><a class="browser" href="https://www.simosbarbering.com" target="_blank" rel="noopener"><span class="addr">simosbarbering.com</span><img src="/assets/shots/simos-menu-d.webp" alt="The Simo&rsquo;s Barbering price board on the website" width="1600" height="1000" loading="lazy" decoding="async"></a><div class="about-it"><h3>Simo&rsquo;s Barbering</h3><p>A traditional barbershop on Lancaster Ave in Wayne. The shop&rsquo;s first website, live one week after I met John.</p><a class="link" href="https://www.simosbarbering.com" target="_blank" rel="noopener">Visit simosbarbering.com</a></div></article>
+        </div>
+        <div class="after-projects">
+          <p>Tiger Digital, BlueThreadz, Dorothy&rsquo;s and the rest are on the Work page.</p>
+          <a class="link" href="/work">See all the work</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="band cement on-light" aria-labelledby="me-h">
+      <div class="wrap two">
+        <h2 id="me-h">When you reach out, you&rsquo;re talking to me.</h2>
+        <div>
+          <p>MJL Collective is one person, not an agency. I design the brand, build the site and keep running it after launch.</p>
+          <p>Text me a change and it ships. Hosting, fixes, menus, team pages and catalogs stay current without you chasing anyone. When something needs a specialist, like deep search work, I bring in people I trust and tell you up front.</p>
+          <div class="actions">
+            <a class="link" href="/services">What I do</a>
+            <a class="link" href="/about">About me</a>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="foot">
-    <div class="bar">
-      <div class="wrap">
-        <a class="home" href="/" aria-label="MJL Collective, home"><img class="mark" src="/assets/mark-white.png" alt="MJL Collective" width="1024" height="265"></a>
-        <nav aria-label="Footer">
+    <div class="wrap">
+      <div class="ask">
+        <h2>Tell me about the business.</h2>
+        <div>
+          <p>I&rsquo;ll tell you what it needs and what it costs, before anyone signs anything.</p>
+          <a class="btn solid" href="/contact">Write to me</a>
+          <a class="mail" href="mailto:mitchell@mjlcollective.com">mitchell@mjlcollective.com</a>
+        </div>
+      </div>
+      <img class="big-mark" src="/assets/lockup-plaster.svg" alt="MJL Collective" width="552" height="143" loading="lazy">
+      <div class="rows">
         <ul>
           <li><a href="/work">Work</a></li>
           <li><a href="/partners">Partners</a></li>
@@ -121,15 +171,15 @@
           <li><a href="/contact">Contact</a></li>
           <li><a href="/clients">Client login</a></li>
         </ul>
-      </nav>
+        <div class="legal">
+          <span>MJL Collective LLC, Moorestown, New Jersey</span>
+          <span><a href="/privacy">Privacy</a></span>
+          <span><a href="/terms">Terms</a></span>
+        </div>
       </div>
-    </div>
-    <div class="wrap legal">
-      <span>MJL Collective LLC, Moorestown, New Jersey</span>
-      <span><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · <a href="mailto:mitchell@mjlcollective.com">mitchell@mjlcollective.com</a></span>
     </div>
   </footer>
 
-  <script src="/assets/site.js"></script>
+  <script src="/assets/site.js?v=20261009r2"></script>
 </body>
 </html>

@@ -4,10 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Partners | MJL Collective</title>
-  <meta name="description" content="Client logos, each linked to the live site.">
+  <meta name="description" content="The businesses MJL Collective works with, newest first. Each logo links to the live site.">
   <link rel="canonical" href="https://mjlcollective.com/partners">
+  <meta name="theme-color" content="#2b2825">
   <meta property="og:title" content="Partners | MJL Collective">
-  <meta property="og:description" content="Client logos, each linked to the live site.">
+  <meta property="og:description" content="The businesses MJL Collective works with, newest first. Each logo links to the live site.">
   <meta property="og:url" content="https://mjlcollective.com/partners">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="MJL Collective">
@@ -18,57 +19,78 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon.png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Archivo:wght@500;700;800&display=swap">
-  <link rel="stylesheet" href="/assets/site.css">
+  <link rel="preload" href="/assets/fonts/InstrumentSans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/SourceSerif4-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/site.css?v=20261009r2">
 </head>
-<body class="sub">
-  <header class="bar topbar" id="top">
+<body>
+  <a class="skip" href="#main">Skip to the content</a>
+  <header class="bar" id="top">
     <div class="wrap">
-      <a class="home" href="/" aria-label="MJL Collective, home"><picture><source media="(max-width: 640px)" srcset="/assets/mark-glyph-dark.png" width="256" height="192"><img class="mark" src="/assets/mark-dark.png" alt="MJL Collective" width="1024" height="265"></picture></a>
-      <nav aria-label="Main">
+      <a class="home" href="/" aria-label="MJL Collective, home"><img src="/assets/lockup-plaster.svg" alt="MJL Collective" width="552" height="143"></a>
+      <nav class="nav" aria-label="Main">
         <ul>
           <li><a href="/work">Work</a></li>
           <li><a href="/partners" aria-current="page">Partners</a></li>
           <li><a href="/services">Services</a></li>
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
-          <li><a href="/clients">Client login</a></li>
+          <li class="sep"><a href="/clients">Client login</a></li>
         </ul>
       </nav>
+      <div class="tools">
+        <a class="login" href="/clients">Client login</a>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="drawer">Menu</button>
+      </div>
     </div>
+    <nav class="drawer" id="drawer" aria-label="Menu">
+      <ul>
+        <li><a href="/work">Work</a></li>
+        <li><a href="/partners" aria-current="page">Partners</a></li>
+        <li><a href="/services">Services</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/clients">Client login</a></li>
+      </ul>
+      <p class="mail">Or email me at <a href="mailto:mitchell@mjlcollective.com">mitchell@mjlcollective.com</a></p>
+    </nav>
   </header>
 
-  <main>
-    <section class="page-head">
+  <main id="main">
+    <section class="dark page-head">
       <div class="wrap">
         <h1>Partners.</h1>
-        <p>Each logo links to the live site.</p>
+        <p class="lede">The businesses I work with, newest first. Each logo opens the live site.</p>
       </div>
     </section>
-
     <section class="partners">
       <div class="wrap">
         <ul class="logo-grid">
-          <li><a href="https://arden-collective.vercel.app" target="_blank" rel="noopener"><img class="mark-stack" src="/assets/logos/arden-seal-small.svg" width="827" height="985" style="--lw:44.9%;--lh:80.2%" alt="Arden Collective"></a></li>
-          <li><a href="https://loftus-construction.vercel.app" target="_blank" rel="noopener"><img class="mark-wide" src="/assets/logos/loftus.webp?v=20261009" width="1191" height="277" style="--lw:94.0%;--lh:32.8%" alt="Loftus Construction"></a></li>
-          <li><a href="https://lewistondesignbuild.com" target="_blank" rel="noopener"><img class="mark-stack" src="/assets/logos/lewiston.webp" width="508" height="508" style="--lw:49.0%;--lh:73.5%" alt="Lewiston Design &amp; Build"></a></li>
-          <li><a href="https://www.simosbarbering.com" target="_blank" rel="noopener"><img class="mark-wide" src="/assets/logos/simos.webp?v=20261002" width="1022" height="556" style="--lw:66.4%;--lh:54.2%" alt="Simo&rsquo;s Barbering"></a></li>
-          <li><a href="https://georgeinsurance.agency" target="_blank" rel="noopener"><img class="mark-wide" src="/assets/logos/george.webp" width="781" height="391" style="--lw:69.2%;--lh:52.0%" alt="George Gravenstine Insurance Agency"></a></li>
-          <li><a href="https://www.tigerdigital.marketing" target="_blank" rel="noopener"><img class="mark-stack" src="/assets/logos/tiger.webp" width="560" height="560" style="--lw:49.0%;--lh:73.5%" alt="Tiger Digital"></a></li>
-          <li><a href="https://www.bluethreadz.com" target="_blank" rel="noopener"><img class="mark-wide" src="/assets/logos/bluethreadz.webp" width="1000" height="132" style="--lw:94.0%;--lh:18.6%" alt="BlueThreadz"></a></li>
-          <li><a href="https://www.dorothysflower.shop" target="_blank" rel="noopener"><img class="mark-stack" src="/assets/logos/dorothy.webp" width="700" height="1337" style="--lw:30.0%;--lh:86.0%" alt="Dorothy&rsquo;s Flower Shop"></a></li>
+          <li><a href="https://arden-collective.vercel.app" target="_blank" rel="noopener"><img class="mark-stack" src="/assets/logos/arden-seal-small.svg" width="827" height="985" alt="Arden Collective" loading="lazy"><span class="nm" aria-hidden="true">Arden Collective</span></a></li>
+          <li><a href="https://loftus-construction.vercel.app" target="_blank" rel="noopener"><img class="mark-wide" src="/assets/logos/loftus.webp?v=20261009" width="1191" height="277" alt="Loftus Construction" loading="lazy"><span class="nm" aria-hidden="true">Loftus Construction</span></a></li>
+          <li><a href="https://lewistondesignbuild.com" target="_blank" rel="noopener"><img class="mark-stack" src="/assets/logos/lewiston.webp" width="508" height="508" alt="Lewiston Design &amp; Build" loading="lazy"><span class="nm" aria-hidden="true">Lewiston Design &amp; Build</span></a></li>
+          <li><a href="https://www.simosbarbering.com" target="_blank" rel="noopener"><img class="mark-wide" src="/assets/logos/simos.webp?v=20261002" width="1022" height="556" alt="Simo&rsquo;s Barbering" loading="lazy"><span class="nm" aria-hidden="true">Simo&rsquo;s Barbering</span></a></li>
+          <li><a href="https://georgeinsurance.agency" target="_blank" rel="noopener"><img class="mark-wide" src="/assets/logos/george.webp" width="781" height="391" alt="George Gravenstine Insurance Agency" loading="lazy"><span class="nm" aria-hidden="true">George Gravenstine</span></a></li>
+          <li><a href="https://www.tigerdigital.marketing" target="_blank" rel="noopener"><img class="mark-stack" src="/assets/logos/tiger.webp" width="560" height="560" alt="Tiger Digital" loading="lazy"><span class="nm" aria-hidden="true">Tiger Digital</span></a></li>
+          <li><a href="https://www.bluethreadz.com" target="_blank" rel="noopener"><img class="mark-wide" src="/assets/logos/bluethreadz.webp" width="1000" height="132" alt="BlueThreadz" loading="lazy"><span class="nm" aria-hidden="true">BlueThreadz</span></a></li>
+          <li><a href="https://www.dorothysflower.shop" target="_blank" rel="noopener"><img class="mark-stack" src="/assets/logos/dorothy.webp" width="700" height="1337" alt="Dorothy&rsquo;s Flower Shop" loading="lazy"><span class="nm" aria-hidden="true">Dorothy&rsquo;s Flower Shop</span></a></li>
         </ul>
       </div>
     </section>
   </main>
 
   <footer class="foot">
-    <div class="bar">
-      <div class="wrap">
-        <a class="home" href="/" aria-label="MJL Collective, home"><img class="mark" src="/assets/mark-white.png" alt="MJL Collective" width="1024" height="265"></a>
-        <nav aria-label="Footer">
+    <div class="wrap">
+      <div class="ask">
+        <h2>Tell me about the business.</h2>
+        <div>
+          <p>I&rsquo;ll tell you what it needs and what it costs, before anyone signs anything.</p>
+          <a class="btn solid" href="/contact">Write to me</a>
+          <a class="mail" href="mailto:mitchell@mjlcollective.com">mitchell@mjlcollective.com</a>
+        </div>
+      </div>
+      <img class="big-mark" src="/assets/lockup-plaster.svg" alt="MJL Collective" width="552" height="143" loading="lazy">
+      <div class="rows">
         <ul>
           <li><a href="/work">Work</a></li>
           <li><a href="/partners" aria-current="page">Partners</a></li>
@@ -77,15 +99,15 @@
           <li><a href="/contact">Contact</a></li>
           <li><a href="/clients">Client login</a></li>
         </ul>
-      </nav>
+        <div class="legal">
+          <span>MJL Collective LLC, Moorestown, New Jersey</span>
+          <span><a href="/privacy">Privacy</a></span>
+          <span><a href="/terms">Terms</a></span>
+        </div>
       </div>
-    </div>
-    <div class="wrap legal">
-      <span>MJL Collective LLC, Moorestown, New Jersey</span>
-      <span><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · <a href="mailto:mitchell@mjlcollective.com">mitchell@mjlcollective.com</a></span>
     </div>
   </footer>
 
-  <script src="/assets/site.js"></script>
+  <script src="/assets/site.js?v=20261009r2"></script>
 </body>
 </html>
