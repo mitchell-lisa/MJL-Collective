@@ -6,12 +6,13 @@ import json, pathlib, re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 C = ROOT / "tools" / "content"
 SITE = "https://mjlcollective.com"
-V = "20261010g1"  # bump when site.css or site.js changes
+V = "20261010i1"  # bump when site.css or site.js changes
 
 NAV = [("/work", "Work"), ("/partners", "Partners"), ("/services", "Services"), ("/about", "About"), ("/contact", "Contact")]
 
-# Clients, newest first (order from commit fea8c67).
+# Clients, newest first (order from commit fea8c67, with ABC Styling added on top).
 CLIENTS = [
+  ("ABC Styling", "https://annie-culbertson-concept.vercel.app", "/assets/logos/abc-styling.svg", 1003, 166, "wide"),
   ("Arden Collective", "https://arden-collective.vercel.app", "/assets/logos/arden-seal-small.svg", 827, 985, "stack"),
   ("Loftus Construction", "https://loftus-construction.vercel.app", "/assets/logos/loftus.webp?v=20261009", 1191, 277, "wide"),
   ("Lewiston Design &amp; Build", "https://lewistondesignbuild.com", "/assets/logos/lewiston.webp", 508, 508, "stack"),
@@ -77,6 +78,7 @@ def bar(cur):
     return f'''<body>
   <a class="skip" href="#main">Skip to the content</a>
   <header class="bar" id="top">
+    <div class="bar-glass" aria-hidden="true"><i class="g"></i><i class="f"></i></div>
     <div class="wrap">
       <a class="home" href="/" aria-label="MJL Collective, home"><img src="/assets/lockup-ink.svg" alt="MJL Collective" width="552" height="143"></a>
       <nav class="nav" aria-label="Main">
@@ -301,7 +303,7 @@ def page(name, path, title, desc, body, ask=True, extra=""):
 # ------------------------------------------------------------------ home
 L = "https://lewistondesignbuild.com"
 # Behind the glass: the top of the site for Annie Culbertson's styling
-# studio (not a client yet, so she is not in the logos or on Partners).
+# studio. She is the newest client: first in the logos and on Partners.
 ANNIE = "https://annie-culbertson-concept.vercel.app"
 print_ = (f'<picture><source media="(max-width: 700px)" type="image/avif" srcset="/assets/shots/annie-top-p-360.avif 360w, /assets/shots/annie-top-p-720.avif 720w, /assets/shots/annie-top-p-1080.avif 1080w" sizes="70vw">'
           f'<source media="(max-width: 700px)" type="image/webp" srcset="/assets/shots/annie-top-p-360.webp 360w, /assets/shots/annie-top-p-720.webp 720w, /assets/shots/annie-top-p-1080.webp 1080w" sizes="70vw">'
@@ -335,9 +337,20 @@ home = f'''    <section class="enter" aria-labelledby="hello">
 
     <section class="rooms" aria-label="The newest sites">
       {room("Arden Collective", "https://arden-collective.vercel.app", "I drew the oval seal, then built the site from it.", "arden-home-d", "The Arden Collective home page, with the oval seal: Boutique talent management for social media creators", "arden-contact-p", "The Arden Collective contact page on a phone, with the pink seal", tag="h2", link="See the preview")}
-      {room("Loftus Construction", "https://loftus-construction.vercel.app", "Bridges since 1994, laid out for the engineers who hire them.", "loftus-home-d", "The Loftus home page: a steam train on a bridge under Design-build, preconstruction, construction", "loftus-top-p", "The Loftus home page on a phone", tag="h2", flip=True, link="See the preview")}
+      {room("Loftus Construction", "https://loftus-construction.vercel.app", "Bridges since 1994, laid out for the engineers who hire them.", "loftus-home-d", "The Loftus home page: a steam train on a bridge under Design-build, preconstruction, construction", "loftus-build-p", "What Loftus builds on a phone: a stone-faced bridge with a black steel railing, and the kinds of bridges they build", tag="h2", flip=True, link="See the preview")}
     </section>
     <div class="more-work wrap"><a class="link" href="/work">See all the work</a></div>
+    <section class="portal-feature" aria-labelledby="portal-h">
+      <div class="wrap portal-in">
+        <div class="room-words">
+          <h2 id="portal-h">Your own client portal.</h2>
+          <p>Every client gets a login. You send me an edit there in a sentence or two, and my reply shows up in the same thread.</p>
+          <p>It can email you or text you when I answer, so you don&rsquo;t have to keep checking.</p>
+          <a class="link" href="/clients">Client login</a>
+        </div>
+        <div class="room-art has-p">{plate("/clients", "portal-thread-d", "An edit thread in the client portal: a request to change Saturday hours, and my reply that it&rsquo;s done", "look", focus=False).replace(SIZES["look"], ROOM_SIZES).replace(' target="_blank" rel="noopener"', '')}{plate("/clients", "portal-alerts-p", "Alert settings in the client portal on a phone: email me and text me when MJL replies", "phone", focus=False).replace(' target="_blank" rel="noopener"', '')}</div>
+      </div>
+    </section>
 
     </section>'''
 page("index.html", "/", "MJL Collective | Websites and brands for local businesses",
@@ -362,9 +375,9 @@ work = glass_head('''<h1>The work.</h1>
       {room("Arden Collective", "https://arden-collective.vercel.app", "An oval seal I drew, and a site built from its type and color.", "arden-contact-d", "The Arden Collective contact page, with the email address inside the pink oval seal", "arden-top-p", "The Arden Collective home page on a phone", side='<div class="marks">' + mark("/assets/brand-work/arden-seal.svg", "The Arden Collective oval seal", 120, 145, "tall") + mark("/assets/brand-work/arden-icon.svg", "The Arden favicon: the seal on an oak green tile", 64, 64, "icon") + '</div>', link="See the preview", rid="arden")}
       {room("Loftus Construction", "https://loftus-construction.vercel.app", "The site they have now, and the one I built for the engineers who hire them.", None, "", art=loftus_ba, flip=True, link="See the preview")}
       {room("Lewiston Design &amp; Build", L, "Every house has its plans, and buyers try the finishes before they call.", "lewiston-projects-d", "The Lewiston projects page: three houses, each with its plans", "lewiston-top-p", "The Lewiston home page on a phone: Custom homes in Middle Tennessee", side='<div class="marks">' + mark("/assets/brand-work/lewiston-badge.webp", "The Lewiston lion badge, which I cut down into the favicon", 160, 160, "tall") + mark("/assets/brand-work/lewiston-fav-32.png", "The Lewiston favicon at 32 pixels", 32, 32, "px") + '</div>')}
-      {room("Simo&rsquo;s Barbering", "https://www.simosbarbering.com", "The shop&rsquo;s first website, live a week after I met John.", "simos-top-d", "The top of the Simo&rsquo;s site: the price board under the Simo&rsquo;s wordmark", "simos-top-p", "The Simo&rsquo;s site on a phone, with the price board", flip=True, side='<div class="marks">' + mark("/assets/brand-work/simos-wordmark.webp", "The Simo&rsquo;s Barbering wordmark, cut out clean for the header", 600, 334, "wide") + '</div>')}
+      {room("Simo&rsquo;s Barbering", "https://www.simosbarbering.com", "The shop&rsquo;s first website, live a week after I met John.", "simos-top-d", "The top of the Simo&rsquo;s site: the price board under the Simo&rsquo;s wordmark", "simos-door-p", "Further down the Simo&rsquo;s site on a phone: His name on the door, with John at work", flip=True, side='<div class="marks">' + mark("/assets/brand-work/simos-wordmark.webp", "The Simo&rsquo;s Barbering wordmark, cut out clean for the header", 600, 334, "wide") + '</div>')}
       {room("George Gravenstine Agency", "https://georgeinsurance.agency", "Auto and home quotes right on the site, in three to five minutes.", "george-home-d", "The George Gravenstine home page: Independent auto, home and business insurance", "george-auto-p", "The George Gravenstine auto insurance page on a phone")}
-      {room("Tiger Digital", "https://www.tigerdigital.marketing", "Joe&rsquo;s agency got a new seal and a new site in two days.", "tiger-home-d", "The Tiger Digital home page: Real growth. No fluff. Under the new seal", "tiger-top-p", "The Tiger Digital home page on a phone", flip=True, side=tiger_ba, rid="tiger")}
+      {room("Tiger Digital", "https://www.tigerdigital.marketing", "Joe&rsquo;s agency got a new seal and a new site in two days.", "tiger-home-d", "The Tiger Digital home page: Real growth. No fluff. Under the new seal", "tiger-team-p", "The Tiger Digital team page on a phone, with Joe", flip=True, side=tiger_ba, rid="tiger")}
       {room("BlueThreadz", "https://www.bluethreadz.com", "I redrew the logo and rebuilt the catalog so every garment leads to a quote.", "bluethreadz-home-d", "The BlueThreadz home page: Build your brand in style", "bluethreadz-quote-p", "The BlueThreadz quote form on a phone: Tell us about your order", side=blue_ba)}
       {room("Dorothy&rsquo;s Flower Shop", "https://www.dorothysflower.shop", "The old shop sign became the mark, then a line of hats.", "dorothy-home-d", "The Dorothy&rsquo;s Flower Shop home page, a full screen of lilacs", "dorothy-shop-p", "The Dorothy&rsquo;s hat shop on a phone", flip=True, side='<div class="marks">' + mark("/assets/brand-work/dorothy-sign.webp", "The Dorothy&rsquo;s Flower Shop mark, taken from the old shop sign", 160, 160, "tall") + '</div>')}
     </section>'''

@@ -37,10 +37,15 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .skip:focus { left: 12px; top: 12px; }
 
 /* ---------- frosted glass: the bar and the panes over the photograph ---------- */
+/* Solid fallback first. Where the browser can blur, the bar is frosted with a
+   moderate live blur over ordinary content; over the home wall it uses a
+   pre-blurred copy of the same photograph instead (see .bar-glass), and the
+   panes always use their pre-blurred copy (.pane.aligned), so nothing over
+   the moving wall asks for a live blur. */
 .bar, .pane, .drawer { background: rgba(244, 240, 233, .95); }
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-  .bar, .drawer { background: rgba(244, 240, 233, .82); -webkit-backdrop-filter: blur(18px) saturate(1.15); backdrop-filter: blur(18px) saturate(1.15); }
-  .pane { background: rgba(244, 240, 233, .86); -webkit-backdrop-filter: blur(22px) saturate(1.1); backdrop-filter: blur(22px) saturate(1.1); }
+  .bar, .drawer { background: linear-gradient(rgba(255, 255, 255, .16), rgba(255, 255, 255, 0)), rgba(244, 240, 233, .66); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2); }
+  .pane { background: rgba(244, 240, 233, .72); -webkit-backdrop-filter: blur(20px) saturate(1.1); backdrop-filter: blur(20px) saturate(1.1); }
 }
 
 /* ---------- the bar ---------- */
@@ -89,15 +94,26 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .gp img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; max-width: none; }
 .frost { position: absolute; inset: 0; pointer-events: none; opacity: var(--f, 0); will-change: opacity; background: url(/assets/glass/frost-band.webp) center / cover no-repeat; }
 @media (max-width: 700px) { .frost { background-image: url(/assets/glass/frost-tall.webp); } }
-.pane { padding: clamp(28px, 3.4vw, 52px); max-width: 780px; box-shadow: 0 1px 0 rgba(255, 255, 255, .7) inset, 0 0 0 1px rgba(255, 255, 255, .35) inset, 0 30px 80px -40px rgba(28, 26, 23, .3); }
+.pane { padding: clamp(28px, 3.4vw, 52px); max-width: 780px; box-shadow: 0 1px 0 rgba(255, 255, 255, .85) inset, 0 0 0 1px rgba(255, 255, 255, .5) inset, 0 0 0 1px rgba(28, 26, 23, .06), 0 30px 80px -40px rgba(28, 26, 23, .32); }
 /* site.js lines the frosted copy of the photograph up behind each pane, so
    the pane is a piece of the same wall, frosted, in every browser */
 /* over the home entrance the wall itself is changing every frame, and a live
    blur behind the bar would be redone each frame; the bar goes solid there */
-html.over-enter .bar { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(244, 240, 233, .96); }
-.pane.aligned { -webkit-backdrop-filter: none; backdrop-filter: none; background: linear-gradient(rgba(248, 246, 241, .5), rgba(248, 246, 241, .5)), var(--fi) var(--fx) var(--fy) / var(--fw) var(--fh) no-repeat; }
+html.over-enter .bar { -webkit-backdrop-filter: none; backdrop-filter: none; background: transparent; }
+.bar { isolation: isolate; box-shadow: 0 1px 0 rgba(255, 255, 255, .55) inset; }
+.bar-glass { position: absolute; inset: 0; overflow: hidden; z-index: -1; display: none; pointer-events: none; }
+html.over-enter .bar-glass { display: block; }
+.bar-glass i { position: absolute; left: 0; top: 0; width: 100%; height: 100vh; background: 0 0 / 100% 100% no-repeat; }
+.bar-glass .g { background-image: url(/assets/glass/soft-wall.webp); }
+.bar-glass .f { background-image: url(/assets/glass/soft-frost-wall.webp); opacity: 0; will-change: opacity; }
+@media (max-width: 700px) {
+  .bar-glass .g { background-image: url(/assets/glass/soft-tall.webp); }
+  .bar-glass .f { background-image: url(/assets/glass/soft-frost-tall.webp); }
+}
+.bar-glass::after { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(255, 255, 255, .2), rgba(255, 255, 255, .04)), rgba(244, 240, 233, .58); }
+.pane.aligned { -webkit-backdrop-filter: none; backdrop-filter: none; background: linear-gradient(170deg, rgba(255, 255, 255, .26), rgba(255, 255, 255, 0) 45%), linear-gradient(rgba(246, 243, 237, var(--pt, .64)), rgba(246, 243, 237, var(--pt, .64))), var(--fi) var(--fx) var(--fy) / var(--fw) var(--fh) no-repeat; }
 .pane h1 { font-size: clamp(48px, 6.4vw, 104px); }
-.pane .lede { margin: 22px 0 0; color: var(--ink-2); font-size: clamp(19px, 1.5vw, 23px); }
+.pane .lede { margin: 22px 0 0; color: #36312b; font-size: clamp(19px, 1.5vw, 23px); }
 .pane .actions { margin-top: 30px; }
 /* the lens: a soft circle around the pointer where the frost lifts (desktop only) */
 .lens:not(.on) { visibility: hidden; }
@@ -143,7 +159,7 @@ html.over-enter .bar { -webkit-backdrop-filter: none; backdrop-filter: none; bac
 .print { position: relative; margin: clamp(64px, 8vw, 120px) auto clamp(48px, 6vw, 96px); width: min(64vw, 1180px, calc((100svh - var(--barh) - 170px) * 1.6)); }
 .print-frame { display: block; line-height: 0; background: var(--plaster); box-shadow: 0 0 0 1px rgba(28, 26, 23, .14), 0 2px 6px rgba(28, 26, 23, .06), 0 40px 90px -40px rgba(28, 26, 23, .45); }
 .print-frame img { display: block; width: 100%; height: auto; aspect-ratio: 1440 / 900; object-fit: contain; }
-.print figcaption { margin: 18px 0 0; max-width: none; font: 400 14px/1.5 var(--sans); color: #3f3a33; text-align: center; }
+.print figcaption { width: fit-content; max-width: 100%; margin: 18px auto 0; padding: 8px 16px; font: 400 14px/1.5 var(--sans); color: #3f3a33; text-align: center; background: linear-gradient(rgba(255, 255, 255, .3), rgba(255, 255, 255, .08)), rgba(246, 243, 237, .62); box-shadow: 0 1px 0 rgba(255, 255, 255, .8) inset, 0 0 0 1px rgba(255, 255, 255, .45) inset, 0 0 0 1px rgba(28, 26, 23, .05); }
 .print figcaption strong { font-weight: 500; color: var(--ink); }
 .print figcaption a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--mortar); text-underline-offset: 4px; margin-left: 6px; white-space: nowrap; }
 @media (max-width: 700px) {
@@ -219,6 +235,17 @@ html.over-enter .bar { -webkit-backdrop-filter: none; backdrop-filter: none; bac
 
 .more-work { padding-top: clamp(56px, 7vw, 96px); padding-bottom: clamp(72px, 9vw, 140px); text-align: center; border-top: 1px solid var(--mortar); }
 .rooms + .more-work { position: relative; background: var(--plaster); }
+/* the client portal, shown the same way as the client sites */
+.portal-feature { position: relative; background: var(--plaster); border-top: 1px solid var(--mortar); padding: clamp(80px, 11vw, 168px) 0; }
+.portal-in { display: grid; gap: 40px; }
+.portal-feature .room-words { margin-top: 0; }
+.portal-feature h2 { font-size: clamp(40px, 4.4vw, 80px); line-height: .98; }
+.portal-feature .room-words > p { font: 400 clamp(19px, 1.5vw, 24px)/1.45 var(--serif); color: var(--ink-2); max-width: 30ch; margin: 18px 0 0; }
+.portal-feature .room-words > p + .link { margin-top: 26px; }
+@media (min-width: 901px) {
+  .portal-in { max-width: calc(1180px + var(--gut) * 2); grid-template-columns: minmax(280px, 34%) minmax(0, 1fr); column-gap: clamp(48px, 6vw, 112px); align-items: center; }
+  .portal-feature .room-art, .portal-feature .room-art.has-p { width: 100%; }
+}
 
 /* ---------- plain bands ---------- */
 .band { padding: clamp(80px, 10vw, 160px) 0; border-top: 1px solid var(--mortar); }
@@ -236,7 +263,7 @@ html.over-enter .bar { -webkit-backdrop-filter: none; backdrop-filter: none; bac
 .clients { padding: clamp(72px, 9vw, 140px) 0 0; }
 .clients-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px 24px; margin-bottom: 20px; }
 .clients-head h2 { font-size: clamp(28px, 2.6vw, 40px); }
-.trusted-row { position: relative; padding: 18px 0; border-top: 1px solid var(--mortar); border-bottom: 1px solid var(--mortar); --cols: 2.4; --gap: 12px; --dur: 60s; }
+.trusted-row { position: relative; padding: 18px 0; border-top: 1px solid var(--mortar); border-bottom: 1px solid var(--mortar); --cols: 2.4; --gap: 12px; --dur: 68s; }
 .trusted-view { overflow: hidden; container-type: inline-size; -webkit-mask-image: linear-gradient(to right, transparent, #000 40px, #000 calc(100% - 40px), transparent); mask-image: linear-gradient(to right, transparent, #000 40px, #000 calc(100% - 40px), transparent); }
 .trusted-track { display: flex; width: max-content; animation: trusted-scroll var(--dur) linear infinite; will-change: transform; }
 .trusted-track ul { list-style: none; margin: 0; padding: 0; display: flex; flex: 0 0 auto; }
@@ -246,8 +273,8 @@ html.over-enter .bar { -webkit-backdrop-filter: none; backdrop-filter: none; bac
 .trusted-track img { position: absolute; inset: 0; margin: auto; object-fit: contain; }
 .trusted-track img.mark-stack { width: 70%; height: 82%; }
 .trusted-track img.mark-wide { width: 90%; height: 46%; }
-@media (min-width: 720px) { .trusted-row { --cols: 4; --gap: 16px; --dur: 64s; } }
-@media (min-width: 1100px) { .trusted-row { --cols: 6.5; --gap: 18px; --dur: 50s; } }
+@media (min-width: 720px) { .trusted-row { --cols: 4; --gap: 16px; --dur: 72s; } }
+@media (min-width: 1100px) { .trusted-row { --cols: 6.5; --gap: 18px; --dur: 56s; } }
 @media (prefers-reduced-motion: reduce) {
   .trusted-view { overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none; }
   .trusted-view::-webkit-scrollbar { display: none; }

@@ -14,8 +14,8 @@
   // pane so it reads as part of the same wall in every browser.
   function frostFor(el) {
     var tall = innerWidth <= 700;
-    if (el.classList.contains("enter")) return tall ? ["tall", "/assets/glass/frost-tall.webp"] : ["wall", "/assets/glass/frost-wall.webp"];
-    return tall ? ["tall", "/assets/glass/frost-tall.webp"] : ["band", "/assets/glass/frost-band.webp"];
+    if (el.classList.contains("enter")) return tall ? ["tall", "/assets/glass/soft-tall.webp"] : ["wall", "/assets/glass/soft-wall.webp"];
+    return tall ? ["tall", "/assets/glass/soft-tall.webp"] : ["band", "/assets/glass/soft-band.webp"];
   }
   var ASPECT = { wall: 5423 / 3389, band: 5423 / 2358, tall: 1947 / 4214 };
   function align() {
@@ -76,11 +76,25 @@
   // Everything below runs once per frame at most and reads nothing from the
   // layout while scrolling: positions are measured on load and resize, and
   // each frame only does arithmetic on scrollY and writes opacity/transform.
+  var barGlass = $$(".bar-glass i");
+  var barFrost = document.querySelector(".bar-glass .f");
   var G = { vh: innerHeight, enterTop: 0, enterH: 1, headTop: 0, headH: 1, roomTops: [], roomsOn: false };
   function measure() {
     var sy = scrollY;
     G.vh = innerHeight;
     if (enter) { var r = enter.getBoundingClientRect(); G.enterTop = r.top + sy; G.enterH = r.height; }
+    // the bar's pre-blurred copy of the wall, placed where the wall sits once
+    // the entrance stage is pinned to the top of the screen
+    if (enter && barGlass.length) {
+      var wl = enter.querySelector(innerWidth <= 700 ? ".wall-tall" : ".wall-wall"), st = enter.querySelector(".enter-stage");
+      if (wl && st) {
+        var wr = wl.getBoundingClientRect(), sr = st.getBoundingClientRect();
+        barGlass.forEach(function (i) {
+          i.style.left = wr.left.toFixed(1) + "px"; i.style.top = (wr.top - sr.top).toFixed(1) + "px";
+          i.style.width = wr.width.toFixed(1) + "px"; i.style.height = wr.height.toFixed(1) + "px";
+        });
+      }
+    }
     if (head) { var h = head.getBoundingClientRect(); G.headTop = h.top + sy; G.headH = h.height; }
     G.roomsOn = rooms.length > 0 && !still && innerWidth > 900 && G.vh >= 620;
     if (rooms.length) {
@@ -134,6 +148,7 @@
       // never fully 0: the frost layer stays rastered and decoded from load, so
       // the first scroll frame does not wait on it
       E.frost.forEach(function (el) { put(el, "opacity", Math.max(f, .002).toFixed(3)); });
+      put(barFrost, "opacity", f.toFixed(3));
       put(E.print, "opacity", c.toFixed(3));
       put(E.print, "transform", "translate3d(-50%,calc(-50% + " + ((1 - c) * 28).toFixed(1) + "px),0)");
       flag(enter, "frosted", f > .995);
