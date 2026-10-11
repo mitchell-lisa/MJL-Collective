@@ -133,6 +133,39 @@
     $$(".room img, .plate img, .ba img, .lens img").forEach(function (i) { pre.observe(i); });
   }
 
+  // Home screens that move on the client's live site. Each loop sits over its
+  // still and only plays while it is on screen. The still stays for reduced
+  // motion, and wherever the browser declines to play (Low Power Mode).
+  var loops = $$("video.loop");
+  if (loops.length && "IntersectionObserver" in window && !still) {
+    var warm = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.preload = "auto"; warm.unobserve(e.target); } });
+    }, { rootMargin: "100% 0px" });
+    // Starting a decoder costs a frame or two, so a loop starts once the
+    // scrolling settles rather than mid-flick.
+    var want = new Set(), idle = 0;
+    function start() {
+      want.forEach(function (v) {
+        v.muted = true; v.defaultMuted = true;
+        if (v.paused) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
+      });
+    }
+    addEventListener("scroll", function () { clearTimeout(idle); idle = setTimeout(start, 200); }, { passive: true });
+    var show = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        var v = e.target;
+        if (e.isIntersecting) want.add(v);
+        else { want.delete(v); if (!v.paused) v.pause(); }
+      });
+      clearTimeout(idle); idle = setTimeout(start, 200);
+    }, { threshold: 0.25 });
+    loops.forEach(function (v) {
+      v.muted = true;
+      v.addEventListener("playing", function () { v.classList.add("on"); }, { once: true });
+      warm.observe(v); show.observe(v);
+    });
+  } else loops.forEach(function (v) { v.remove(); });
+
   var queued = false;
   function frame() {
     queued = false;

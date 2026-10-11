@@ -158,6 +158,7 @@ html.over-enter .bar-glass { display: block; }
 .enter-words { position: relative; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding-top: calc(var(--barh) + 40px); padding-bottom: clamp(40px, 9vh, 110px); }
 .enter-words .pane { max-width: 860px; }
 .nobr { white-space: nowrap; }
+@media (min-width: 701px) { .nobr-d { white-space: nowrap; } }
 @media (max-width: 700px) {
   .enter-words .pane { padding: 26px 22px 28px; }
   .enter-words h1 { font-size: clamp(40px, 11.5vw, 56px); }
@@ -172,7 +173,11 @@ html.over-enter .bar-glass { display: block; }
    the capture is ever rounded off */
 .plate.p { padding: 5px; border-radius: 14px; background: var(--ink); }
 .plate.p img { aspect-ratio: 390 / 844; object-fit: contain; background: #fff; }
-@media (max-width: 700px) { .plate.p { padding: 3px; border-radius: 9px; } }
+.plate video.loop { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; opacity: 0; transition: opacity .5s ease; pointer-events: none; background: transparent; }
+.plate.p video.loop { inset: 5px; width: calc(100% - 10px); height: calc(100% - 10px); border-radius: 0; }
+.plate video.loop.on { opacity: 1; }
+@media (max-width: 700px) { .plate.p { padding: 3px; border-radius: 9px; } .plate.p video.loop { inset: 3px; width: calc(100% - 6px); height: calc(100% - 6px); } }
+@media (prefers-reduced-motion: reduce) { .plate video.loop { display: none; } }
 /* coming into focus: a plate is soft as it rises into view and settles clear */
 .plate.focus picture { opacity: calc(1 - var(--f, 0) * .6); transform: translate3d(0, calc(var(--f, 0) * 18px), 0); }
 .plate.focus.clear picture { opacity: 1; transform: none; }

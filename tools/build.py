@@ -6,7 +6,7 @@ import json, pathlib, re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 C = ROOT / "tools" / "content"
 SITE = "https://mjlcollective.com"
-V = "20261010n2"  # bump when site.css or site.js changes
+V = "20261010t3"  # bump when site.css or site.js changes
 
 NAV = [("/work", "Work"), ("/partners", "Partners"), ("/services", "Services"), ("/about", "About"), ("/contact", "Contact")]
 
@@ -156,11 +156,21 @@ def pic(shot, alt, sizes, eager=False):
     return (f'<picture><source type="image/avif" srcset="{src("avif")}" sizes="{sizes}">'
             f'<img src="/assets/shots/{shot}-{ws[1]}.webp" srcset="{src("webp")}" sizes="{sizes}" alt="{alt}" width="{w}" height="{h}" {lz}></picture>')
 
+# Home screens that move on the live site, recorded from the very top as
+# seamless loops (tools/framestep.py, slidestills.py + synthloop.py in the
+# redesign workspace). The still stays underneath as the poster.
+LOOPS = {"annie-top-d", "simos-top-d", "lewiston-top-p", "dorothy-home-d", "bluethreadz-home-d"}
+
 def plate(url, shot, alt, sizes="look", eager=False, focus=True):
     kind = "d" if shot.endswith("-d") else "p"
     t = ' tabindex="-1"' if kind == "p" else ""
     f = " focus" if focus else ""
-    return f'<a class="plate {kind}{f}" href="{url}" target="_blank" rel="noopener"{t}>{pic(shot, alt, SIZES[sizes], eager)}</a>'
+    loop = ""
+    if shot in LOOPS:
+        w, h = (1440, 900) if kind == "d" else (390, 844)
+        loop = (f'<video class="loop" muted playsinline loop preload="none" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1" width="{w}" height="{h}">'
+                f'<source src="/assets/loops/{shot}.mp4?v={V}" type="video/mp4; codecs=&quot;avc1.640033&quot;"><source src="/assets/loops/{shot}.webm?v={V}" type="video/webm; codecs=&quot;vp9&quot;"></video>')
+    return f'<a class="plate {kind}{f}{" has-loop" if loop else ""}" href="{url}" target="_blank" rel="noopener"{t}>{pic(shot, alt, SIZES[sizes], eager)}{loop}</a>'
 
 # The glass block: Mitchell's photograph of a real glass block wall, squared up
 # so the blocks sit on a true grid (tools/glass-grid.json). Three crops: the
@@ -313,8 +323,8 @@ home = f'''    <section class="enter" aria-labelledby="hello">
         </div>
         <div class="wrap enter-words">
           <div class="pane">
-            <h1 id="hello">The local places people love, <span class="nobr">done right online.</span></h1>
-            <p class="lede">I design the site, build the brand, and keep it all running, so you can get back to&nbsp;work.</p>
+            <h1 id="hello"><span class="nobr-d">Websites and brands,</span> <span class="nobr">built to last.</span></h1>
+            <p class="lede">I design the site, shape the brand, and keep it all running after&nbsp;launch.</p>
             <div class="actions">
               <a class="btn" href="/contact">Start a project</a>
               <a class="link" href="/work">See the work</a>
@@ -345,8 +355,8 @@ home = f'''    <section class="enter" aria-labelledby="hello">
     </section>
 
     </section>'''
-page("index.html", "/", "MJL Collective | The local places people love, done right online",
-     "I design websites and brands for local businesses, then keep it all running, so you can get back to work.", home)
+page("index.html", "/", "MJL Collective | Websites and brands, built to last",
+     "I design websites and shape brands for businesses, then keep it all running after launch.", home)
 
 # ------------------------------------------------------------------ work
 loftus_ba = ba("Loftus Construction",
@@ -410,11 +420,18 @@ services = glass_head('''<h1>The site is where it starts.</h1>
         <div class="words">
           <h2 id="s2">Keep it current</h2>
           <p>Text a change and it ships. Hosting, fixes, and catalog, listing or team updates, without the owner chasing anyone.</p>
-          <p>Clients send requests through the client portal and get my reply there, with a text when I answer if they want one.</p>
         </div>
         <div class="shot">{fig("https://georgeinsurance.agency/team", "george-team-d", "The George Gravenstine team page", "George Gravenstine Agency", "The team page. When someone joins the office, they show up here.")}</div>
       </section>
-      <section class="service" aria-labelledby="s3">
+      <section class="service" aria-labelledby="s-portal">
+        <div class="words">
+          <h2 id="s-portal">A login of your own</h2>
+          <p>Every client gets their own login. Send me a change there, see where it stands, and get a text or email when it&rsquo;s done.</p>
+          <a class="link" href="/clients">Client login</a>
+        </div>
+        <div class="shot">{fig("/clients", "portal-alerts-d", "The Alerts page in the client portal: email me when MJL replies, text me when MJL replies, with an email address and a mobile number", "The client portal", "Pick email, text or both, and hear back the moment a change is done.").replace(' target="_blank" rel="noopener"', "")}</div>
+      </section>
+      <section class="service flip" aria-labelledby="s3">
         <div class="words">
           <h2 id="s3">Show up where it matters</h2>
           <p>Company LinkedIn or other channels. Listings, catalogs and simple presence systems. Light automation so what is true offline stays true online.</p>
@@ -432,7 +449,7 @@ services = glass_head('''<h1>The site is where it starts.</h1>
       </section>
     </div>'''
 page("services.html", "/services", "Services | MJL Collective",
-     "The website and brand first, then keeping it current: hosting, fixes, listings, catalogs, and email and SMS once the base is solid.", services)
+     "The website and brand first, then keeping it current: hosting, fixes, listings, catalogs, a client login for changes, and email and SMS once the base is solid.", services)
 
 # ------------------------------------------------------------------ about
 about = glass_head('''<h1>Mitchell Lisa</h1>
@@ -453,7 +470,7 @@ about = glass_head('''<h1>Mitchell Lisa</h1>
       </div>
     </section>'''
 page("about.html", "/about", "About Mitchell Lisa | MJL Collective",
-     "Mitchell Lisa runs MJL Collective, a one-person studio that builds websites and brands for local businesses and keeps them current.", about)
+     "Mitchell Lisa runs MJL Collective, a one-person studio that designs websites and shapes brands for businesses, then keeps it all running after launch.", about)
 
 # ------------------------------------------------------------------ contact
 contact = glass_head('''<h1>Tell me about the business.</h1>
