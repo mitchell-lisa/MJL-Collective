@@ -159,7 +159,7 @@ def pic(shot, alt, sizes, eager=False):
 # Home screens that move on the live site, recorded from the very top as
 # seamless loops (tools/framestep.py, slidestills.py + synthloop.py in the
 # redesign workspace). The still stays underneath as the poster.
-LOOPS = {"annie-top-d", "simos-top-d", "lewiston-top-p", "dorothy-home-d", "bluethreadz-home-d"}
+LOOPS = {"annie-top-d", "annie-top-p", "simos-top-d", "lewiston-top-p", "dorothy-home-d", "bluethreadz-home-d"}
 
 def plate(url, shot, alt, sizes="look", eager=False, focus=True):
     kind = "d" if shot.endswith("-d") else "p"
@@ -374,6 +374,7 @@ blue_ba = ba("BlueThreadz logo",
 work = glass_head('''<h1>The work.</h1>
           <p class="lede">Every site opens live. Try them on your phone too.</p>''') + f'''
     <section class="rooms" aria-label="Client sites, newest first">
+      {room("ABC Styling", ANNIE, "Annie&rsquo;s lookbook, her services and a free consult, all in one place.", "annie-work-d", "The ABC Styling lookbook: Annie&rsquo;s styled looks, one beside the next", "annie-top-p", "The top of the ABC Styling site on a phone: Annie walking in a black cape, then 8 to 10 new looks from your own closet", side='<div class="marks">' + mark("/assets/brand-work/abc-styling-wordmark.svg", "The ABC Styling wordmark", 1011, 174, "wide") + '</div>', link="See the site", rid="abc")}
       {room("Arden Collective", "https://arden-collective.vercel.app", "An oval seal I drew, and a site built from its type and color.", "arden-contact-d", "The Arden Collective contact page, with the email address inside the pink oval seal", "arden-top-p", "The Arden Collective home page on a phone", side='<div class="marks">' + mark("/assets/brand-work/arden-seal.svg", "The Arden Collective oval seal", 120, 145, "tall") + mark("/assets/brand-work/arden-icon.svg", "The Arden favicon: the seal on an oak green tile", 64, 64, "icon") + '</div>', link="See the preview", rid="arden")}
       {room("Loftus Construction", "https://loftus-construction.vercel.app", "The site they have now, and the one I built for the engineers who hire them.", None, "", art=loftus_ba, flip=True, link="See the preview")}
       {room("Lewiston Design &amp; Build", L, "Every house has its plans, and buyers try the finishes before they call.", "lewiston-projects-d", "The Lewiston projects page: three houses, each with its plans", "lewiston-top-p", "The Lewiston home page on a phone: Custom homes in Middle Tennessee", side='<div class="marks">' + mark("/assets/brand-work/lewiston-badge.webp", "The Lewiston lion badge, which I cut down into the favicon", 160, 160, "tall") + mark("/assets/brand-work/lewiston-fav-32.png", "The Lewiston favicon at 32 pixels", 32, 32, "px") + '</div>')}
