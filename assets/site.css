@@ -52,7 +52,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .bar { position: sticky; top: 0; z-index: 50; color: var(--ink); font-family: var(--sans); border-bottom: 1px solid var(--hair); }
 .bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: var(--barh); }
 .bar .home { display: block; flex: 0 0 auto; line-height: 0; }
-.bar .home img { height: 28px; width: auto; }
+.bar .home img { height: 40px; width: auto; position: relative; top: 4px; }
 .nav ul { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 34px; }
 .nav a, .bar .login { text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: .01em; padding: 6px 0; border-bottom: 1px solid transparent; }
 .nav a:hover, .nav a[aria-current="page"] { border-bottom-color: currentColor; }
@@ -62,7 +62,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .drawer { display: none; }
 @media (max-width: 900px) {
   :root { --barh: 64px; }
-  .bar .home img { height: 24px; }
+  .bar .home img { height: 34px; top: 3px; }
   .nav { display: none; }
   .bar .tools { display: flex; }
   /* The drawer lives at body level, outside the frosted bar: a backdrop
@@ -376,7 +376,7 @@ figcaption strong { font: 400 21px/1.2 var(--display); color: var(--ink); margin
 .foot .ask .mail { display: block; margin-top: 18px; font: 500 14px/1.4 var(--sans); }
 @media (max-width: 900px) { .foot .ask { display: block; } .foot .ask div { margin-top: 26px; } }
 .foot .sign { display: inline-block; margin: 0 0 36px; line-height: 0; }
-.foot .sign img { width: clamp(170px, 16vw, 230px); height: auto; }
+.foot .sign img { width: clamp(200px, 18vw, 280px); height: auto; }
 .foot .rows { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 20px 40px; padding-top: 22px; border-top: 1px solid var(--mortar); font-size: 13.5px; }
 .foot .rows ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 28px; }
 .foot .rows a { text-decoration: none; }

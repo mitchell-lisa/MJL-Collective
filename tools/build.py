@@ -6,7 +6,7 @@ import json, pathlib, re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 C = ROOT / "tools" / "content"
 SITE = "https://mjlcollective.com"
-V = "20261010t3"  # bump when site.css or site.js changes
+V = "20261012m9"  # bump when site.css or site.js changes
 
 NAV = [("/work", "Work"), ("/partners", "Partners"), ("/services", "Services"), ("/about", "About"), ("/contact", "Contact")]
 
@@ -49,15 +49,17 @@ def head(path, title, desc, extra=""):
   <meta property="og:url" content="{url}">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="MJL Collective">
-  <meta property="og:image" content="{SITE}/assets/og.png">
+  <meta property="og:image" content="{SITE}/assets/og.png?v=m9">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="The MJL Collective mark">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/svg+xml" href="/assets/monogram-small.svg">
-  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="/assets/monogram-small.svg?v=m9">
+  <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48.png?v=m9">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png?v=m9">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png?v=m9">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png?v=m9">
+  <link rel="manifest" href="/site.webmanifest">
 
   {ld}<link rel="preload" href="/assets/fonts/InstrumentSerif-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/InstrumentSans-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -80,7 +82,7 @@ def bar(cur):
   <header class="bar" id="top">
     <div class="bar-glass" aria-hidden="true"><i class="g"></i><i class="f"></i></div>
     <div class="wrap">
-      <a class="home" href="/" aria-label="MJL Collective, home"><img src="/assets/lockup-ink.svg" alt="MJL Collective" width="552" height="143"></a>
+      <a class="home" href="/" aria-label="MJL Collective, home"><img src="/assets/lockup-ink.svg?v=m9" alt="MJL Collective" width="698" height="163"></a>
       <nav class="nav" aria-label="Main">
         <ul>
           {items}
@@ -116,7 +118,7 @@ def foot(cur, ask=True):
   <footer class="foot{"" if ask else " slim"}">
     <div class="wrap">
       {askblock}
-      <a class="sign" href="/" aria-label="MJL Collective, home"><img src="/assets/lockup-ink.svg" alt="MJL Collective" width="552" height="143" loading="lazy"></a>
+      <a class="sign" href="/" aria-label="MJL Collective, home"><img src="/assets/lockup-ink.svg?v=m9" alt="MJL Collective" width="698" height="163" loading="lazy"></a>
       <div class="rows">
         <ul>
           {items}

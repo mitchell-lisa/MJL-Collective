@@ -2,18 +2,22 @@
 
 ## The mark
 
-Three letters built from one stroke weight. The M's last leg runs past the
-baseline and hooks left, and that hook is the J, so the monogram is a single
-connected shape. The L stands beside it on the same baseline. "Collective" sits
-to the right in sentence case.
+A high-contrast serif ligature. The M has a hairline left stem and a heavy
+right leg, and that right leg keeps going below the baseline as the J, ending
+in a small hook with a ball terminal. The L stands beside it on the same
+baseline with a hairline foot and a curved upturned end. COLLECTIVE is set in
+widely spaced capitals (Cinzel).
 
-Two lockups:
+Lockups:
 
-- **Lockup** (`mjl-collective.svg`): the monogram and the word together. This is
-  the default and what the site header, the footer and the emails use.
-- **Mark** (`mjl-collective-mark.svg`): the monogram alone. Use it only where
-  the lockup cannot fit or the name is already present: the favicon, an app
-  icon, a stamp, a patch.
+- **Lockup** (`mjl-collective.svg`): the monogram, a hairline rule, then
+  COLLECTIVE. This is the default and what the site header, the footer and the
+  emails use. It uses a slightly heavier hairline cut so it stays crisp at
+  header and email sizes.
+- **Stacked** (`mjl-collective-stacked.svg`): the monogram over COLLECTIVE, for
+  square placements, social and print.
+- **Mark** (`mjl-collective-mark.svg`): the monogram alone, for the favicon, an
+  app icon, a stamp, a patch.
 
 The type in every file is converted to outlines, so nothing depends on a font
 being installed. The source geometry lives in `assets/site.css` sizing and in
@@ -25,6 +29,7 @@ the generator that produced these files.
 | --- | --- |
 | `mjl-collective.svg` | Lockup, ink. Scales to any size. |
 | `mjl-collective-white.svg` | Lockup, white, for dark grounds. |
+| `mjl-collective-stacked.svg` / `-stacked-white.svg` | Stacked lockup, ink / white. |
 | `mjl-collective-mark.svg` | Monogram alone, ink. |
 | `mjl-collective-mark-white.svg` | Monogram alone, white. |
 | `mjl-collective-on-white-512.png` / `-2048.png` | Lockup on white. |
