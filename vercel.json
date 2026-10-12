@@ -12,5 +12,22 @@
       "source": "/clients/:path*",
       "destination": "https://mjl-client-portal.vercel.app/clients/:path*"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/terms-of-service",
+      "destination": "/terms",
+      "permanent": true
+    },
+    {
+      "source": "/terms-of-use",
+      "destination": "/terms",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/privacy",
+      "permanent": true
+    }
   ]
 }

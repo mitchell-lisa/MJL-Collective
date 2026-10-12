@@ -126,6 +126,9 @@ def foot(cur, ask=True):
           <span>MJL Collective LLC</span>
           <span><a href="/privacy"{' aria-current="page"' if cur=="/privacy" else ""}>Privacy</a></span>
           <span><a href="/terms"{' aria-current="page"' if cur=="/terms" else ""}>Terms</a></span>
+          <span><a href="/cookies"{' aria-current="page"' if cur=="/cookies" else ""}>Cookies</a></span>
+          <span><a href="/accessibility"{' aria-current="page"' if cur=="/accessibility" else ""}>Accessibility</a></span>
+          <span><a href="/sms-alerts"{' aria-current="page"' if cur=="/sms-alerts" else ""}>SMS Alerts</a></span>
         </div>
       </div>
     </div>
@@ -516,7 +519,9 @@ page("contact.html", "/contact", "Contact | MJL Collective",
 # ------------------------------------------------------------------ privacy and terms
 for slug, title, desc in [
     ("privacy", "Privacy Policy | MJL Collective", "How MJL Collective LLC collects, uses, stores, shares, and deletes information, including Plaid financial connections for internal bookkeeping."),
-    ("terms", "Terms | MJL Collective", "Text message terms for MJL Collective client portal alerts: program, frequency, cost, STOP and HELP, carriers and privacy.")]:
+    ("terms", "Terms | MJL Collective", "Terms of Service and Terms of Use for MJL Collective LLC: website use, client services, payments, portal accounts, ownership, hosting, and text message alerts."),
+    ("cookies", "Cookie Policy | MJL Collective", "What cookies and similar storage the MJL Collective website and client portal use, and how to control them."),
+    ("accessibility", "Accessibility Statement | MJL Collective", "MJL Collective’s commitment to an accessible website: our WCAG 2.1 AA goal, what we do, known limits, and how to report a problem.")]:
     hd = (C / f"{slug}.head.html").read_text().strip()
     doc = (C / f"{slug}.doc.html").read_text()
     body = f'''    <section class="legal-head">
