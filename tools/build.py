@@ -33,7 +33,7 @@ def head(path, title, desc, extra=""):
         ld = '<script type="application/ld+json">' + json.dumps({
           "@context": "https://schema.org", "@type": "ProfessionalService", "name": "MJL Collective LLC",
           "alternateName": "MJL Collective", "url": SITE, "email": "mitchell@mjlcollective.com", "image": SITE + "/assets/og.png",
-          "description": desc, "founder": {"@type": "Person", "name": "Mitchell Lisa"},
+          "description": desc, "founder": {"@type": "Person", "name": "Mitchell Lisa", "image": SITE + "/assets/mitchell-square-512.webp"},
           "knowsAbout": ["web design", "brand identity", "logo design", "website maintenance", "email and SMS marketing"]}) + "</script>\n  "
     return f'''<!doctype html>
 <html lang="en">
@@ -462,7 +462,7 @@ about = glass_head('''<h1>Mitchell Lisa</h1>
           <p class="lede">One person, not an agency. When you reach out, you&rsquo;re talking to me.</p>''') + '''
     <section class="founder-body">
       <div class="wrap founder">
-        <div class="portrait"><img src="/assets/mitchell.webp" alt="Mitchell Lisa in an MJL Collective cap" width="1122" height="1402" loading="lazy" decoding="async"></div>
+        <div class="portrait"><picture><source type="image/avif" srcset="/assets/mitchell-560.avif?v=h2 560w, /assets/mitchell-840.avif?v=h2 840w, /assets/mitchell-1122.avif?v=h2 1122w" sizes="(min-width: 901px) 38vw, min(460px, 100vw)"><img src="/assets/mitchell-840.webp?v=h2" srcset="/assets/mitchell-560.webp?v=h2 560w, /assets/mitchell-840.webp?v=h2 840w, /assets/mitchell-1122.webp?v=h2 1122w" sizes="(min-width: 901px) 38vw, min(460px, 100vw)" alt="Mitchell Lisa in a black MJL Collective cap and a cream sweater" width="1122" height="1402" loading="lazy" decoding="async"></picture></div>
         <div class="text">
           <p>I build every site myself, and usually the brand it sits on too: the logo, the type and the colors.</p>
           <p>Once it&rsquo;s live, I keep it current. When your hours change, a price goes up or you add a service, you send me a note and I make the change.</p>
