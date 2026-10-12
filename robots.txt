@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /compliance/
 
 Sitemap: https://mjlcollective.com/sitemap.xml
