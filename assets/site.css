@@ -8,10 +8,10 @@
 
 :root {
   --ink: #1c1a17;
-  --ink-2: #565047;
-  --plaster: #f4f0e9;
-  --cement: #ebe6dc;
-  --mortar: #d5cec2;
+  --ink-2: #575754;
+  --plaster: #ffffff;
+  --cement: #f6f6f5;
+  --mortar: #e8e8e6;
   --display: "Instrument Serif", "Cormorant Garamond", Georgia, serif;
   --sans: "Instrument Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
@@ -19,7 +19,7 @@
   --max: 1320px;
   --barh: 76px;
   --hair: rgba(28, 26, 23, .12);
-  --frost: rgba(244, 240, 233, .74);
+  --frost: rgba(255, 255, 255, .74);
   color-scheme: light;
 }
 * { box-sizing: border-box; }
@@ -42,10 +42,10 @@ p { margin: 0 0 1em; text-wrap: pretty; }
    pre-blurred copy of the same photograph instead (see .bar-glass), and the
    panes always use their pre-blurred copy (.pane.aligned), so nothing over
    the moving wall asks for a live blur. */
-.bar, .pane { background: rgba(244, 240, 233, .95); }
+.bar, .pane { background: rgba(255, 255, 255, .95); }
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-  .bar { background: linear-gradient(rgba(255, 255, 255, .16), rgba(255, 255, 255, 0)), rgba(244, 240, 233, .66); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2); }
-  .pane { background: rgba(244, 240, 233, .72); -webkit-backdrop-filter: blur(20px) saturate(1.1); backdrop-filter: blur(20px) saturate(1.1); }
+  .bar { background: linear-gradient(rgba(255, 255, 255, .16), rgba(255, 255, 255, 0)), rgba(255, 255, 255, .66); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2); }
+  .pane { background: rgba(255, 255, 255, .72); -webkit-backdrop-filter: blur(20px) saturate(1.1); backdrop-filter: blur(20px) saturate(1.1); }
 }
 
 /* ---------- the bar ---------- */
@@ -69,9 +69,9 @@ p { margin: 0 0 1em; text-wrap: pretty; }
      filter on an ancestor would make it the drawer's containing block and
      clip it to the bar on iOS Safari. Opaque plaster, full screen, above
      everything; the bar sits on top of it so Close stays in reach. */
-  .drawer { display: block; position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 900; background: #f4f0e9; color: var(--ink); padding: calc(var(--barh) + 12px + env(safe-area-inset-top, 0px)) max(var(--gut), env(safe-area-inset-right, 0px)) calc(40px + env(safe-area-inset-bottom, 0px)) max(var(--gut), env(safe-area-inset-left, 0px)); overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; visibility: hidden; opacity: 0; transition: opacity .2s ease, visibility 0s linear .2s; }
+  .drawer { display: block; position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 900; background: #ffffff; color: var(--ink); padding: calc(var(--barh) + 12px + env(safe-area-inset-top, 0px)) max(var(--gut), env(safe-area-inset-right, 0px)) calc(40px + env(safe-area-inset-bottom, 0px)) max(var(--gut), env(safe-area-inset-left, 0px)); overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; visibility: hidden; opacity: 0; transition: opacity .2s ease, visibility 0s linear .2s; }
   .drawer.open { visibility: visible; opacity: 1; transition: opacity .2s ease; }
-  html body.menu-open .bar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: #f4f0e9; -webkit-backdrop-filter: none; backdrop-filter: none; padding-top: env(safe-area-inset-top, 0px); }
+  html body.menu-open .bar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: #ffffff; -webkit-backdrop-filter: none; backdrop-filter: none; padding-top: env(safe-area-inset-top, 0px); }
   html body.menu-open .bar-glass { display: none; }
   .drawer ul { list-style: none; margin: 0; padding: 0; }
   .drawer li { border-bottom: 1px solid var(--mortar); }
@@ -116,7 +116,7 @@ html.over-enter .bar-glass { display: block; }
   .bar-glass .g { background-image: url(/assets/glass/soft-tall.webp); }
   .bar-glass .f { background-image: url(/assets/glass/soft-frost-tall.webp); }
 }
-.bar-glass::after { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(255, 255, 255, .2), rgba(255, 255, 255, .04)), rgba(244, 240, 233, .58); }
+.bar-glass::after { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(255, 255, 255, .2), rgba(255, 255, 255, .04)), rgba(255, 255, 255, .58); }
 .pane.aligned { -webkit-backdrop-filter: none; backdrop-filter: none; background: linear-gradient(170deg, rgba(255, 255, 255, .26), rgba(255, 255, 255, 0) 45%), linear-gradient(rgba(246, 243, 237, var(--pt, .64)), rgba(246, 243, 237, var(--pt, .64))), var(--fi) var(--fx) var(--fy) / var(--fw) var(--fh) no-repeat; }
 .pane h1 { font-size: clamp(48px, 6.4vw, 104px); }
 .pane .lede { margin: 22px 0 0; color: #36312b; font-size: clamp(19px, 1.5vw, 23px); }
@@ -312,7 +312,7 @@ figcaption strong { font: 400 21px/1.2 var(--display); color: var(--ink); margin
 @media (min-width: 720px) { .logo-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .logo-grid li { border-right: 1px solid var(--mortar); border-bottom: 1px solid var(--mortar); min-width: 0; }
 .logo-grid a { position: relative; display: block; aspect-ratio: 1 / 1; text-decoration: none; transition: background .15s ease; }
-.logo-grid a:hover, .logo-grid a:focus-visible { background: rgba(235, 230, 220, .6); }
+.logo-grid a:hover, .logo-grid a:focus-visible { background: rgba(246, 246, 245, .6); }
 .logo-grid img { position: absolute; left: 0; right: 0; top: 0; bottom: 44px; margin: auto; object-fit: contain; }
 .logo-grid img.mark-stack { width: 52%; height: 62%; }
 .logo-grid img.mark-wide { width: 78%; height: 40%; }
@@ -404,7 +404,7 @@ figcaption strong { font: 400 21px/1.2 var(--display); color: var(--ink); margin
 .ba-mark.wide .ba-after, .ba-mark.wide .ba-before { padding: 10%; }
 .ba-mark .mk { max-width: 100%; max-height: 100%; width: auto; height: auto; }
 .ba-mark.wide .mk { width: 100%; }
-.ba-line { position: absolute; top: 0; bottom: 0; left: var(--x); width: 2px; margin-left: -1px; background: #fbf9f5; box-shadow: 0 0 0 1px rgba(28, 26, 23, .12); pointer-events: none; }
+.ba-line { position: absolute; top: 0; bottom: 0; left: var(--x); width: 2px; margin-left: -1px; background: #ffffff; box-shadow: 0 0 0 1px rgba(28, 26, 23, .12); pointer-events: none; }
 .ba-line span { position: absolute; top: 50%; left: 50%; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%; background: rgba(251, 249, 245, .94); box-shadow: 0 0 0 1px rgba(28, 26, 23, .14), 0 10px 30px -10px rgba(28, 26, 23, .5); }
 .ba-line span::before, .ba-line span::after { content: ""; position: absolute; top: 50%; width: 7px; height: 7px; margin-top: -4px; border: solid var(--ink); border-width: 0 0 1.5px 1.5px; }
 .ba-line span::before { left: 12px; transform: rotate(45deg); }
