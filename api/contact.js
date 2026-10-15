@@ -9,7 +9,7 @@
 
 const site = {
   name: "MJL Collective",
-  legalName: "MJL Collective LLC",
+  legalName: "Lets Link LLC, doing business as MJL Collective",
   domain: "mjlcollective.com",
   url: "https://mjlcollective.com",
   email: "mitchell@mjlcollective.com",
