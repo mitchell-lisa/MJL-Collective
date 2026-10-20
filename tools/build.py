@@ -12,7 +12,7 @@ NAV = [("/work", "Work"), ("/partners", "Partners"), ("/services", "Services"), 
 
 # Clients, newest first (order from commit fea8c67, with ABC Styling added on top).
 CLIENTS = [
-  ("ABC Styling", "https://annie-culbertson-concept.vercel.app", "/assets/logos/abc-styling.svg?v=20261010", 1011, 174, "wide"),
+  ("ABC Styling", "https://www.anniebculbertson.com", "/assets/logos/abc-styling.svg?v=20261010", 1011, 174, "wide"),
   ("Arden Collective", "https://ardencollective.co", "/assets/logos/arden-seal-small.svg", 827, 985, "stack"),
   ("Loftus Construction", "https://loftus-construction.vercel.app", "/assets/logos/loftus.webp?v=20261010", 1219, 305, "wide"),
   ("Lewiston Design &amp; Build", "https://lewistondesignbuild.com", "/assets/logos/lewiston.webp?v=20261010", 520, 520, "stack"),
@@ -319,7 +319,7 @@ def page(name, path, title, desc, body, ask=True, extra=""):
 L = "https://lewistondesignbuild.com"
 # Behind the glass: the top of the site for Annie Culbertson's styling
 # studio. She is the newest client: first in the logos and on Partners.
-ANNIE = "https://annie-culbertson-concept.vercel.app"
+ANNIE = "https://www.anniebculbertson.com"
 home = f'''    <section class="enter" aria-labelledby="hello">
       <div class="enter-stage">
         <div class="wall-box">
@@ -342,7 +342,7 @@ home = f'''    <section class="enter" aria-labelledby="hello">
     {carousel()}
 
     <section class="rooms flow" aria-label="The newest sites">
-      {room("ABC Styling", ANNIE, "A site for Annie Culbertson, a stylist in New York.", "annie-top-d", "The top of the ABC Styling site: Annie in a black cape beside the ABC Styling wordmark on oxblood, under the site&rsquo;s menu", "annie-services-p", "The ABC Styling services page on a phone: Services, then her menu of styling sessions", link="See the site")}
+      {room("ABC Styling", ANNIE, "A site for Annie Culbertson, a personal stylist in New York.", "annie-live-d", "The ABC Styling home page: Annie in a black coat beside the ABC Styling wordmark and her services on oxblood", "annie-services-p", "The ABC Styling services page on a phone: Services, then her menu of styling sessions", link="See the site")}
       {room("Arden Collective", "https://ardencollective.co", "I drew the oval seal, then built the site from it.", "arden-home-d", "The Arden Collective home page, with the oval seal: Boutique talent management for social media creators", "arden-contact-p", "The Arden Collective contact page on a phone, with the pink seal", tag="h2")}
       {room("Loftus Construction", "https://loftus-construction.vercel.app", "Bridges since 1994, laid out for the engineers who hire them.", "loftus-record-d", "The Loftus record: each bridge with its owner agency and contract value, starting with the Headquarters Road bridge rehabilitation", "loftus-build-p", "What Loftus builds on a phone: a stone-faced bridge with a black steel railing, and the kinds of bridges they build", tag="h2", flip=True, link="See the preview")}
     </section>
