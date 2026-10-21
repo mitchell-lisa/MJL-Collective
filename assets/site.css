@@ -422,58 +422,14 @@ figcaption strong { font: 400 21px/1.2 var(--display); color: var(--ink); margin
 .ba figcaption a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--mortar); }
 .room-words .ba { margin-bottom: 30px; }
 
-/* ---------- 2026-10-21: the whole glass, a light backdrop for the words ----------
-   The photograph shows in full at its own shape: no cover crop, no frost
-   layer over it, and it starts under the bar instead of behind it. The words
-   sit on a small, soft scrim rather than a big frosted box. */
-.glass-head, .enter { margin-top: 0; }
-html.over-enter .bar { background: rgba(255, 255, 255, .95); }
-@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-  html.over-enter .bar { -webkit-backdrop-filter: blur(16px) saturate(1.1); backdrop-filter: blur(16px) saturate(1.1); background: rgba(255, 255, 255, .86); }
-}
-html.over-enter .bar-glass, .bar-glass { display: none; }
-.frost, .lens, .wall .frosted { display: none !important; }
-
-/* the light backdrop: small padding, a soft translucent plaster, a hint of blur */
-.pane, .pane.aligned { background: rgba(255, 255, 255, .8); box-shadow: 0 10px 30px -18px rgba(28, 26, 23, .35); padding: clamp(16px, 1.8vw, 26px) clamp(18px, 2.2vw, 32px); }
-@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-  .pane, .pane.aligned { background: rgba(255, 255, 255, .7); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
-}
-.pane h1 { font-size: clamp(40px, 4.6vw, 76px); }
-.pane .lede { margin-top: 12px; font-size: clamp(17px, 1.25vw, 20px); }
-.pane .actions { margin-top: 20px; }
-
-/* home: the wall at its own aspect, full width, nothing cut off */
-.enter-stage { display: block; }
-.wall-box { position: relative; height: auto; min-height: 0; overflow: visible; }
-.wall { position: relative; left: auto; top: auto; transform: none; width: 100%; height: auto; aspect-ratio: var(--a); }
-.enter-words { position: absolute; left: 0; right: 0; bottom: 0; min-height: 0; padding-top: 0; padding-bottom: clamp(20px, 4vw, 56px); }
-.enter-words .pane { width: fit-content; max-width: min(640px, 100%); }
-
-/* inner pages: the band photograph at its own aspect, words over its lower left */
-.glass-head, .glass-head.lost { min-height: 0; display: block; padding: 0; }
-.glass-head .gp { position: relative; inset: auto; }
-.glass-head .gp img { height: auto; aspect-ratio: 5423 / 2358; object-fit: contain; }
-.glass-head > .wrap { position: absolute; left: 0; right: 0; bottom: clamp(16px, 3vw, 44px); }
-.glass-head .pane { width: fit-content; max-width: min(600px, 100%); padding-right: clamp(18px, 2.2vw, 32px); }
-
-@media (max-width: 700px) {
-  .enter-words { padding-bottom: 18px; }
-  .enter-words .pane { padding: 16px 18px 18px; }
-  .enter-words h1 { font-size: clamp(34px, 9.6vw, 44px); }
-  .pane .lede { font-size: 17px; }
-  /* the band is short on a phone, so the words follow it on plain plaster */
-  .glass-head > .wrap { position: static; padding-top: 22px; padding-bottom: 8px; }
-  .glass-head .pane, .glass-head .pane.aligned { background: none; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; padding: 0; }
-  .pane h1 { font-size: clamp(34px, 10vw, 46px); }
-}
+/* ---------- 2026-10-21: the wall shows through the words ----------
+   No frosted box and no blur behind the titles. The words sit straight on
+   the glass with a soft light halo and a faint scrim, so every block reads. */
+.pane, .pane.aligned { position: relative; isolation: isolate; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; padding: 0; }
+.pane::before { content: ""; position: absolute; z-index: -1; inset: -48px -72px; pointer-events: none; background: radial-gradient(closest-side, rgba(255, 255, 255, .5), rgba(255, 255, 255, .22) 60%, rgba(255, 255, 255, 0)); }
+.pane h1, .pane .lede { text-shadow: 0 0 2px rgba(255, 255, 255, .9), 0 0 10px rgba(255, 255, 255, .85), 0 0 26px rgba(255, 255, 255, .7); }
+.pane .lede { color: var(--ink); font-weight: 500; }
+.pane .actions .link { background: rgba(255, 255, 255, .82); padding: 12px 16px; }
+@media (max-width: 700px) { .pane::before { inset: -28px -20px; } .enter-words .pane, .glass-head .pane { padding: 0; } }
 /* the menu reads as a button on a phone */
 .menu-btn { border: 1px solid var(--ink); padding: 10px 14px; min-height: 40px; }
-/* the whole wall fits the screen under the bar, centred on plaster */
-.enter-stage { --ha: 1.6002; width: min(100%, calc((100vh - var(--barh)) * var(--ha))); width: min(100%, calc((100svh - var(--barh)) * var(--ha))); margin: 0 auto; }
-@media (max-width: 700px) { .enter-stage { --ha: .4620; } }
-.enter-words .wrap, .enter-words { max-width: none; }
-.enter-words { padding-left: clamp(14px, 3vw, 48px); padding-right: clamp(14px, 3vw, 48px); }
-.enter-words .pane { max-width: min(560px, 100%); }
-.enter-words .lede { max-width: 36ch; }
-@media (max-width: 700px) { .enter-words { padding-left: 12px; padding-right: 12px; padding-bottom: 12px; } .enter-words .actions { margin-top: 14px; } }
