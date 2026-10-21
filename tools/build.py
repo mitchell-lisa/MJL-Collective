@@ -6,7 +6,7 @@ import json, pathlib, re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 C = ROOT / "tools" / "content"
 SITE = "https://mjlcollective.com"
-V = "20261012m9"  # bump when site.css or site.js changes
+V = "20261021g1"  # bump when site.css or site.js changes
 
 NAV = [("/work", "Work"), ("/partners", "Partners"), ("/services", "Services"), ("/about", "About"), ("/contact", "Contact")]
 
@@ -191,8 +191,6 @@ def glass_pic(wide="band", eager=False, cls="gp"):
     lz = 'fetchpriority="high"' if eager else 'loading="lazy" decoding="async"'
     g = GRID[wide]
     return (f'<picture class="{cls}">'
-            f'<source media="(max-width: 700px)" type="image/avif" srcset="{gsrc("tall", "avif")}" sizes="100vw">'
-            f'<source media="(max-width: 700px)" type="image/webp" srcset="{gsrc("tall", "webp")}" sizes="100vw">'
             f'<source type="image/avif" srcset="{gsrc(wide, "avif")}" sizes="100vw">'
             f'<img src="/assets/glass/glass-{wide}-1920.webp" srcset="{gsrc(wide, "webp")}" sizes="100vw" alt="" width="{g["w"]}" height="{g["h"]}" {lz}></picture>')
 
