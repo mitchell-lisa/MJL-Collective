@@ -469,3 +469,11 @@ html.over-enter .bar-glass, .bar-glass { display: none; }
 }
 /* the menu reads as a button on a phone */
 .menu-btn { border: 1px solid var(--ink); padding: 10px 14px; min-height: 40px; }
+/* the whole wall fits the screen under the bar, centred on plaster */
+.enter-stage { --ha: 1.6002; width: min(100%, calc((100vh - var(--barh)) * var(--ha))); width: min(100%, calc((100svh - var(--barh)) * var(--ha))); margin: 0 auto; }
+@media (max-width: 700px) { .enter-stage { --ha: .4620; } }
+.enter-words .wrap, .enter-words { max-width: none; }
+.enter-words { padding-left: clamp(14px, 3vw, 48px); padding-right: clamp(14px, 3vw, 48px); }
+.enter-words .pane { max-width: min(560px, 100%); }
+.enter-words .lede { max-width: 36ch; }
+@media (max-width: 700px) { .enter-words { padding-left: 12px; padding-right: 12px; padding-bottom: 12px; } .enter-words .actions { margin-top: 14px; } }
