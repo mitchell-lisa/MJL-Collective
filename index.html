@@ -29,6 +29,28 @@
   <link rel="preload" href="/assets/fonts/InstrumentSans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/SourceSerif4-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/site.css?v=20261021g2">
+<style>
+.paths{padding:clamp(56px,8vw,112px) 0}
+.paths h2{margin:0 0 28px}
+.path-grid{display:grid;gap:20px;grid-template-columns:1fr}
+@media(min-width:800px){.path-grid{grid-template-columns:1fr 1fr}}
+.path{display:flex;flex-direction:column;gap:12px;padding:32px;border:1px solid rgba(0,0,0,.12);border-radius:14px;background:#fff;color:inherit;text-decoration:none;transition:border-color .2s,box-shadow .2s}
+.path:hover{border-color:rgba(0,0,0,.35);box-shadow:0 10px 30px rgba(0,0,0,.06)}
+.path .k{font-size:13px;letter-spacing:.08em;text-transform:uppercase;opacity:.6}
+.path h3{font-family:"Instrument Serif",serif;font-weight:400;font-size:clamp(30px,3.4vw,42px);line-height:1.05;margin:0}
+.path ul{margin:4px 0 0;padding-left:18px;line-height:1.6}
+.path .go{margin-top:auto;padding-top:12px;text-decoration:underline;text-underline-offset:4px}
+.page-hero{padding:clamp(120px,14vw,180px) 0 clamp(32px,5vw,64px)}
+.page-hero h1{font-family:"Instrument Serif",serif;font-weight:400;font-size:clamp(42px,6vw,76px);line-height:1.02;margin:0 0 18px;max-width:16ch}
+.page-hero p{max-width:56ch;font-size:clamp(17px,1.4vw,20px);line-height:1.55}
+.page-hero .actions{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-top:24px}
+.feats{display:grid;gap:28px;grid-template-columns:1fr;padding-block:clamp(32px,5vw,64px)}
+@media(min-width:800px){.feats{grid-template-columns:repeat(3,1fr)}}
+.feats h3{font-family:"Instrument Serif",serif;font-weight:400;font-size:26px;margin:0 0 8px}
+.feats p{margin:0;line-height:1.6}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;padding:0;list-style:none}
+.chips li{border:1px solid rgba(0,0,0,.15);border-radius:999px;padding:6px 14px;font-size:14px}
+</style>
 </head>
 <body>
   <a class="skip" href="#main">Skip to the content</a>
@@ -38,8 +60,10 @@
       <a class="home" href="/" aria-label="MJL Collective, home"><img src="/assets/lockup-ink.svg?v=m9" alt="MJL Collective" width="698" height="163"></a>
       <nav class="nav" aria-label="Main">
         <ul>
+          <li><a href="/creators">Creators</a></li>
+          <li><a href="/businesses">Businesses</a></li>
           <li><a href="/work">Work</a></li>
-          <li><a href="/partners">Partners</a></li>
+          
           <li><a href="/services">Services</a></li>
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
@@ -54,8 +78,10 @@
   </header>
   <nav class="drawer" id="drawer" aria-label="Menu">
     <ul>
-      <li><a href="/work">Work</a></li>
-        <li><a href="/partners">Partners</a></li>
+      <li><a href="/creators">Creators</a></li>
+          <li><a href="/businesses">Businesses</a></li>
+          <li><a href="/work">Work</a></li>
+        
         <li><a href="/services">Services</a></li>
         <li><a href="/about">About</a></li>
         <li><a href="/contact">Contact</a></li>
@@ -82,10 +108,30 @@
             <h1 id="hello"><span class="nobr-d">Websites and brands,</span> <span class="nobr">built to last.</span></h1>
             <p class="lede">I design the site, shape the brand, and keep it all running after&nbsp;launch.</p>
             <div class="actions">
-              <a class="btn" href="/contact">Start a project</a>
-              <a class="link" href="/work">See the work</a>
+              <a class="btn" href="/creators">I&rsquo;m a creator</a>
+              <a class="btn" href="/businesses">I run a business</a>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="paths" aria-labelledby="paths-h">
+      <div class="wrap">
+        <h2 id="paths-h">Who are you building for?</h2>
+        <div class="path-grid">
+          <a class="path" href="/creators">
+            <span class="k">For creators</span>
+            <h3>One home for everything you post.</h3>
+            <p>A real site that pulls in your newest looks and shoppable finds from ShopMy, LTK, Instagram, TikTok and Substack. One link for your following, plus your own portal for edits.</p>
+            <span class="go">The creator site</span>
+          </a>
+          <a class="path" href="/businesses">
+            <span class="k">For businesses</span>
+            <h3>A site and brand that look like the work.</h3>
+            <p>For owner-run shops, studios, trades and small firms. I design the brand, build the site, and keep it running after launch, with a client portal for every change.</p>
+            <span class="go">The business site</span>
+          </a>
         </div>
       </div>
     </section>
@@ -93,7 +139,7 @@
     <section class="clients" aria-labelledby="clients-h">
       <div class="wrap">
         <div class="clients-head">
-          <h2 id="clients-h">The businesses I work with.</h2>
+          <h2 id="clients-h">The people and businesses I work with.</h2>
           <a class="link" href="/partners">Every logo, with a link to the site</a>
         </div>
         <div class="trusted-row">
@@ -191,8 +237,10 @@
       <a class="sign" href="/" aria-label="MJL Collective, home"><img src="/assets/lockup-ink.svg?v=m9" alt="MJL Collective" width="698" height="163" loading="lazy"></a>
       <div class="rows">
         <ul>
+          <li><a href="/creators">Creators</a></li>
+          <li><a href="/businesses">Businesses</a></li>
           <li><a href="/work">Work</a></li>
-          <li><a href="/partners">Partners</a></li>
+          
           <li><a href="/services">Services</a></li>
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
