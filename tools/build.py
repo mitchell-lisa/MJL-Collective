@@ -435,7 +435,7 @@ services = glass_head('''<h1>The site is where it starts.</h1>
           <p>Every client gets their own login. Send me a change there, see where it stands, and get a text or email when it&rsquo;s done.</p>
           <a class="link" href="/clients">Client login</a>
         </div>
-        <div class="shot">{fig("/clients", "portal-alerts-d", "The Alerts page in the client portal: email me when MJL replies, text me when MJL replies, with an email address and a mobile number", "The client portal", "Pick email, text or both, and hear back the moment a change is done.").replace(' target="_blank" rel="noopener"', "")}</div>
+        <div class="shot">{fig("/clients", "portal-edits-d", "The Alerts page in the client portal: email me when MJL replies, text me when MJL replies, with an email address and a mobile number", "The client portal", "Pick email, text or both, and hear back the moment a change is done.").replace(' target="_blank" rel="noopener"', "")}</div>
       </section>
       <section class="service flip" aria-labelledby="s3">
         <div class="words">
