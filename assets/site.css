@@ -168,7 +168,40 @@ html.over-enter .bar-glass { display: block; }
 .plate { position: relative; display: block; text-decoration: none; background: var(--cement); box-shadow: 0 0 0 1px var(--hair), 0 40px 80px -48px rgba(28, 26, 23, .45); }
 .plate picture { display: block; }
 .plate img { width: 100%; height: auto; display: block; }
-.plate.d img { aspect-ratio: 1440 / 900; object-fit: contain; }
+/* Every desktop capture sits in the same front-view MacBook (assets/macbook-frame.svg).
+   The shot fills the glass. A small camera notch sits on the screen; the deck is the base. */
+.plate.d {
+  --screen-l: 5.44%;
+  --screen-t: 2.93%;
+  --screen-w: 89.11%;
+  --screen-h: 86.55%;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  aspect-ratio: 900 / 580;
+  filter: drop-shadow(0 22px 28px rgba(28, 26, 23, .22));
+}
+.plate.d::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/assets/macbook-frame.svg?v=20261027d") center / 100% 100% no-repeat;
+  pointer-events: none;
+  z-index: 2;
+}
+.plate.d picture,
+.plate.d video.loop {
+  position: absolute;
+  left: var(--screen-l);
+  top: var(--screen-t);
+  width: var(--screen-w);
+  height: var(--screen-h);
+  margin: 0;
+  border-radius: 1.3% / 2%;
+  overflow: hidden;
+}
+.plate.d img { width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; object-position: top center; background: #fff; border-radius: 0; }
+.plate.d video.loop { object-fit: cover; z-index: 1; }
 /* Every phone capture sits in the same front-view frame (assets/phone-frame.svg).
    The shot fills the glass up to the top rim. A small black island is drawn
    on top of that screen; it is not a band of the website. */
@@ -212,6 +245,9 @@ html.over-enter .bar-glass { display: block; }
 .plate.focus picture { opacity: calc(1 - var(--f, 0) * .6); transform: translate3d(0, calc(var(--f, 0) * 18px), 0); }
 .plate.focus.clear picture { opacity: 1; transform: none; }
 .plate.focus:not(.clear) picture { will-change: opacity, transform; }
+/* MacBook and iPhone: the shot stays in the glass. The whole device softens. */
+.plate.d.focus picture,
+.plate.p.focus picture { opacity: 1; transform: none; }
 
 /* ---------- the exhibition: one room per client ----------
    On a large screen each room fills the screen and the next one slides up
@@ -248,8 +284,8 @@ html.over-enter .bar-glass { display: block; }
   .room.covered { visibility: hidden; }
   .room.flip .room-in { grid-template-columns: minmax(280px, 32%) minmax(0, 1fr); }
   .room.flip .room-art { order: 2; }
-  .room-art { width: min(100%, calc((100svh - var(--barh) - 260px) * 1.6)); justify-self: center; }
-  .room-art.has-p { width: min(100%, calc((100svh - var(--barh) - 260px) * 2.1)); }
+  .room-art { width: min(100%, calc((100svh - var(--barh) - 260px) * 1.55)); justify-self: center; }
+  .room-art.has-p { width: min(100%, calc((100svh - var(--barh) - 260px) * 2)); }
   .room-words { margin-top: 0; }
   .room-words .ba-mark .ba-frame { width: min(100%, 260px, calc(22svh * 4 / 3)); }
   .room-words .ba-mark.wide .ba-frame { width: min(100%, 340px, calc(16svh * 2)); }
