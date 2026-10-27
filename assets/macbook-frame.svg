@@ -55,6 +55,23 @@
     V22
     A17 17 0 0 1 54 5
     Z"/>
-  <!-- camera notch, on the glass, not a status band -->
+  <!-- browser window inside the glass: tabs, then the address bar. The capture starts under this. -->
+  <clipPath id="glass">
+    <path d="M60 18 H840 A10 10 0 0 1 850 28 V508 A10 10 0 0 1 840 518 H60 A10 10 0 0 1 50 508 V28 A10 10 0 0 1 60 18 Z"/>
+  </clipPath>
+  <g clip-path="url(#glass)">
+    <path fill="#e6e6ea" d="M60 18 H840 A10 10 0 0 1 850 28 V54 H50 V28 A10 10 0 0 1 60 18 Z"/>
+    <rect x="50" y="54" width="800" height="38" fill="#f4f4f6"/>
+    <path fill="#ffffff" d="M124 55 V36 A8 8 0 0 1 132 28 H292 A8 8 0 0 1 300 36 V55 Z"/>
+    <rect x="146" y="39" width="56" height="4" rx="2" fill="#c8c8ce"/>
+    <circle cx="70" cy="37" r="4.5" fill="#ff5f57"/>
+    <circle cx="86" cy="37" r="4.5" fill="#febc2e"/>
+    <circle cx="102" cy="37" r="4.5" fill="#28c840"/>
+    <rect x="66" y="64" width="768" height="20" rx="10" fill="#ffffff" stroke="#d2d2d6"/>
+    <circle cx="82" cy="74" r="3.2" fill="none" stroke="#b0b0b6" stroke-width="1.4"/>
+    <rect x="94" y="72.5" width="84" height="3" rx="1.5" fill="#d0d0d4"/>
+    <rect x="50" y="91" width="800" height="1" fill="#d0d0d4"/>
+  </g>
+  <!-- camera notch, on the glass, over the tab strip -->
   <rect x="426" y="12" width="48" height="16" rx="5" fill="#0c0c0e"/>
 </svg>
