@@ -257,15 +257,19 @@ html.over-enter .bar-glass { display: block; }
 .room { background: var(--plaster); border-top: 1px solid var(--mortar); padding: clamp(72px, 10vw, 120px) 0; }
 .room-in { width: 100%; max-width: calc(var(--max) + var(--gut) * 2); margin: 0 auto; padding: 0 var(--gut); }
 .room-art { position: relative; }
-/* Wide screens: desktop print and phone, side by side, bottoms aligned.
-   Narrow screens: the 20fr column would shrink the phone to about 70px.
-   Stack them and give the framed phone a real device width. */
+/* Wide screens: MacBook and iPhone side by side, bottoms aligned.
+   76fr / 20fr keeps the laptop dominant in the magazine spread.
+   Narrow screens: that 20fr column would shrink the phone to about 70px,
+   so the pair stacks. The MacBook stays full width and leads. The phone
+   is a companion at 60% of that width (both frames fill their plates, so
+   this is about 60% of the MacBook's visual width), not a handset that
+   outgrows the laptop. */
 .room-art.has-p { display: grid; grid-template-columns: 76fr 20fr; column-gap: 4%; align-items: end; padding-right: 0; }
 .room-art.has-p > * { min-width: 0; }
 @media (max-width: 900px) {
   .room-art.has-p { grid-template-columns: minmax(0, 1fr); row-gap: 36px; justify-items: center; align-items: stretch; }
   .room-art.has-p .plate.d { width: 100%; }
-  .room-art.has-p .plate.p { width: min(86%, 320px); }
+  .room-art.has-p .plate.p { width: 60%; }
 }
 .room-words { margin-top: clamp(40px, 8vw, 64px); }
 .room h2 { font-size: clamp(46px, 5.2vw, 96px); line-height: .96; }
