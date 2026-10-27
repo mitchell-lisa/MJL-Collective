@@ -169,14 +169,44 @@ html.over-enter .bar-glass { display: block; }
 .plate picture { display: block; }
 .plate img { width: 100%; height: auto; display: block; }
 .plate.d img { aspect-ratio: 1440 / 900; object-fit: contain; }
-/* the phone is a dark bezel around a square-cornered screen, so no corner of
-   the capture is ever rounded off */
-.plate.p { padding: 5px; border-radius: 14px; background: var(--ink); }
-.plate.p img { aspect-ratio: 390 / 844; object-fit: contain; background: #fff; }
+/* Every phone capture sits in the same front-view frame (assets/phone-frame.svg):
+   dark body, thin rim, Dynamic Island in the top bezel, side keys. The screen
+   hole matches the 390×844 capture, so the shot is not cropped. */
+.plate.p {
+  --screen-l: 6.47%;
+  --screen-t: 7.19%;
+  --screen-w: 87.06%;
+  --screen-h: 90.29%;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  aspect-ratio: 402 / 834;
+  filter: drop-shadow(0 22px 28px rgba(28, 26, 23, .28));
+}
+.plate.p::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/assets/phone-frame.svg?v=20261027b") center / 100% 100% no-repeat;
+  pointer-events: none;
+  z-index: 2;
+}
+.plate.p picture,
+.plate.p video.loop {
+  position: absolute;
+  left: var(--screen-l);
+  top: var(--screen-t);
+  width: var(--screen-w);
+  height: var(--screen-h);
+  margin: 0;
+  border-radius: 14% / 6.4%;
+  overflow: hidden;
+}
+.plate.p img { width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; object-position: top center; background: #fff; border-radius: 0; }
 .plate video.loop { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; opacity: 0; transition: opacity .5s ease; pointer-events: none; background: transparent; }
-.plate.p video.loop { inset: 5px; width: calc(100% - 10px); height: calc(100% - 10px); border-radius: 0; }
+.plate.p video.loop { object-fit: cover; z-index: 1; }
 .plate video.loop.on { opacity: 1; }
-@media (max-width: 700px) { .plate.p { padding: 3px; border-radius: 9px; } .plate.p video.loop { inset: 3px; width: calc(100% - 6px); height: calc(100% - 6px); } }
 @media (prefers-reduced-motion: reduce) { .plate video.loop { display: none; } }
 /* coming into focus: a plate is soft as it rises into view and settles clear */
 .plate.focus picture { opacity: calc(1 - var(--f, 0) * .6); transform: translate3d(0, calc(var(--f, 0) * 18px), 0); }
@@ -190,16 +220,15 @@ html.over-enter .bar-glass { display: block; }
 .room { background: var(--plaster); border-top: 1px solid var(--mortar); padding: clamp(72px, 10vw, 120px) 0; }
 .room-in { width: 100%; max-width: calc(var(--max) + var(--gut) * 2); margin: 0 auto; padding: 0 var(--gut); }
 .room-art { position: relative; }
-/* Wide screens: desktop and phone side by side, bottoms aligned, never overlapping.
-   Narrow screens: that 20fr column shrinks to about 70px and the dark bezel
-   reads as a phone drawn inside the phone. Stack them, and show the capture
-   at the width it was taken (390 CSS pixels) with no device frame. */
+/* Wide screens: desktop print and phone, side by side, bottoms aligned.
+   Narrow screens: the 20fr column would shrink the phone to about 70px.
+   Stack them and give the framed phone a real device width. */
 .room-art.has-p { display: grid; grid-template-columns: 76fr 20fr; column-gap: 4%; align-items: end; padding-right: 0; }
+.room-art.has-p > * { min-width: 0; }
 @media (max-width: 900px) {
-  .room-art.has-p { grid-template-columns: minmax(0, 1fr); row-gap: 28px; justify-items: center; align-items: stretch; }
+  .room-art.has-p { grid-template-columns: minmax(0, 1fr); row-gap: 36px; justify-items: center; align-items: stretch; }
   .room-art.has-p .plate.d { width: 100%; }
-  .room-art.has-p .plate.p { width: min(100%, 390px); padding: 0; border-radius: 0; background: var(--cement); }
-  .room-art.has-p .plate.p video.loop { inset: 0; width: 100%; height: 100%; }
+  .room-art.has-p .plate.p { width: min(86%, 320px); }
 }
 .room-words { margin-top: clamp(40px, 8vw, 64px); }
 .room h2 { font-size: clamp(46px, 5.2vw, 96px); line-height: .96; }

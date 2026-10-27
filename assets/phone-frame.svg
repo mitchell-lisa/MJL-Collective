@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 402 834" fill="none">
+  <defs>
+    <linearGradient id="body" x1="30" y1="0" x2="372" y2="834" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3a3646"/>
+      <stop offset="0.16" stop-color="#221f2a"/>
+      <stop offset="0.52" stop-color="#121116"/>
+      <stop offset="1" stop-color="#2c2836"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="14" y1="6" x2="388" y2="828" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#9a93b0"/>
+      <stop offset="0.28" stop-color="#514b60"/>
+      <stop offset="0.62" stop-color="#16141c"/>
+      <stop offset="1" stop-color="#7a728e"/>
+    </linearGradient>
+    <linearGradient id="btn" x1="0" y1="0" x2="14" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5c5670"/>
+      <stop offset="0.5" stop-color="#2c2936"/>
+      <stop offset="1" stop-color="#14131a"/>
+    </linearGradient>
+  </defs>
+  <g fill="url(#btn)">
+    <rect x="3" y="128" width="13" height="26" rx="3"/>
+    <rect x="3" y="168" width="13" height="56" rx="4"/>
+    <rect x="3" y="234" width="13" height="56" rx="4"/>
+    <rect x="386" y="180" width="13" height="84" rx="4"/>
+  </g>
+  <path fill="url(#body)" fill-rule="evenodd" d="
+    M78 6
+    H324
+    A64 64 0 0 1 388 70
+    V764
+    A64 64 0 0 1 324 828
+    H78
+    A64 64 0 0 1 14 764
+    V70
+    A64 64 0 0 1 78 6
+    Z
+    M74 62
+    H328
+    A46 46 0 0 1 374 108
+    V765
+    A46 46 0 0 1 328 811
+    H74
+    A46 46 0 0 1 28 765
+    V108
+    A46 46 0 0 1 74 62
+    Z"/>
+  <path fill="none" stroke="url(#rim)" stroke-width="1.75" d="
+    M78 7
+    H324
+    A63 63 0 0 1 387 70
+    V764
+    A63 63 0 0 1 324 827
+    H78
+    A63 63 0 0 1 15 764
+    V70
+    A63 63 0 0 1 78 7
+    Z"/>
+  <rect x="142" y="20" width="118" height="32" rx="16" fill="#0b0a0e"/>
+</svg>
