@@ -204,13 +204,16 @@ html.over-enter .bar-glass { display: block; }
 .plate.d img { width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; object-position: top center; background: #fff; border-radius: 0; }
 .plate.d video.loop { object-fit: cover; z-index: 1; }
 /* Every phone capture sits in the same front-view frame (assets/phone-frame.svg).
-   The shot fills the glass up to the top rim. A small black island is drawn
-   on top of that screen; it is not a band of the website. */
+   The glass still runs to the rim. The shot starts below a status safe area
+   (iPhone 14 Pro inset, 59/852 of the screen) so the header clears the
+   Dynamic Island. The safe area is that site's own top color, not a bezel. */
 .plate.p {
   --screen-l: 6.22%;
   --screen-t: 2.15%;
   --screen-w: 87.56%;
   --screen-h: 95.82%;
+  --safe: 6.92%;
+  --cap: #fff;
   padding: 0;
   border-radius: 0;
   background: transparent;
@@ -218,6 +221,14 @@ html.over-enter .bar-glass { display: block; }
   aspect-ratio: 402 / 790;
   filter: drop-shadow(0 22px 28px rgba(28, 26, 23, .28));
 }
+/* Top pixel of each phone capture. The safe area continues that color. */
+.plate.p:has(img[src*="annie-services-p"]) { --cap: #f7f3eb; }
+.plate.p:has(img[src*="annie-top-p"]) { --cap: #7e3036; }
+.plate.p:has(img[src*="arden-contact-p"]) { --cap: #f3eee5; }
+.plate.p:has(img[src*="arden-top-p"]) { --cap: #2f3c33; }
+.plate.p:has(img[src*="loftus-build-p"]) { --cap: #191d20; }
+.plate.p:has(img[src*="simos-door-p"]) { --cap: #0b0809; }
+.plate.p:has(img[src*="tiger-team-p"]) { --cap: #ebe7e2; }
 .plate.p::after {
   content: "";
   position: absolute;
@@ -237,9 +248,29 @@ html.over-enter .bar-glass { display: block; }
   border-radius: 15% / 6.9%;
   overflow: hidden;
 }
-.plate.p img { width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; object-position: top center; background: #fff; border-radius: 0; }
+.plate.p picture { background: var(--cap); }
+.plate.p img {
+  position: absolute;
+  left: 0;
+  top: var(--safe);
+  width: 100%;
+  height: calc(100% - var(--safe));
+  aspect-ratio: auto;
+  object-fit: cover;
+  object-position: top center;
+  background: var(--cap);
+  border-radius: 0;
+}
 .plate video.loop { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; opacity: 0; transition: opacity .5s ease; pointer-events: none; background: transparent; }
-.plate.p video.loop { object-fit: cover; z-index: 1; }
+/* 0.0692 matches --safe. The loop starts on the same line as the still. */
+.plate.p video.loop {
+  top: calc(var(--screen-t) + var(--screen-h) * 0.0692);
+  height: calc(var(--screen-h) * 0.9308);
+  border-radius: 0;
+  object-fit: cover;
+  object-position: top center;
+  z-index: 1;
+}
 .plate video.loop.on { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .plate video.loop { display: none; } }
 /* coming into focus: a plate is soft as it rises into view and settles clear */
