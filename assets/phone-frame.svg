@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 402 790" fill="none">
+  <defs>
+    <linearGradient id="body" x1="30" y1="0" x2="372" y2="790" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3a3646"/>
+      <stop offset="0.16" stop-color="#221f2a"/>
+      <stop offset="0.52" stop-color="#121116"/>
+      <stop offset="1" stop-color="#2c2836"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="14" y1="6" x2="388" y2="785" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#9a93b0"/>
+      <stop offset="0.28" stop-color="#514b60"/>
+      <stop offset="0.62" stop-color="#16141c"/>
+      <stop offset="1" stop-color="#7a728e"/>
+    </linearGradient>
+    <linearGradient id="btn" x1="0" y1="0" x2="14" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5c5670"/>
+      <stop offset="0.5" stop-color="#2c2936"/>
+      <stop offset="1" stop-color="#14131a"/>
+    </linearGradient>
+  </defs>
+  <g fill="url(#btn)">
+    <rect x="3" y="128" width="13" height="26" rx="3"/>
+    <rect x="3" y="168" width="13" height="56" rx="4"/>
+    <rect x="3" y="234" width="13" height="56" rx="4"/>
+    <rect x="386" y="180" width="13" height="84" rx="4"/>
+  </g>
+  <!-- chassis with an edge-to-edge screen. The island is drawn on top of the glass, not in a dead band. -->
+  <path fill="url(#body)" fill-rule="evenodd" d="
+    M76 6
+    H326
+    A62 62 0 0 1 388 68
+    V723
+    A62 62 0 0 1 326 785
+    H76
+    A62 62 0 0 1 14 723
+    V68
+    A62 62 0 0 1 76 6
+    Z
+    M76 19
+    H326
+    A49 49 0 0 1 375 68
+    V723
+    A49 49 0 0 1 326 772
+    H76
+    A49 49 0 0 1 27 723
+    V68
+    A49 49 0 0 1 76 19
+    Z"/>
+  <path fill="none" stroke="url(#rim)" stroke-width="1.75" d="
+    M76 7
+    H326
+    A61 61 0 0 1 387 68
+    V723
+    A61 61 0 0 1 326 784
+    H76
+    A61 61 0 0 1 15 723
+    V68
+    A61 61 0 0 1 76 7
+    Z"/>
+  <rect x="149" y="30" width="104" height="26" rx="13" fill="#0b0a0e"/>
+</svg>

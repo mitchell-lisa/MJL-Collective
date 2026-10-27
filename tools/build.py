@@ -6,7 +6,7 @@ import json, pathlib, re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 C = ROOT / "tools" / "content"
 SITE = "https://mjlcollective.com"
-V = "20261021g2"  # bump when site.css or site.js changes
+V = "20261027e"  # bump when site.css or site.js changes
 
 NAV = [("/work", "Work"), ("/partners", "Partners"), ("/services", "Services"), ("/about", "About"), ("/contact", "Contact")]
 
@@ -149,7 +149,7 @@ def img(src, alt, w, h, eager=False):
 # served as AVIF with a WebP fallback, at three widths each.
 SHOT_W = {"d": (1200, 1800, 2880), "p": (360, 720, 1080)}
 SIZES = {"lead": "(min-width: 900px) min(62vw, 940px), 88vw", "look": "(min-width: 900px) min(78vw, 1120px), 100vw",
-         "half": "(min-width: 900px) min(56vw, 800px), 100vw", "phone": "(min-width: 900px) 220px, 52vw",
+         "half": "(min-width: 900px) min(56vw, 800px), 100vw", "phone": "(min-width: 901px) 240px, min(320px, 86vw)",
          "lead-phone": "(min-width: 900px) 170px, 26vw"}
 
 def pic(shot, alt, sizes, eager=False):

@@ -168,20 +168,87 @@ html.over-enter .bar-glass { display: block; }
 .plate { position: relative; display: block; text-decoration: none; background: var(--cement); box-shadow: 0 0 0 1px var(--hair), 0 40px 80px -48px rgba(28, 26, 23, .45); }
 .plate picture { display: block; }
 .plate img { width: 100%; height: auto; display: block; }
-.plate.d img { aspect-ratio: 1440 / 900; object-fit: contain; }
-/* the phone is a dark bezel around a square-cornered screen, so no corner of
-   the capture is ever rounded off */
-.plate.p { padding: 5px; border-radius: 14px; background: var(--ink); }
-.plate.p img { aspect-ratio: 390 / 844; object-fit: contain; background: #fff; }
+/* Every desktop capture sits in the same front-view MacBook (assets/macbook-frame.svg).
+   Inside the glass, a tabs strip and address bar. The shot fills the page area under that chrome.
+   A small camera notch sits on the tab strip; the deck is the base. */
+.plate.d {
+  --screen-l: 5.44%;
+  --screen-t: 15.69%;
+  --screen-w: 89.11%;
+  --screen-h: 73.79%;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  aspect-ratio: 900 / 580;
+  filter: drop-shadow(0 22px 28px rgba(28, 26, 23, .22));
+}
+.plate.d::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/assets/macbook-frame.svg?v=20261027e") center / 100% 100% no-repeat;
+  pointer-events: none;
+  z-index: 2;
+}
+.plate.d picture,
+.plate.d video.loop {
+  position: absolute;
+  left: var(--screen-l);
+  top: var(--screen-t);
+  width: var(--screen-w);
+  height: var(--screen-h);
+  margin: 0;
+  border-radius: 0 0 1.25% 1.25% / 0 0 2.34% 2.34%;
+  overflow: hidden;
+}
+.plate.d img { width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; object-position: top center; background: #fff; border-radius: 0; }
+.plate.d video.loop { object-fit: cover; z-index: 1; }
+/* Every phone capture sits in the same front-view frame (assets/phone-frame.svg).
+   The shot fills the glass up to the top rim. A small black island is drawn
+   on top of that screen; it is not a band of the website. */
+.plate.p {
+  --screen-l: 6.22%;
+  --screen-t: 2.15%;
+  --screen-w: 87.56%;
+  --screen-h: 95.82%;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  aspect-ratio: 402 / 790;
+  filter: drop-shadow(0 22px 28px rgba(28, 26, 23, .28));
+}
+.plate.p::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/assets/phone-frame.svg?v=20261027c") center / 100% 100% no-repeat;
+  pointer-events: none;
+  z-index: 2;
+}
+.plate.p picture,
+.plate.p video.loop {
+  position: absolute;
+  left: var(--screen-l);
+  top: var(--screen-t);
+  width: var(--screen-w);
+  height: var(--screen-h);
+  margin: 0;
+  border-radius: 15% / 6.9%;
+  overflow: hidden;
+}
+.plate.p img { width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; object-position: top center; background: #fff; border-radius: 0; }
 .plate video.loop { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; opacity: 0; transition: opacity .5s ease; pointer-events: none; background: transparent; }
-.plate.p video.loop { inset: 5px; width: calc(100% - 10px); height: calc(100% - 10px); border-radius: 0; }
+.plate.p video.loop { object-fit: cover; z-index: 1; }
 .plate video.loop.on { opacity: 1; }
-@media (max-width: 700px) { .plate.p { padding: 3px; border-radius: 9px; } .plate.p video.loop { inset: 3px; width: calc(100% - 6px); height: calc(100% - 6px); } }
 @media (prefers-reduced-motion: reduce) { .plate video.loop { display: none; } }
 /* coming into focus: a plate is soft as it rises into view and settles clear */
 .plate.focus picture { opacity: calc(1 - var(--f, 0) * .6); transform: translate3d(0, calc(var(--f, 0) * 18px), 0); }
 .plate.focus.clear picture { opacity: 1; transform: none; }
 .plate.focus:not(.clear) picture { will-change: opacity, transform; }
+/* MacBook and iPhone: the shot stays in the glass. The whole device softens. */
+.plate.d.focus picture,
+.plate.p.focus picture { opacity: 1; transform: none; }
 
 /* ---------- the exhibition: one room per client ----------
    On a large screen each room fills the screen and the next one slides up
@@ -190,8 +257,16 @@ html.over-enter .bar-glass { display: block; }
 .room { background: var(--plaster); border-top: 1px solid var(--mortar); padding: clamp(72px, 10vw, 120px) 0; }
 .room-in { width: 100%; max-width: calc(var(--max) + var(--gut) * 2); margin: 0 auto; padding: 0 var(--gut); }
 .room-art { position: relative; }
-/* desktop and phone side by side, bottoms aligned, never overlapping */
+/* Wide screens: desktop print and phone, side by side, bottoms aligned.
+   Narrow screens: the 20fr column would shrink the phone to about 70px.
+   Stack them and give the framed phone a real device width. */
 .room-art.has-p { display: grid; grid-template-columns: 76fr 20fr; column-gap: 4%; align-items: end; padding-right: 0; }
+.room-art.has-p > * { min-width: 0; }
+@media (max-width: 900px) {
+  .room-art.has-p { grid-template-columns: minmax(0, 1fr); row-gap: 36px; justify-items: center; align-items: stretch; }
+  .room-art.has-p .plate.d { width: 100%; }
+  .room-art.has-p .plate.p { width: min(86%, 320px); }
+}
 .room-words { margin-top: clamp(40px, 8vw, 64px); }
 .room h2 { font-size: clamp(46px, 5.2vw, 96px); line-height: .96; }
 .room-words > p { font: 400 clamp(20px, 1.6vw, 26px)/1.4 var(--serif); color: var(--ink-2); max-width: 24ch; margin: 22px 0 28px; }
@@ -210,8 +285,8 @@ html.over-enter .bar-glass { display: block; }
   .room.covered { visibility: hidden; }
   .room.flip .room-in { grid-template-columns: minmax(280px, 32%) minmax(0, 1fr); }
   .room.flip .room-art { order: 2; }
-  .room-art { width: min(100%, calc((100svh - var(--barh) - 260px) * 1.6)); justify-self: center; }
-  .room-art.has-p { width: min(100%, calc((100svh - var(--barh) - 260px) * 2.1)); }
+  .room-art { width: min(100%, calc((100svh - var(--barh) - 260px) * 1.55)); justify-self: center; }
+  .room-art.has-p { width: min(100%, calc((100svh - var(--barh) - 260px) * 2)); }
   .room-words { margin-top: 0; }
   .room-words .ba-mark .ba-frame { width: min(100%, 260px, calc(22svh * 4 / 3)); }
   .room-words .ba-mark.wide .ba-frame { width: min(100%, 340px, calc(16svh * 2)); }

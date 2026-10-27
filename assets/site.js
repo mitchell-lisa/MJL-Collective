@@ -118,7 +118,13 @@
       es.forEach(function (e) { if (e.isIntersecting) seen.add(e.target); else seen.delete(e.target); });
       tick();
     }, { rootMargin: "10% 0px" });
-    plates.forEach(function (el) { var pc = el.querySelector("picture"); if (pc) { pc.style.opacity = ".4"; pc.style.transform = "translate3d(0,18px,0)"; } io.observe(el); });
+    plates.forEach(function (el) {
+      // A device frame keeps the capture locked in the glass. Soften the whole plate.
+      var device = el.classList.contains("d") || el.classList.contains("p");
+      var target = device ? el : el.querySelector("picture");
+      if (target) { target.style.opacity = ".4"; target.style.transform = "translate3d(0,18px,0)"; }
+      io.observe(el);
+    });
   }
   // decode pictures a screen or two before they arrive, so no frame waits on it
   if ("IntersectionObserver" in window) {
@@ -187,7 +193,8 @@
       seen.forEach(function (el) { reads.push([el, el.getBoundingClientRect()]); });
       reads.forEach(function (rb) {
         var b = rb[1], cc = (b.top + Math.min(b.height, vh) * .35) / vh, ff = ease(.62, .98, cc);
-        var pic = rb[0].querySelector("picture");
+        var device = rb[0].classList.contains("d") || rb[0].classList.contains("p");
+        var pic = device ? rb[0] : rb[0].querySelector("picture");
         put(pic, "opacity", (1 - ff * .6).toFixed(3));
         put(pic, "transform", "translate3d(0," + (ff * 18).toFixed(1) + "px,0)");
         flag(rb[0], "clear", ff === 0);
