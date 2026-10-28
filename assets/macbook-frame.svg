@@ -11,15 +11,15 @@
       <stop offset="0.35" stop-color="#3a3a40"/>
       <stop offset="1" stop-color="#6e6e76"/>
     </linearGradient>
-    <linearGradient id="deck" x1="12" y1="518" x2="12" y2="572" gradientUnits="userSpaceOnUse">
+    <linearGradient id="deck" x1="36" y1="518" x2="36" y2="572" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#c5c8ce"/>
       <stop offset="0.18" stop-color="#eceef1"/>
       <stop offset="0.72" stop-color="#f7f8f9"/>
       <stop offset="1" stop-color="#d5d8dd"/>
     </linearGradient>
   </defs>
-  <!-- silver deck, slightly wider than the lid -->
-  <rect x="12" y="518" width="876" height="54" rx="8" fill="url(#deck)"/>
+  <!-- silver deck, the same width as the lid so the silhouette lines up -->
+  <rect x="36" y="518" width="828" height="54" rx="8" fill="url(#deck)"/>
   <rect x="36" y="526" width="828" height="3" fill="#8d939c"/>
   <rect x="408" y="562" width="84" height="5" rx="2.5" fill="#c5cad1"/>
   <!-- lid, screen punched out so the capture fills the glass -->
@@ -55,22 +55,23 @@
     V22
     A17 17 0 0 1 54 5
     Z"/>
-  <!-- browser window inside the glass: tabs, then the address bar. The capture starts under this. -->
+  <!-- browser window inside the glass: a short tab strip, then a short address bar.
+       The capture starts at the y=58 hairline. site.css screen-t is 10%. -->
   <clipPath id="glass">
     <path d="M60 18 H840 A10 10 0 0 1 850 28 V508 A10 10 0 0 1 840 518 H60 A10 10 0 0 1 50 508 V28 A10 10 0 0 1 60 18 Z"/>
   </clipPath>
   <g clip-path="url(#glass)">
-    <path fill="#e6e6ea" d="M60 18 H840 A10 10 0 0 1 850 28 V54 H50 V28 A10 10 0 0 1 60 18 Z"/>
-    <rect x="50" y="54" width="800" height="38" fill="#f4f4f6"/>
-    <path fill="#ffffff" d="M124 55 V36 A8 8 0 0 1 132 28 H292 A8 8 0 0 1 300 36 V55 Z"/>
-    <rect x="146" y="39" width="56" height="4" rx="2" fill="#c8c8ce"/>
-    <circle cx="70" cy="37" r="4.5" fill="#ff5f57"/>
-    <circle cx="86" cy="37" r="4.5" fill="#febc2e"/>
-    <circle cx="102" cy="37" r="4.5" fill="#28c840"/>
-    <rect x="66" y="64" width="768" height="20" rx="10" fill="#ffffff" stroke="#d2d2d6"/>
-    <circle cx="82" cy="74" r="3.2" fill="none" stroke="#b0b0b6" stroke-width="1.4"/>
-    <rect x="94" y="72.5" width="84" height="3" rx="1.5" fill="#d0d0d4"/>
-    <rect x="50" y="91" width="800" height="1" fill="#d0d0d4"/>
+    <path fill="#e6e6ea" d="M60 18 H840 A10 10 0 0 1 850 28 V38 H50 V28 A10 10 0 0 1 60 18 Z"/>
+    <rect x="50" y="38" width="800" height="20" fill="#f4f4f6"/>
+    <path fill="#ffffff" d="M108 39 V27 A4 4 0 0 1 112 23 H250 A4 4 0 0 1 254 27 V39 Z"/>
+    <rect x="161" y="29.5" width="40" height="2.5" rx="1.25" fill="#c8c8ce"/>
+    <circle cx="66" cy="29" r="2.8" fill="#ff5f57"/>
+    <circle cx="77" cy="29" r="2.8" fill="#febc2e"/>
+    <circle cx="88" cy="29" r="2.8" fill="#28c840"/>
+    <rect x="60" y="42" width="780" height="12" rx="6" fill="#ffffff" stroke="#d2d2d6" stroke-width="0.8"/>
+    <circle cx="74" cy="48" r="2.1" fill="none" stroke="#b0b0b6" stroke-width="1.1"/>
+    <rect x="82" y="46.8" width="58" height="2.4" rx="1.2" fill="#d0d0d4"/>
+    <rect x="50" y="58" width="800" height="1" fill="#d0d0d4"/>
   </g>
   <!-- camera notch, on the glass, over the tab strip -->
   <rect x="426" y="12" width="48" height="16" rx="5" fill="#0c0c0e"/>
