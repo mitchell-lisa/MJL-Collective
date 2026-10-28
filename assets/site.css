@@ -169,13 +169,14 @@ html.over-enter .bar-glass { display: block; }
 .plate picture { display: block; }
 .plate img { width: 100%; height: auto; display: block; }
 /* Every desktop capture sits in the same front-view MacBook (assets/macbook-frame.svg).
-   Inside the glass, a tabs strip and address bar. The shot fills the page area under that chrome.
+   Inside the glass, a short tab strip and address bar (about 8% of the screen).
+   The shot fills the page area under that chrome, starting at the hairline.
    A small camera notch sits on the tab strip; the deck is the base. */
 .plate.d {
   --screen-l: 5.44%;
-  --screen-t: 15.69%;
+  --screen-t: 10%;
   --screen-w: 89.11%;
-  --screen-h: 73.79%;
+  --screen-h: 79.48%;
   padding: 0;
   background: transparent;
   box-shadow: none;
@@ -186,7 +187,7 @@ html.over-enter .bar-glass { display: block; }
   content: "";
   position: absolute;
   inset: 0;
-  background: url("/assets/macbook-frame.svg?v=20261027e") center / 100% 100% no-repeat;
+  background: url("/assets/macbook-frame.svg?v=20261028a") center / 100% 100% no-repeat;
   pointer-events: none;
   z-index: 2;
 }
@@ -198,7 +199,7 @@ html.over-enter .bar-glass { display: block; }
   width: var(--screen-w);
   height: var(--screen-h);
   margin: 0;
-  border-radius: 0 0 1.25% 1.25% / 0 0 2.34% 2.34%;
+  border-radius: 0 0 1.25% 1.25% / 0 0 2.17% 2.17%;
   overflow: hidden;
 }
 .plate.d img { width: 100%; height: 100%; aspect-ratio: auto; object-fit: cover; object-position: top center; background: #fff; border-radius: 0; }
