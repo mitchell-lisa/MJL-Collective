@@ -142,7 +142,8 @@ html.over-enter .bar-glass { display: block; }
 
 /* ---------- home: the hero ----------
    The glass wall, still, with the words on a frosted pane over it. It scrolls
-   away like the rest of the page: nothing pinned, nothing tied to the scroll. */
+   away like the rest of the page: nothing pinned, nothing tied to the scroll.
+   The headline and the two buttons are centered. Other heroes stay left. */
 .enter { position: relative; }
 .enter-stage { position: relative; isolation: isolate; display: flex; flex-direction: column; }
 .wall-box { position: absolute; left: 0; right: 0; top: 0; height: 100vh; height: 100svh; min-height: 560px; overflow: hidden; }
@@ -155,8 +156,9 @@ html.over-enter .bar-glass { display: block; }
 .wall-tall .frosted { background-image: url(/assets/glass/frost-tall-m.webp); }
 .wall-tall { display: none; }
 @media (max-width: 700px) { .wall-wall { display: none; } .wall-tall { display: block; } }
-.enter-words { position: relative; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding-top: calc(var(--barh) + 40px); padding-bottom: clamp(40px, 9vh, 110px); }
-.enter-words .pane { max-width: 860px; }
+.enter-words { position: relative; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-top: calc(var(--barh) + 40px); padding-bottom: clamp(40px, 9vh, 110px); }
+.enter-words .pane { width: 100%; max-width: 860px; text-align: center; }
+.enter-words .actions { justify-content: center; }
 .nobr { white-space: nowrap; }
 @media (min-width: 701px) { .nobr-d { white-space: nowrap; } }
 @media (max-width: 700px) {
