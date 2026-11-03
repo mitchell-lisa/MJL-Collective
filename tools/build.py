@@ -6,7 +6,7 @@ import json, pathlib, re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 C = ROOT / "tools" / "content"
 SITE = "https://mjlcollective.com"
-V = "20261031b"  # bump when site.css or site.js changes
+V = "20261103a"  # bump when site.css or site.js changes
 
 NAV = [("/work", "Work"), ("/partners", "Partners"), ("/services", "Services"), ("/about", "About"), ("/contact", "Contact")]
 
@@ -453,9 +453,19 @@ services = glass_head('''<h1>The site is where it starts.</h1>
           <a class="link" href="/contact">Ask me what your business needs</a>
         </div>
       </section>
+      <section class="service text-only" id="weekly" aria-labelledby="weekly-k s-weekly">
+        <div class="words">
+          <p class="k" id="weekly-k">Creators</p>
+          <h2 id="s-weekly">A weekly email</h2>
+        </div>
+        <div class="more">
+          <p>Each week I turn the looks you posted into an email of what you wore. Shoppable Amazon and LTK links, so the commission stays with you. You approve each issue before it sends. I handle Kit, or the email tool you already use.</p>
+          <a class="link" href="/contact">Ask me about a weekly email</a>
+        </div>
+      </section>
     </div>'''
 page("services.html", "/services", "Services | MJL Collective",
-     "The website and brand first, then keeping it current: hosting, fixes, listings, catalogs, a client login for changes, and email and SMS once the base is solid.", services)
+     "The website and brand first, then keeping it current: hosting, fixes, listings, catalogs, a client login for changes, and email and SMS once the base is solid. For creators, a weekly email of what you wore.", services)
 
 # ------------------------------------------------------------------ about
 about = glass_head('''<h1>Mitchell Lisa</h1>
@@ -490,7 +500,7 @@ contact = glass_head('''<h1>Tell me about the business.</h1>
             <label><span>Business</span><input name="business" maxlength="200" autocomplete="organization"></label>
             <label><span>Email</span><input name="email" type="email" required maxlength="200" autocomplete="email"></label>
             <label><span>Phone <em>(optional)</em></span><input name="phone" type="tel" maxlength="60" autocomplete="tel"></label>
-            <label class="full"><span>What do you need help with?</span><textarea name="message" required rows="6" maxlength="4000" placeholder="New site, a rebuild, updates, or email and SMS. Tell me a little about the business."></textarea></label>
+            <label class="full"><span>What do you need help with?</span><textarea name="message" required rows="6" maxlength="4000" placeholder="New site, a rebuild, updates, email and SMS, or a weekly email. Tell me a little about the business."></textarea></label>
           </div>
           <div class="cf-foot">
             <button class="btn" type="submit">Send message</button>

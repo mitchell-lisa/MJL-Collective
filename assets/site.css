@@ -400,6 +400,7 @@ html.over-enter .bar-glass { display: block; }
 .service.text-only .more { grid-column: 7 / span 6; }
 .service h2 { font-size: clamp(36px, 3.6vw, 58px); margin-bottom: 22px; }
 .service p { font-size: clamp(18px, 1.3vw, 20px); color: var(--ink-2); }
+.service .k { margin: 0 0 14px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); opacity: .6; }
 figure { margin: 0; }
 figcaption { margin-top: 20px; font-size: 16px; color: var(--ink-2); max-width: 62ch; }
 figcaption strong { font: 400 21px/1.2 var(--display); color: var(--ink); margin-right: 4px; }
