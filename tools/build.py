@@ -459,7 +459,7 @@ services = glass_head('''<h1>The site is where it starts.</h1>
           <h2 id="s-weekly">A weekly email</h2>
         </div>
         <div class="more">
-          <p>Each week I turn the looks you posted into an email of what you wore. Shoppable Amazon and LTK links, so the commission stays with you. You approve each issue before it sends. I handle Kit, or the email tool you already use.</p>
+          <p>Each week I turn the looks you posted into an email of what you wore. Shoppable links, so the commission stays with you. You approve each issue before it sends. I handle Kit, or the email tool you already use.</p>
           <a class="link" href="/contact">Ask me about a weekly email</a>
         </div>
       </section>
