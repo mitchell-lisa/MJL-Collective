@@ -6,7 +6,7 @@ import json, pathlib, re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 C = ROOT / "tools" / "content"
 SITE = "https://mjlcollective.com"
-V = "20261103a"  # bump when site.css or site.js changes
+V = "20261031b"  # bump when site.css or site.js changes
 
 NAV = [("/work", "Work"), ("/partners", "Partners"), ("/services", "Services"), ("/about", "About"), ("/contact", "Contact")]
 
@@ -453,19 +453,9 @@ services = glass_head('''<h1>The site is where it starts.</h1>
           <a class="link" href="/contact">Ask me what your business needs</a>
         </div>
       </section>
-      <section class="service text-only" id="weekly" aria-labelledby="weekly-k s-weekly">
-        <div class="words">
-          <p class="k" id="weekly-k">Creators</p>
-          <h2 id="s-weekly">A weekly email</h2>
-        </div>
-        <div class="more">
-          <p>Each week I turn the looks you posted into an email of what you wore. Shoppable links, so the commission stays with you. You approve each issue before it sends. I handle Kit, or the email tool you already use.</p>
-          <a class="link" href="/contact">Ask me about a weekly email</a>
-        </div>
-      </section>
     </div>'''
 page("services.html", "/services", "Services | MJL Collective",
-     "The website and brand first, then keeping it current: hosting, fixes, listings, catalogs, a client login for changes, and email and SMS once the base is solid. For creators, a weekly email of what you wore.", services)
+     "The website and brand first, then keeping it current: hosting, fixes, listings, catalogs, a client login for changes, and email and SMS once the base is solid.", services)
 
 # ------------------------------------------------------------------ about
 about = glass_head('''<h1>Mitchell Lisa</h1>
