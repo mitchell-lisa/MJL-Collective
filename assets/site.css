@@ -200,9 +200,26 @@ section { scroll-margin-top: calc(var(--barh) - 20px); }
 .process li { counter-increment: p; display: grid; grid-template-columns: 28px 1fr; padding: 9px 0; border-top: 1px solid var(--mortar); }
 .process li:last-child { border-bottom: 1px solid var(--mortar); }
 .process li::before { content: counter(p); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+#services .wrap { padding-bottom: 64px; }
 @media (max-width: 380px) {
   .steps { --run: 18px; }
   .step { padding: 18px 16px 22px; }
+}
+
+/* creators: a weekly email, beside the business steps, not a fifth step */
+.creators .wrap { border-top: 1px solid var(--mortar); padding-top: 56px; padding-bottom: 92px; display: grid; grid-template-columns: 1fr; gap: 28px 64px; }
+@media (min-width: 860px) { .creators .wrap { grid-template-columns: 0.9fr 1.1fr; align-items: start; } }
+.creators .label { margin: 0 0 14px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
+.creators h2 { margin: 0 0 14px; font-weight: 400; font-size: clamp(28px, calc(25px + 0.77vw), 36px); letter-spacing: -0.02em; line-height: 1.15; max-width: 16ch; text-wrap: balance; }
+.creators .lede { margin: 0; color: var(--ink-2); max-width: 42ch; }
+.creators ul { list-style: none; margin: 0; padding: 0; max-width: 48ch; }
+.creators li { padding: 10px 0; border-top: 1px solid var(--mortar); color: var(--ink-2); font-size: 14px; }
+.creators li:last-child { border-bottom: 1px solid var(--mortar); }
+.creators .cta { display: inline-block; margin-top: 28px; color: var(--ink); }
+.creators .cta:hover, .creators .cta:focus-visible { background: var(--ink); color: var(--plaster); }
+@media (max-width: 640px) {
+  #services .wrap { padding-bottom: 48px; }
+  .creators .wrap { padding-top: 40px; padding-bottom: 64px; }
 }
 
 /* ---------- about ---------- */

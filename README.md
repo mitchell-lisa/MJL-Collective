@@ -28,7 +28,7 @@ Six pages, one shared stylesheet and script:
   line about the site, and a link out.
 - `partners.html` at `/partners`: a grid of the client logos. Each logo
   links to that client's live site.
-- `services.html` at `/services`: the four steps and the process under them.
+- `services.html` at `/services`: the four steps, the process under them, and a weekly email for creators.
 - `about.html` at `/about` and `contact.html` at `/contact`.
 - `assets/site.css` and `assets/site.js` are shared. `vercel.json` sets
   `cleanUrls`, so `/work` serves `work.html`.
