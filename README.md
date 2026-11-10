@@ -44,9 +44,9 @@ branch create preview deployments.
 
 ## Pages
 
-- `/` home, `/work`, `/partners`, `/services`, `/about`, `/contact`, `/privacy`, `/terms`, and `404.html`.
+- `/` home, `/creators`, `/businesses`, `/work`, `/partners`, `/services`, `/about`, `/contact`, `/privacy`, `/terms`, and `404.html`.
 - `/clients` is rewritten to the client portal app (`vercel.json`). Don't remove that rewrite.
-- The client logo carousel and the Partners grid read from `CLIENTS` in `tools/build.py`, newest first.
+- The homepage logo carousel stays as its own mixed row. `/partners` lists the same people in two grids, creators then businesses. Those logos do not also sit on `/creators` or `/businesses`. The live HTML is edited by hand. `tools/build.py` is behind those pages, so do not regenerate over them.
 
 ## Brand
 
