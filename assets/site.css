@@ -57,7 +57,43 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .nav a, .bar .login { text-decoration: none; font-size: 14px; font-weight: 500; letter-spacing: .01em; padding: 6px 0; border-bottom: 1px solid transparent; }
 .nav a:hover, .nav a[aria-current="page"] { border-bottom-color: currentColor; }
 .nav .sep { padding-left: 34px; border-left: 1px solid var(--mortar); }
-/* Partners sits with Creators and Businesses, so the row is tighter until the bar has room. */
+/* Work keeps its sub-pages in a dropdown so the top row stays short. */
+.nav .has-sub { position: relative; display: flex; align-items: center; gap: 6px; }
+.nav .has-sub > a { display: inline-flex; align-items: center; }
+.nav .sub-toggle {
+  appearance: none; -webkit-appearance: none; background: none; border: 0;
+  width: 18px; height: 18px; padding: 0; margin: 0; cursor: pointer;
+  position: relative; flex: 0 0 auto; border-radius: 0; color: inherit;
+}
+.nav .sub-toggle::after {
+  content: ""; position: absolute; left: 4px; top: 6px;
+  width: 6px; height: 6px;
+  border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg); transform-origin: center;
+}
+.nav .has-sub.open > .sub-toggle::after,
+.nav .has-sub:hover > .sub-toggle::after,
+.nav .has-sub:focus-within > .sub-toggle::after { transform: rotate(225deg); top: 8px; }
+.nav .sub {
+  display: none; position: absolute; top: calc(100% + 10px); left: -16px;
+  min-width: 196px; margin: 0; padding: 8px 0;
+  list-style: none; background: #ffffff; color: var(--ink);
+  border: 1px solid var(--hair);
+  box-shadow: 0 16px 36px -18px rgba(28, 26, 23, .35);
+  z-index: 60;
+}
+.nav .has-sub:hover > .sub,
+.nav .has-sub:focus-within > .sub,
+.nav .has-sub.open > .sub { display: block; }
+.nav .sub a {
+  display: block; padding: 9px 18px; border-bottom: 0; white-space: nowrap;
+  font-size: 14px; font-weight: 500; letter-spacing: .01em;
+}
+.nav .sub a:hover,
+.nav .sub a[aria-current="page"] { text-decoration: underline; text-underline-offset: 4px; background: var(--cement); }
+.nav .has-sub.current-section > a,
+.nav .has-sub > a[aria-current="true"],
+.nav .has-sub > a[aria-current="page"] { border-bottom-color: currentColor; }
 @media (max-width: 1180px) {
   .nav ul { gap: 14px; }
   .nav .sep { padding-left: 14px; }
@@ -81,7 +117,29 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   .drawer ul { list-style: none; margin: 0; padding: 0; }
   .drawer li { border-bottom: 1px solid var(--mortar); }
   .drawer a { display: block; padding: 14px 0; font: 400 36px/1.1 var(--display); text-decoration: none; }
-  .drawer a[aria-current="page"] { font-style: normal; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 7px; }
+  .drawer a[aria-current="page"],
+  .drawer a[aria-current="true"] { font-style: normal; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 7px; }
+  .drawer .drawer-row { display: flex; align-items: center; gap: 8px; }
+  .drawer .drawer-row > a { flex: 1; min-width: 0; }
+  .drawer .sub-toggle {
+    appearance: none; -webkit-appearance: none; background: none; border: 0;
+    width: 44px; height: 44px; padding: 0; margin: 0 0 0 auto; cursor: pointer;
+    position: relative; flex: 0 0 auto; color: inherit; border-radius: 0;
+  }
+  .drawer .sub-toggle::after {
+    content: ""; position: absolute; left: 16px; top: 16px;
+    width: 10px; height: 10px;
+    border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg); transform-origin: center;
+  }
+  .drawer .has-sub.open > .drawer-row .sub-toggle::after { transform: rotate(225deg); top: 20px; }
+  .drawer .has-sub > .sub { display: none; border-bottom: 0; padding: 0 0 12px; }
+  .drawer .has-sub.open > .sub { display: block; }
+  .drawer .has-sub > .sub[hidden] { display: none; }
+  .drawer .has-sub > .sub li { border-bottom: 0; }
+  .drawer .has-sub > .sub a {
+    font-size: 26px; line-height: 1.15; padding: 8px 0 8px 4px; color: var(--ink-2);
+  }
   .drawer .mail { margin-top: 28px; font: 400 17px/1.5 var(--serif); color: var(--ink-2); }
   .drawer .mail a { display: inline; font: inherit; padding: 0; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
   body.menu-open { overflow: hidden; position: fixed; left: 0; right: 0; width: 100%; }
@@ -238,6 +296,8 @@ html.over-enter .bar-glass { display: block; }
 .plate.p:has(img[src*="loftus-build-p"]) { --cap: #191d20; }
 .plate.p:has(img[src*="simos-door-p"]) { --cap: #0b0809; }
 .plate.p:has(img[src*="tiger-team-p"]) { --cap: #ebe7e2; }
+.plate.p:has(img[src*="marie-home-p"]) { --cap: #00191c; }
+.plate.p:has(img[src*="aspen-home-p"]) { --cap: #4a585a; }
 .plate.p::after {
   content: "";
   position: absolute;

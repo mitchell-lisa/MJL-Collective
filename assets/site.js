@@ -284,6 +284,43 @@
   addEventListener("pageshow", function () { if (isOpen) set(false, true); });
 })();
 
+// Work sub-pages: a dropdown on the desktop bar, and an expandable group
+// in the phone menu. The Work link itself still goes to the Work page.
+(function () {
+  function bind(item, isDrawer) {
+    var btn = item.querySelector(".sub-toggle");
+    var sub = item.querySelector(":scope > .sub");
+    if (!btn || !sub) return;
+    function setOpen(on) {
+      item.classList.toggle("open", on);
+      btn.setAttribute("aria-expanded", on ? "true" : "false");
+      if (isDrawer) {
+        if (on) sub.removeAttribute("hidden");
+        else sub.setAttribute("hidden", "");
+      }
+    }
+    if (isDrawer && item.classList.contains("open")) setOpen(true);
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      setOpen(btn.getAttribute("aria-expanded") !== "true");
+    });
+    if (!isDrawer) {
+      item.addEventListener("mouseenter", function () { setOpen(true); });
+      item.addEventListener("mouseleave", function () { setOpen(false); });
+      item.addEventListener("focusin", function () { setOpen(true); });
+      item.addEventListener("focusout", function (e) {
+        if (!item.contains(e.relatedTarget)) setOpen(false);
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") setOpen(false);
+      });
+    }
+  }
+  [].slice.call(document.querySelectorAll(".nav .has-sub")).forEach(function (el) { bind(el, false); });
+  [].slice.call(document.querySelectorAll(".drawer .has-sub")).forEach(function (el) { bind(el, true); });
+})();
+
 // The contact form posts to /api/contact, which emails the submission
 // straight to Mitchell's inbox and a confirmation to the visitor.
 (function () {
