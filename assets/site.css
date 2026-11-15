@@ -374,6 +374,9 @@ html.over-enter .bar-glass { display: block; }
 .room h2 { font-size: clamp(46px, 5.2vw, 96px); line-height: .96; }
 .room-words > p { font: 400 clamp(20px, 1.6vw, 26px)/1.4 var(--serif); color: var(--ink-2); max-width: 24ch; margin: 22px 0 28px; }
 .room-words .link { display: inline-block; margin-top: 4px; }
+.room-words h2 + .link,
+.room-words h2 + .marks,
+.room-words h2 + .ba { margin-top: 28px; }
 .marks { display: flex; align-items: center; flex-wrap: wrap; gap: 16px 22px; margin-bottom: 30px; }
 .marks .mk { width: auto; flex: none; }
 .marks .tall { height: clamp(96px, 9vw, 128px); }
