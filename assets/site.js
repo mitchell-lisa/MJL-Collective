@@ -1,100 +1,17 @@
-// The glass. Mitchell's glass block wall sits clear at the top of the page.
-// On the home page it frosts over as you scroll, then the blocks clear one at
-// a time and a client site is behind them. Only opacity and transform change
-// on scroll; the frosted glass is drawn ahead of time. Nothing moves for
-// people who ask for reduced motion.
+// Scroll behavior for the work rooms and the client plates. Nothing moves
+// for people who ask for reduced motion.
 (function () {
   var still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var fine = window.matchMedia && matchMedia("(hover: hover) and (pointer: fine)").matches;
   var clamp = function (x) { return x < 0 ? 0 : x > 1 ? 1 : x; };
   var ease = function (a, b, x) { var t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); };
   var $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
 
-  // Frosted panes: line the frosted copy of the photograph up behind each
-  // pane so it reads as part of the same wall in every browser.
-  function frostFor(el) {
-    var tall = innerWidth <= 700;
-    if (el.classList.contains("enter")) return tall ? ["tall", "/assets/glass/soft-tall.webp"] : ["wall", "/assets/glass/soft-wall.webp"];
-    return tall ? ["tall", "/assets/glass/soft-tall.webp"] : ["band", "/assets/glass/soft-band.webp"];
-  }
-  var ASPECT = { wall: 5423 / 3389, band: 5423 / 2358, tall: 1947 / 4214 };
-  function align() {
-    $$(".glass-head, .enter").forEach(function (host) {
-      var pane = host.querySelector(".pane"); if (!pane) return;
-      var f = frostFor(host), box;
-      var wallEl = host.querySelector(f[0] === "tall" ? ".wall-tall" : ".wall-wall");
-      if (host.classList.contains("enter") && wallEl) box = wallEl.getBoundingClientRect();
-      else {
-        var g = host.querySelector(".gp"); if (!g) return;
-        var r = g.getBoundingClientRect(), a = ASPECT[f[0]], w = r.width, h = r.height;
-        if (w / h > a) { h = w / a; } else { w = h * a; }
-        box = { left: r.left + (r.width - w) / 2, top: r.top + (r.height - h) / 2, width: w, height: h };
-      }
-      var p = pane.getBoundingClientRect(), s = pane.style;
-      s.setProperty("--fi", "url(" + f[1] + ")");
-      s.setProperty("--fx", (box.left - p.left).toFixed(1) + "px");
-      s.setProperty("--fy", (box.top - p.top).toFixed(1) + "px");
-      s.setProperty("--fw", box.width.toFixed(1) + "px");
-      s.setProperty("--fh", box.height.toFixed(1) + "px");
-      pane.classList.add("aligned");
-    });
-  }
-
-  var enter = document.querySelector(".enter");
-  var head = document.querySelector(".glass-head");
   var plates = $$(".plate.focus");
   var rooms = $$(".rooms:not(.flow) .room");
-  // The home hero is a still photograph: no pinned, scroll-linked entrance.
-  // Lens: a soft circle around the pointer where the frost lifts. Desktop only.
-  var lenses = [];
-  if (fine && !still) {
-    var hosts = [];
-    if (head) hosts.push({ box: head, src: head.querySelector(".gp"), after: head.querySelector(".frost"), host: head });
-    hosts.forEach(function (h) {
-      if (!h.src || !h.after) return;
-      var l = document.createElement("div"); l.className = "lens"; l.setAttribute("aria-hidden", "true");
-      var c = h.src.cloneNode(true); c.removeAttribute("class");
-      $$("img", c).forEach(function (i) { i.removeAttribute("fetchpriority"); i.setAttribute("alt", ""); i.setAttribute("loading", "lazy"); });
-      l.appendChild(c);
-      h.after.parentNode.insertBefore(l, h.after.nextSibling);
-      lenses.push({ el: l, box: h.box, host: h.host, last: "" });
-    });
-    var mx = -999, my = -999, lq = false, lensOn = false;
-    function moveLens() {
-      lq = false;
-      lenses.forEach(function (L) {
-        var r = L.box.getBoundingClientRect();
-        L.el.style.setProperty("--mx", (mx - r.left).toFixed(0) + "px");
-        L.el.style.setProperty("--my", (my - r.top).toFixed(0) + "px");
-      });
-    }
-    addEventListener("pointermove", function (e) { mx = e.clientX; my = e.clientY; if (!lensOn) { lensOn = true; lenses.forEach(function (L) { L.el.classList.add("on"); }); } if (!lq) { lq = true; requestAnimationFrame(moveLens); } }, { passive: true });
-    document.addEventListener("pointerleave", function () { mx = my = -999; moveLens(); });
-  }
-
-  // Everything below runs once per frame at most and reads nothing from the
-  // layout while scrolling: positions are measured on load and resize, and
-  // each frame only does arithmetic on scrollY and writes opacity/transform.
-  var barGlass = $$(".bar-glass i");
-  var barFrost = document.querySelector(".bar-glass .f");
-  var G = { vh: innerHeight, enterTop: 0, enterH: 1, headTop: 0, headH: 1, roomTops: [], roomsOn: false };
+  var G = { vh: innerHeight, roomTops: [], roomsOn: false };
   function measure() {
     var sy = scrollY;
     G.vh = innerHeight;
-    if (enter) { var r = enter.getBoundingClientRect(); G.enterTop = r.top + sy; G.enterH = r.height; }
-    // the bar's pre-blurred copy of the wall, placed where the wall sits at
-    // the top of the page (each frame shifts it by the scroll)
-    if (enter && barGlass.length) {
-      var wl = enter.querySelector(innerWidth <= 700 ? ".wall-tall" : ".wall-wall"), st = enter.querySelector(".enter-stage");
-      if (wl && st) {
-        var wr = wl.getBoundingClientRect(), sr = st.getBoundingClientRect();
-        barGlass.forEach(function (i) {
-          i.style.left = wr.left.toFixed(1) + "px"; i.style.top = (wr.top + scrollY).toFixed(1) + "px";
-          i.style.width = wr.width.toFixed(1) + "px"; i.style.height = wr.height.toFixed(1) + "px";
-        });
-      }
-    }
-    if (head) { var h = head.getBoundingClientRect(); G.headTop = h.top + sy; G.headH = h.height; }
     G.roomsOn = rooms.length > 0 && !still && innerWidth > 900 && G.vh >= 620;
     if (rooms.length) {
       var box = rooms[0].parentNode.getBoundingClientRect().top + sy, acc = 0;
@@ -102,14 +19,11 @@
     }
   }
   var last = new Map();
-  // write real properties on the element that moves, not inherited custom
-  // properties on a parent, so a scroll frame never restyles a whole subtree
   function put(el, name, val) {
     if (!el) return;
     var k = last.get(el) || {}; if (k[name] === val) return;
     k[name] = val; last.set(el, k); el.style[name] = val;
   }
-  var headFrost = head ? head.querySelector(".frost") : null;
   function flag(el, cls, on) { if (el.classList.contains(cls) !== on) el.classList.toggle(cls, on); }
 
   var seen = new Set();
@@ -119,14 +33,12 @@
       tick();
     }, { rootMargin: "10% 0px" });
     plates.forEach(function (el) {
-      // A device frame keeps the capture locked in the glass. Soften the whole plate.
       var device = el.classList.contains("d") || el.classList.contains("p");
       var target = device ? el : el.querySelector("picture");
       if (target) { target.style.opacity = ".4"; target.style.transform = "translate3d(0,18px,0)"; }
       io.observe(el);
     });
   }
-  // decode pictures a screen or two before they arrive, so no frame waits on it
   if ("IntersectionObserver" in window) {
     var pre = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
@@ -136,19 +48,14 @@
         if (img.complete) go(); else img.addEventListener("load", go, { once: true });
       });
     }, { rootMargin: "200% 0px" });
-    $$(".room img, .plate img, .ba img, .lens img").forEach(function (i) { pre.observe(i); });
+    $$(".room img, .plate img, .ba img").forEach(function (i) { pre.observe(i); });
   }
 
-  // Home screens that move on the client's live site. Each loop sits over its
-  // still and only plays while it is on screen. The still stays for reduced
-  // motion, and wherever the browser declines to play (Low Power Mode).
   var loops = $$("video.loop");
   if (loops.length && "IntersectionObserver" in window && !still) {
     var warm = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) { e.target.preload = "auto"; warm.unobserve(e.target); } });
     }, { rootMargin: "100% 0px" });
-    // Starting a decoder costs a frame or two, so a loop starts once the
-    // scrolling settles rather than mid-flick.
     var want = new Set(), idle = 0;
     function start() {
       want.forEach(function (v) {
@@ -176,18 +83,6 @@
   function frame() {
     queued = false;
     var sy = scrollY, vh = G.vh;
-    if (enter) {
-      var over = sy < G.enterTop + G.enterH - 40;
-      flag(document.documentElement, "over-enter", over);
-      // the hero scrolls like the rest of the page; its blurred copy behind
-      // the bar moves with it
-      if (over) barGlass.forEach(function (i) { put(i, "transform", "translate3d(0," + (-sy).toFixed(1) + "px,0)"); });
-    }
-    if (head && !still) {
-      var hf = ease(0, .9, (sy - G.headTop) / Math.max(1, G.headH));
-      put(headFrost, "opacity", hf.toFixed(3));
-      lenses.forEach(function (L) { if (L.host === head) put(L.el, "opacity", hf.toFixed(3)); });
-    }
     if (seen.size) {
       var reads = [];
       seen.forEach(function (el) { reads.push([el, el.getBoundingClientRect()]); });
@@ -200,14 +95,12 @@
         flag(rb[0], "clear", ff === 0);
       });
     }
-    // the exhibition: the next room comes up over this one, which settles back
     if (G.roomsOn) {
       for (var k = 0; k < rooms.length; k++) {
         var top = G.roomTops[k] - sy;
         var nxt = k + 1 < rooms.length ? G.roomTops[k + 1] - sy : vh * 2;
         var near = top < vh * 1.2 && nxt > -vh * .2;
         flag(rooms[k], "near", near);
-        // a room the next one has fully covered stays stuck underneath; stop painting it
         flag(rooms[k], "covered", nxt <= 0);
         if (!near) continue;
         var come = ease(0, 1, 1 - Math.max(0, top) / vh);
@@ -221,11 +114,10 @@
   function tick() { if (!queued) { queued = true; requestAnimationFrame(frame); } }
   addEventListener("scroll", tick, { passive: true });
   var rq = false;
-  addEventListener("resize", function () { if (rq) return; rq = true; requestAnimationFrame(function () { rq = false; measure(); align(); frame(); }); }, { passive: true });
-  addEventListener("load", function () { measure(); align(); frame(); });
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { measure(); align(); frame(); });
+  addEventListener("resize", function () { if (rq) return; rq = true; requestAnimationFrame(function () { rq = false; measure(); frame(); }); }, { passive: true });
+  addEventListener("load", function () { measure(); frame(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { measure(); frame(); });
   measure();
-  align();
   frame();
 })();
 
@@ -241,7 +133,7 @@
 })();
 
 // Phone menu: the bar's Menu button opens the drawer of links. The drawer is
-// a body-level overlay (not inside the frosted bar). While it is open the page
+// a body-level overlay. While it is open the page
 // underneath is pinned in place, which is the scroll lock iOS Safari honours,
 // and put back exactly where it was on close.
 (function () {

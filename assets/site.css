@@ -1,7 +1,7 @@
 /* MJL Collective. One palette, light and quiet:
    plaster (the page), cement (panels and quiet grounds), mortar (hairlines),
    ink (type and the one solid button), ink-2 (secondary type).
-   The glass block photograph is the material; the client work brings the color. */
+   The client work brings the color. */
 @font-face { font-family: "Instrument Serif"; src: url("/assets/fonts/InstrumentSerif-latin.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: "Instrument Sans"; src: url("/assets/fonts/InstrumentSans-latin.woff2") format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
 @font-face { font-family: "Source Serif 4"; src: url("/assets/fonts/SourceSerif4-latin.woff2") format("woff2"); font-weight: 200 900; font-style: normal; font-display: swap; }
@@ -36,17 +36,8 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .skip { position: absolute; left: -9999px; top: 0; z-index: 100; background: var(--plaster); color: var(--ink); padding: 10px 14px; font-family: var(--sans); }
 .skip:focus { left: 12px; top: 12px; }
 
-/* ---------- frosted glass: the bar and the panes over the photograph ---------- */
-/* Solid fallback first. Where the browser can blur, the bar is frosted with a
-   moderate live blur over ordinary content; over the home wall it uses a
-   pre-blurred copy of the same photograph instead (see .bar-glass), and the
-   panes always use their pre-blurred copy (.pane.aligned), so nothing over
-   the moving wall asks for a live blur. */
-.bar, .pane { background: rgba(255, 255, 255, .95); }
-@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-  .bar { background: linear-gradient(rgba(255, 255, 255, .16), rgba(255, 255, 255, 0)), rgba(255, 255, 255, .66); -webkit-backdrop-filter: blur(14px) saturate(1.2); backdrop-filter: blur(14px) saturate(1.2); }
-  .pane { background: rgba(255, 255, 255, .72); -webkit-backdrop-filter: blur(20px) saturate(1.1); backdrop-filter: blur(20px) saturate(1.1); }
-}
+/* ---------- the top bar: solid white on every page ---------- */
+.bar { background: #ffffff; }
 
 /* ---------- the bar ---------- */
 .bar { position: sticky; top: 0; z-index: 50; color: var(--ink); font-family: var(--sans); border-bottom: 1px solid var(--hair); }
@@ -105,8 +96,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   :root { --barh: 64px; }
   .bar .home img { height: 34px; top: 3px; }
   .nav { display: none; }
-  .bar { background: #ffffff; -webkit-backdrop-filter: none; backdrop-filter: none; }
-  .bar-glass { display: none; }
+  .bar { background: #ffffff; }
   .bar .tools { display: flex; }
   /* The drawer lives at body level, outside the frosted bar: a backdrop
      filter on an ancestor would make it the drawer's containing block and
@@ -114,8 +104,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
      everything; the bar sits on top of it so Close stays in reach. */
   .drawer { display: block; position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 900; background: #ffffff; color: var(--ink); padding: calc(var(--barh) + 12px + env(safe-area-inset-top, 0px)) max(var(--gut), env(safe-area-inset-right, 0px)) calc(40px + env(safe-area-inset-bottom, 0px)) max(var(--gut), env(safe-area-inset-left, 0px)); overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; visibility: hidden; opacity: 0; transition: opacity .2s ease, visibility 0s linear .2s; }
   .drawer.open { visibility: visible; opacity: 1; transition: opacity .2s ease; }
-  html body.menu-open .bar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: #ffffff; -webkit-backdrop-filter: none; backdrop-filter: none; padding-top: env(safe-area-inset-top, 0px); }
-  html body.menu-open .bar-glass { display: none; }
+  html body.menu-open .bar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: #ffffff; padding-top: env(safe-area-inset-top, 0px); }
   .drawer ul { list-style: none; margin: 0; padding: 0; }
   .drawer li { border-bottom: 1px solid var(--mortar); }
   .drawer a { display: block; padding: 14px 0; font: 400 36px/1.1 var(--display); text-decoration: none; }
@@ -156,81 +145,8 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 30px; }
 .lede { font-size: clamp(18px, 1.35vw, 21px); color: var(--ink-2); max-width: 40ch; }
 
-/* ---------- the glass block photograph ----------
-   Mitchell's photograph of a real glass block wall, squared up so every block
-   sits on a true grid. It sits clear. Frosted glass carries the words. Every
-   change on scroll is opacity or transform only; the blur is drawn ahead of
-   time (assets/glass/frost-*.webp), so it is cheap and the same in every browser. */
-.gp { position: absolute; inset: 0; display: block; }
-.gp img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; max-width: none; }
-.frost { position: absolute; inset: 0; pointer-events: none; opacity: var(--f, 0); will-change: opacity; background: url(/assets/glass/frost-band.webp) center / cover no-repeat; }
-@media (max-width: 700px) { .frost { background-image: url(/assets/glass/frost-tall.webp); } }
-.pane { padding: clamp(28px, 3.4vw, 52px); max-width: 780px; box-shadow: 0 1px 0 rgba(255, 255, 255, .85) inset, 0 0 0 1px rgba(255, 255, 255, .5) inset, 0 0 0 1px rgba(28, 26, 23, .06), 0 30px 80px -40px rgba(28, 26, 23, .32); }
-/* site.js lines the frosted copy of the photograph up behind each pane, so
-   the pane is a piece of the same wall, frosted, in every browser */
-/* over the home entrance the wall itself is changing every frame, and a live
-   blur behind the bar would be redone each frame; the bar goes solid there */
-html.over-enter .bar { -webkit-backdrop-filter: none; backdrop-filter: none; background: transparent; }
-.bar { isolation: isolate; box-shadow: 0 1px 0 rgba(255, 255, 255, .55) inset; }
-.bar-glass { position: absolute; inset: 0; overflow: hidden; z-index: -1; display: none; pointer-events: none; }
-html.over-enter .bar-glass { display: block; }
-.bar-glass i { position: absolute; left: 0; top: 0; width: 100%; height: 100vh; background: 0 0 / 100% 100% no-repeat; will-change: transform; }
-.bar-glass .g { background-image: url(/assets/glass/soft-wall.webp); }
-.bar-glass .f { background-image: url(/assets/glass/soft-frost-wall.webp); opacity: 0; will-change: opacity; }
-@media (max-width: 700px) {
-  .bar-glass .g { background-image: url(/assets/glass/soft-tall.webp); }
-  .bar-glass .f { background-image: url(/assets/glass/soft-frost-tall.webp); }
-}
-.bar-glass::after { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(255, 255, 255, .2), rgba(255, 255, 255, .04)), rgba(255, 255, 255, .58); }
-.pane.aligned { -webkit-backdrop-filter: none; backdrop-filter: none; background: linear-gradient(170deg, rgba(255, 255, 255, .26), rgba(255, 255, 255, 0) 45%), linear-gradient(rgba(246, 243, 237, var(--pt, .64)), rgba(246, 243, 237, var(--pt, .64))), var(--fi) var(--fx) var(--fy) / var(--fw) var(--fh) no-repeat; }
-.pane h1 { font-size: clamp(48px, 6.4vw, 104px); }
-.pane .lede { margin: 22px 0 0; color: #36312b; font-size: clamp(19px, 1.5vw, 23px); }
-.pane .actions { margin-top: 30px; }
-/* the lens: a soft circle around the pointer where the frost lifts (desktop only) */
-.lens:not(.on) { visibility: hidden; }
-.lens { position: absolute; inset: 0; pointer-events: none; opacity: var(--l, 0); will-change: opacity; -webkit-mask-image: radial-gradient(circle var(--lr, 150px) at var(--mx, -999px) var(--my, -999px), #000 35%, transparent 100%); mask-image: radial-gradient(circle var(--lr, 150px) at var(--mx, -999px) var(--my, -999px), #000 35%, transparent 100%); }
-.lens img { width: 100%; height: 100%; object-fit: cover; max-width: none; }
-
-/* the bar runs over the photograph at the top of a page */
-.glass-head, .enter { margin-top: calc(var(--barh) * -1 - 1px); }
-.glass-head { position: relative; isolation: isolate; overflow: hidden; min-height: min(78vh, 760px); display: flex; align-items: flex-end; padding: calc(var(--barh) + 64px) 0 clamp(36px, 5vw, 72px); }
-.glass-head .wrap { position: relative; }
-.glass-head .pane { width: fit-content; max-width: min(720px, 100%); padding-right: clamp(36px, 5vw, 80px); }
-.glass-head .pane .lede { max-width: 34ch; }
-.glass-head .lens { z-index: 0; }
-.glass-head.lost { min-height: min(88vh, 820px); }
-@media (max-width: 700px) {
-  .glass-head { min-height: 0; padding: calc(var(--barh) + 46vw) 0 20px; }
-  .glass-head .pane { padding: 26px 22px 28px; }
-  .pane h1 { font-size: clamp(42px, 12vw, 60px); }
-}
-
-/* ---------- home: the hero ----------
-   The glass wall, still, with the words on a frosted pane over it. It scrolls
-   away like the rest of the page: nothing pinned, nothing tied to the scroll.
-   The headline and the two buttons are centered on the glass, both ways.
-   Other heroes stay as they were. */
-.enter { position: relative; }
-.enter-stage { position: relative; isolation: isolate; display: flex; flex-direction: column; }
-.wall-box { position: absolute; left: 0; right: 0; top: 0; height: 100vh; height: 100svh; min-height: 560px; overflow: hidden; }
-.wall { position: absolute; left: 50%; top: 50%; width: max(100vw, calc(100svh * var(--a))); height: max(100svh, calc(100vw / var(--a))); transform: translate(-50%, -50%); }
-.wall .clear, .wall .clear img { display: block; width: 100%; height: 100%; max-width: none; }
-.wall .frosted { position: absolute; inset: 0; display: none; }
-/* the frost with the mortar already drawn into it (one bitmap, baked from
-   mortar-*.svg over frost-*.webp), so the crossfade is a single plain layer */
-.wall .frosted { background: url(/assets/glass/frost-wall-m.webp) 0 0 / 100% 100% no-repeat; }
-.wall-tall .frosted { background-image: url(/assets/glass/frost-tall-m.webp); }
-.wall-tall { display: none; }
-@media (max-width: 700px) { .wall-wall { display: none; } .wall-tall { display: block; } }
-.enter-words { position: relative; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding-top: var(--barh); padding-bottom: var(--barh); }
-.enter-words .pane { width: 100%; max-width: 860px; text-align: center; }
-.enter-words .actions { justify-content: center; }
 .nobr { white-space: nowrap; }
 @media (min-width: 701px) { .nobr-d { white-space: nowrap; } }
-@media (max-width: 700px) {
-  .enter-words .pane { padding: 26px 22px 28px; }
-  .enter-words h1 { font-size: clamp(40px, 11.5vw, 56px); }
-}
 
 /* ---------- plates: the client sites, shown like prints ---------- */
 .plate { position: relative; display: block; text-decoration: none; background: var(--cement); box-shadow: 0 0 0 1px var(--hair), 0 40px 80px -48px rgba(28, 26, 23, .45); }
@@ -619,31 +535,6 @@ figcaption strong { font: 400 21px/1.2 var(--display); color: var(--ink); margin
 .ba figcaption a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--mortar); }
 .room-words .ba { margin-bottom: 30px; }
 
-/* ---------- 2026-10-21: the wall shows through the words ----------
-   No frosted box and no blur behind the titles. The words sit straight on
-   the glass with a soft light halo and a faint scrim, so every block reads. */
-.pane, .pane.aligned { position: relative; isolation: isolate; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; padding: 0; }
-.pane::before { content: ""; position: absolute; z-index: -1; inset: -48px -72px; pointer-events: none; background: radial-gradient(closest-side, rgba(255, 255, 255, .5), rgba(255, 255, 255, .22) 60%, rgba(255, 255, 255, 0)); }
-.pane h1, .pane .lede { text-shadow: 0 0 2px rgba(255, 255, 255, .9), 0 0 10px rgba(255, 255, 255, .85), 0 0 26px rgba(255, 255, 255, .7); }
-.pane .lede { color: var(--ink); font-weight: 500; }
-.pane .actions .link { background: rgba(255, 255, 255, .82); padding: 12px 16px; }
-@media (max-width: 700px) { .pane::before { inset: -28px -20px; } .enter-words .pane, .glass-head .pane { padding: 0; } }
-/* white words with a soft shadow read better on the glass than dark ones */
-.pane::before { inset: -56px -96px; background: radial-gradient(closest-side, rgba(28, 26, 23, .42), rgba(28, 26, 23, .2) 62%, rgba(28, 26, 23, 0)); }
-.pane h1, .pane .lede { color: #fff; text-shadow: 0 1px 2px rgba(28, 26, 23, .55), 0 2px 14px rgba(28, 26, 23, .5), 0 0 34px rgba(28, 26, 23, .35); }
-.pane .actions .btn { background: #fff; color: var(--ink); border-color: #fff; }
-.pane .actions .link { background: none; padding: 0; color: #fff; border-color: #fff; text-shadow: 0 1px 2px rgba(28, 26, 23, .6), 0 0 12px rgba(28, 26, 23, .5); }
-@media (max-width: 700px) { .pane::before { inset: -36px -24px; } }
-.enter-words, .glass-head { overflow-x: clip; }
-.pane::before { background: radial-gradient(closest-side, rgba(28, 26, 23, .52), rgba(28, 26, 23, .26) 62%, rgba(28, 26, 23, 0)); }
-.pane .lede, .pane .actions .link { text-shadow: 0 1px 2px rgba(28, 26, 23, .8), 0 1px 10px rgba(28, 26, 23, .65), 0 0 24px rgba(28, 26, 23, .45); }
-
-/* four division buttons on the landing hero: one row on desktop, two by two on a phone */
-.pane .actions.quad { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; max-width: 640px; margin-left: auto; margin-right: auto; }
-.pane .actions.quad .btn { min-height: 44px; padding: 11px 14px; }
-@media (max-width: 700px) { .pane .actions.quad { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 340px; gap: 10px; } }
-
-
 /* ---------- home: four division columns ----------
    White field, the line, then four cover photos. Each column links to a
    division page. The name sits on a short dark gradient. A slight zoom
@@ -740,3 +631,35 @@ figcaption strong { font: 400 21px/1.2 var(--display); color: var(--ink); margin
   .hero-col.businesses img { object-position: center 50%; }
   .hero-col-name { padding: 16px 14px 16px; font-size: clamp(24px, 6.5vw, 30px); }
 }
+
+
+/* typographic page hero, used on the division pages and the rest of the site */
+.page-hero { padding: clamp(24px, 4vw, 56px) 0 clamp(24px, 4vw, 48px); }
+.page-hero .k { margin: 0 0 10px; }
+.page-hero h1 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(42px, 6vw, 76px);
+  line-height: 1.02;
+  margin: 0 0 18px;
+  max-width: 16ch;
+}
+.page-hero p { max-width: 56ch; font-size: clamp(17px, 1.4vw, 20px); line-height: 1.55; }
+.page-hero .actions { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; margin-top: 24px; }
+
+/* Work: typographic hero, then the same four division covers as the homepage */
+.work-top {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100svh - var(--barh) - 1px);
+  background: #fff;
+}
+.work-top .page-hero { flex: 0 0 auto; padding-bottom: 20px; }
+.work-top .work-cover { flex: 1 1 auto; display: flex; flex-direction: column; min-height: 0; }
+.work-top .hero-cols-grid { flex: 1 1 auto; min-height: 480px; }
+@media (max-width: 700px) {
+  .work-top { min-height: 0; display: block; }
+  .work-top .page-hero { padding-bottom: clamp(16px, 4vw, 32px); }
+  .work-top .hero-cols-grid { min-height: 0; }
+}
+

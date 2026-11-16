@@ -6,7 +6,7 @@ import json, pathlib, re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 C = ROOT / "tools" / "content"
 SITE = "https://mjlcollective.com"
-V = "20261116f"  # bump when site.css or site.js changes
+V = "20261116g"  # bump when site.css or site.js changes
 
 NAV = [("/work", "Work"), ("/partners", "Partners"), ("/services", "Services"), ("/about", "About"), ("/contact", "Contact")]
 
@@ -80,7 +80,6 @@ def bar(cur):
     return f'''<body>
   <a class="skip" href="#main">Skip to the content</a>
   <header class="bar" id="top">
-    <div class="bar-glass" aria-hidden="true"><i class="g"></i><i class="f"></i></div>
     <div class="wrap">
       <a class="home" href="/" aria-label="MJL Collective, home"><img src="/assets/lockup-ink.svg?v=m9" alt="MJL Collective" width="698" height="163"></a>
       <nav class="nav" aria-label="Main">
@@ -197,13 +196,11 @@ def glass_pic(wide="band", eager=False, cls="gp"):
             f'<img src="/assets/glass/glass-{wide}-1920.webp" srcset="{gsrc(wide, "webp")}" sizes="100vw" alt="" width="{g["w"]}" height="{g["h"]}" {lz}></picture>')
 
 def glass_head(inner, cls=""):
-    return f'''    <section class="glass-head{(" " + cls) if cls else ""}" data-glass="band">
-      {glass_pic("band", eager=True)}
-      <div class="frost" aria-hidden="true"></div>
+    # Live pages are hand-edited. This helper stays typographic so a rebuild
+    # does not put the old glass-block hero back.
+    return f'''    <section class="page-hero">
       <div class="wrap">
-        <div class="pane">
           {inner}
-        </div>
       </div>
     </section>'''
 
