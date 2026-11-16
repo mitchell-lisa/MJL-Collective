@@ -99,12 +99,14 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   .nav .sep { padding-left: 14px; }
 }
 .bar .tools { display: none; align-items: center; gap: 18px; }
-.menu-btn { appearance: none; -webkit-appearance: none; background: none; border: 0; border-bottom: 1px solid var(--ink); color: var(--ink); font: 500 14px/1 var(--sans); padding: 6px 0; border-radius: 0; cursor: pointer; }
+.menu-btn { appearance: none; -webkit-appearance: none; background: none; border: 0; border-bottom: 1px solid transparent; color: var(--ink); font: inherit; font-size: 14px; font-weight: 500; letter-spacing: .01em; line-height: inherit; padding: 6px 0; border-radius: 0; cursor: pointer; display: inline; }
 .drawer { display: none; }
 @media (max-width: 900px) {
   :root { --barh: 64px; }
   .bar .home img { height: 34px; top: 3px; }
   .nav { display: none; }
+  .bar { background: #ffffff; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .bar-glass { display: none; }
   .bar .tools { display: flex; }
   /* The drawer lives at body level, outside the frosted bar: a backdrop
      filter on an ancestor would make it the drawer's containing block and
@@ -626,8 +628,6 @@ figcaption strong { font: 400 21px/1.2 var(--display); color: var(--ink); margin
 .pane .lede { color: var(--ink); font-weight: 500; }
 .pane .actions .link { background: rgba(255, 255, 255, .82); padding: 12px 16px; }
 @media (max-width: 700px) { .pane::before { inset: -28px -20px; } .enter-words .pane, .glass-head .pane { padding: 0; } }
-/* the menu reads as a button on a phone */
-.menu-btn { border: 1px solid var(--ink); padding: 10px 14px; min-height: 40px; }
 /* white words with a soft shadow read better on the glass than dark ones */
 .pane::before { inset: -56px -96px; background: radial-gradient(closest-side, rgba(28, 26, 23, .42), rgba(28, 26, 23, .2) 62%, rgba(28, 26, 23, 0)); }
 .pane h1, .pane .lede { color: #fff; text-shadow: 0 1px 2px rgba(28, 26, 23, .55), 0 2px 14px rgba(28, 26, 23, .5), 0 0 34px rgba(28, 26, 23, .35); }
@@ -692,8 +692,8 @@ figcaption strong { font: 400 21px/1.2 var(--display); color: var(--ink); margin
   transform: scale(1.001);
   transition: transform .7s ease;
 }
-.hero-col.creators img { object-position: center 20%; }
-.hero-col.businesses img { object-position: left 22%; }
+.hero-col.creators img { object-position: center 18%; }
+.hero-col.businesses img { object-position: center 42%; }
 .hero-col.athletes img { object-position: center 28%; }
 .hero-col.musicians img { object-position: center 40%; }
 .hero-col:hover img,
@@ -736,7 +736,7 @@ figcaption strong { font: 400 21px/1.2 var(--display); color: var(--ink); margin
     gap: 2px;
   }
   .hero-col { aspect-ratio: 3 / 4; }
-  .hero-col.creators img { object-position: center top; }
-  .hero-col.businesses img { object-position: left 15%; }
+  .hero-col.creators img { object-position: center 12%; }
+  .hero-col.businesses img { object-position: center 40%; }
   .hero-col-name { padding: 16px 14px 16px; font-size: clamp(24px, 6.5vw, 30px); }
 }
