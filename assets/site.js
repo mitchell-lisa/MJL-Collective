@@ -343,3 +343,27 @@
       .then(function () { button.disabled = false; button.textContent = "Send message"; });
   });
 })();
+
+// Preview request on the division pages. Same endpoint as the contact form.
+(function () {
+  var form = document.querySelector(".preview-form");
+  if (!form) return;
+  var button = form.querySelector("button");
+  var note = form.querySelector(".cf-note");
+  var sent = form.querySelector(".cf-sent");
+  var grid = form.querySelector(".cf-grid");
+  var foot = form.querySelector(".cf-foot");
+  var label = button.textContent;
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+    var payload = {};
+    new FormData(form).forEach(function (v, k) { payload[k] = v; });
+    button.disabled = true;
+    button.textContent = "Sending";
+    note.hidden = true;
+    fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
+      .then(function (r) { if (!r.ok) throw new Error("send failed"); grid.hidden = true; foot.hidden = true; sent.hidden = false; })
+      .catch(function () { note.hidden = false; button.disabled = false; button.textContent = label; });
+  });
+})();

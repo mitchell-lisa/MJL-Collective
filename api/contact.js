@@ -18,6 +18,52 @@ const site = {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const LOGO = `${site.url}/assets/mark-email.png`;
 
+// Preview requests from the division pages. The key is the hidden value.
+const DIVISIONS = {
+  businesses: "Businesses",
+  creators: "Creators",
+  athletes: "Athletes",
+  musicians: "Musicians",
+  work: "Work",
+};
+
+// Simple per-instance limit. No extra service: a warm function remembers
+// recent preview posts by IP, and a new instance starts empty.
+const previewHits = new Map();
+const PREVIEW_WINDOW_MS = 15 * 60 * 1000;
+const PREVIEW_MAX = 8;
+
+function clientIp(req) {
+  const raw = req.headers["x-forwarded-for"] || req.headers["x-real-ip"] || "";
+  const first = String(Array.isArray(raw) ? raw[0] : raw).split(",")[0].trim();
+  return first || (req.socket && req.socket.remoteAddress) || "unknown";
+}
+
+function previewLimited(ip) {
+  const now = Date.now();
+  const kept = (previewHits.get(ip) || []).filter((t) => now - t < PREVIEW_WINDOW_MS);
+  if (kept.length >= PREVIEW_MAX) {
+    previewHits.set(ip, kept);
+    return true;
+  }
+  kept.push(now);
+  previewHits.set(ip, kept);
+  if (previewHits.size > 2000) previewHits.delete(previewHits.keys().next().value);
+  return false;
+}
+
+function oneLine(s) {
+  return s.replace(/[\r\n]+/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function resend(key, payload) {
+  return fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+}
+
 const esc = (s) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
@@ -73,6 +119,56 @@ module.exports = async function handler(req, res) {
   // Honeypot: real visitors never see this field. Pretend success for bots.
   if (field("company", 200)) return res.status(200).json({ ok: true });
 
+  if (field("kind", 20) === "preview") {
+    if (previewLimited(clientIp(req))) {
+      res.setHeader("Retry-After", "900");
+      return res.status(429).json({ error: "Please wait a few minutes and try again." });
+    }
+    const divisionKey = field("division", 40).toLowerCase();
+    const division = DIVISIONS[divisionKey];
+    const name = oneLine(field("name", 200));
+    const email = oneLine(field("email", 200));
+    const handle = oneLine(field("handle", 200));
+    if (!division || !name || !handle || !EMAIL_RE.test(email)) {
+      return res.status(400).json({ error: "Please add your name, a valid email, and your handle." });
+    }
+    const key = process.env.RESEND_API_KEY;
+    if (!key) return res.status(500).json({ error: "Form not configured" });
+
+    const handleLabel = divisionKey === "businesses" ? "Website or Instagram" : "Instagram";
+    const from = `${site.name} <form@${site.domain}>`;
+    const rows = [["Division", division], ["Name", name], ["Email", email], [handleLabel, handle]]
+      .map(([k, v]) => `<tr>
+<td style="padding:7px 16px 7px 0;font-family:Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:0.18em;color:#888b88;vertical-align:top;white-space:nowrap;">${esc(k).toUpperCase()}</td>
+<td style="padding:7px 0;font-size:15px;line-height:1.5;color:#1b1c1b;">${esc(v)}</td>
+</tr>`)
+      .join("");
+    const notifyHtml = shell(`
+<div style="margin:0 0 28px 0;">${logoImg(104)}</div>
+<p style="margin:0;font-family:Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:0.22em;color:#888b88;">PREVIEW REQUEST</p>
+<h1 style="margin:10px 0 22px 0;font-size:26px;font-weight:normal;line-height:1.2;">${esc(division)}</h1>
+<table role="presentation" cellpadding="0" cellspacing="0" style="border-top:1px solid #cfd3d0;padding-top:6px;">${rows}</table>
+<p style="margin:24px 0 0 0;font-family:Helvetica,Arial,sans-serif;font-size:12px;color:#4e504e;">Reply to this email to answer ${esc(name.split(/\s+/)[0])} directly.</p>`);
+    const notifyText = [
+      `Division: ${division}`,
+      `Name: ${name}`,
+      `Email: ${email}`,
+      `${handleLabel}: ${handle}`,
+      "",
+      "Sent from the mjlcollective.com preview form.",
+    ].join("\n");
+    const notifyRes = await resend(key, {
+      from,
+      to: [site.email],
+      reply_to: email,
+      subject: `Preview request: ${division}, ${name}, ${email}, ${handle}`,
+      html: notifyHtml,
+      text: notifyText,
+    });
+    if (!notifyRes.ok) return res.status(502).json({ error: "Send failed" });
+    return res.status(200).json({ ok: true });
+  }
+
   const name = field("name", 200);
   const business = field("business", 200);
   const email = field("email", 200);
@@ -90,12 +186,7 @@ module.exports = async function handler(req, res) {
   const firstName = name.split(/\s+/)[0];
   const msgHtml = esc(message).replace(/\n/g, "<br />");
 
-  const send = (payload) =>
-    fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+  const send = (payload) => resend(key, payload);
 
   // 1. The notification to Mitchell.
   const rows = [["Name", name], ["Business", business], ["Email", email], ["Phone", phone]]
