@@ -515,6 +515,7 @@ figcaption strong { font: 400 21px/1.2 var(--display); color: var(--ink); margin
 .meet aside .block + .block { margin-top: 36px; padding-top: 30px; border-top: 1px solid var(--mortar); }
 @media (max-width: 900px) { .meet .grid { display: block; } .meet aside { margin-top: 64px; } }
 .cf { position: relative; }
+.cf [hidden] { display: none !important; }
 .cf .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .cf-grid { display: grid; grid-template-columns: 1fr; gap: 22px 24px; }
 @media (min-width: 640px) { .cf-grid { grid-template-columns: 1fr 1fr; } .cf-grid .full { grid-column: 1 / -1; } }
@@ -532,6 +533,11 @@ figcaption strong { font: 400 21px/1.2 var(--display); color: var(--ink); margin
 .cf-sent { border-top: 2px solid var(--ink); padding: 28px 0 0; }
 .cf-sent .big { margin: 0 0 8px; font: 400 44px/1.1 var(--display); }
 .cf-sent p { color: var(--ink-2); }
+
+/* Preview request on the division pages. Same fields and type as the contact form. */
+.preview h2 { font-size: clamp(40px, 4.6vw, 72px); line-height: .98; }
+.preview .line { max-width: 42ch; margin: 18px 0 0; color: var(--ink-2); font-size: clamp(18px, 1.35vw, 21px); }
+.preview .cf { max-width: 680px; margin-top: clamp(28px, 4vw, 44px); }
 
 /* ---------- privacy and terms: quiet, no photograph ---------- */
 .legal-head { padding: clamp(64px, 8vw, 128px) 0 clamp(24px, 3vw, 40px); }

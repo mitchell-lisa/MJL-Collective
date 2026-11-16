@@ -28,7 +28,7 @@
   <link rel="preload" href="/assets/fonts/InstrumentSerif-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/InstrumentSans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/SourceSerif4-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/site.css?v=20261115x">
+  <link rel="stylesheet" href="/assets/site.css?v=20261116a">
 <style>
 .paths{padding:clamp(56px,8vw,112px) 0}
 .paths h2{margin:0 0 28px}
@@ -137,6 +137,31 @@
       </div>
     </section>
 
+    <section class="band preview" aria-labelledby="preview-h">
+      <div class="wrap">
+        <h2 id="preview-h">See your site first</h2>
+        <p class="line">Send your handle and we&rsquo;ll build a free preview within a day.</p>
+        <form class="cf preview-form" novalidate>
+          <input type="hidden" name="kind" value="preview">
+          <input type="hidden" name="division" value="businesses">
+          <input type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
+          <div class="cf-grid">
+            <label><span>Name</span><input name="name" required maxlength="200" autocomplete="name"></label>
+            <label><span>Email</span><input name="email" type="email" required maxlength="200" autocomplete="email"></label>
+            <label class="full"><span>Website or Instagram</span><input name="handle" required maxlength="200" autocapitalize="off" spellcheck="false" placeholder="site or @name"></label>
+          </div>
+          <div class="cf-foot">
+            <button class="btn" type="submit">Request my preview</button>
+            <p class="cf-note" hidden>Something went wrong. <a href="mailto:mitchell@mjlcollective.com?subject=Preview%20request">Email me directly instead</a>.</p>
+          </div>
+          <div class="cf-sent" hidden>
+            <p class="big">Got it.</p>
+            <p>We will send your preview within a day.</p>
+          </div>
+        </form>
+      </div>
+    </section>
+
   </main>
 
   <footer class="foot">
@@ -174,6 +199,6 @@
     </div>
   </footer>
 
-  <script src="/assets/site.js?v=20261115w"></script>
+  <script src="/assets/site.js?v=20261116a"></script>
 </body>
 </html>
