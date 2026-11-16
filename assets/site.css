@@ -642,3 +642,101 @@ figcaption strong { font: 400 21px/1.2 var(--display); color: var(--ink); margin
 .pane .actions.quad { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; max-width: 640px; margin-left: auto; margin-right: auto; }
 .pane .actions.quad .btn { min-height: 44px; padding: 11px 14px; }
 @media (max-width: 700px) { .pane .actions.quad { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 340px; gap: 10px; } }
+
+
+/* ---------- home: four division columns ----------
+   White field, the line, then four cover photos. Each column links to a
+   division page. The name sits on a short dark gradient. A slight zoom
+   on hover. */
+.hero-cols {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100svh - var(--barh) - 1px);
+}
+.hero-cols-intro { padding: 24px 0 20px; text-align: center; flex: 0 0 auto; }
+@media (min-width: 701px) { .hero-cols-intro { padding: 28px 0 22px; } }
+.hero-cols-intro h1 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(36px, 5.2vw, 64px);
+  line-height: 1.05;
+  color: var(--ink);
+  margin: 0 auto;
+  max-width: 18ch;
+  text-shadow: none;
+}
+.hero-cols-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  flex: 1 1 auto;
+  min-height: 520px;
+}
+.hero-col {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  color: #fff;
+  text-decoration: none;
+  background: #1c1a17;
+  min-height: 0;
+}
+.hero-col img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.001);
+  transition: transform .7s ease;
+}
+.hero-col.creators img { object-position: center 20%; }
+.hero-col.businesses img { object-position: left 22%; }
+.hero-col.athletes img { object-position: center 28%; }
+.hero-col.musicians img { object-position: center 40%; }
+.hero-col:hover img,
+.hero-col:focus-visible img { transform: scale(1.05); }
+@media (prefers-reduced-motion: reduce) {
+  .hero-col img,
+  .hero-col:hover img,
+  .hero-col:focus-visible img { transition: none; transform: none; }
+}
+.hero-col::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 42%;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(28, 26, 23, .58), rgba(28, 26, 23, .16) 58%, rgba(28, 26, 23, 0));
+}
+.hero-col-name {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: 20px 18px 22px;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(26px, 2.2vw, 40px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.hero-col:focus-visible { outline: 2px solid #fff; outline-offset: -4px; z-index: 2; }
+@media (max-width: 700px) {
+  .hero-cols { min-height: 0; display: block; }
+  .hero-cols-intro { padding: 20px 0 16px; }
+  .hero-cols-intro h1 { font-size: clamp(32px, 9vw, 44px); }
+  .hero-cols-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    height: auto;
+    min-height: 0;
+    gap: 2px;
+  }
+  .hero-col { aspect-ratio: 3 / 4; }
+  .hero-col.creators img { object-position: center top; }
+  .hero-col.businesses img { object-position: left 15%; }
+  .hero-col-name { padding: 16px 14px 16px; font-size: clamp(24px, 6.5vw, 30px); }
+}
