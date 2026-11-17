@@ -32,8 +32,8 @@
 <style>
 .paths{padding:clamp(56px,8vw,112px) 0}
 .paths h2{margin:0 0 28px}
-.path-grid{display:grid;gap:20px;grid-template-columns:1fr}
-@media(min-width:800px){.path-grid{grid-template-columns:1fr 1fr}}
+.path-grid{display:grid;gap:20px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:800px){.path-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .path{display:flex;flex-direction:column;gap:12px;padding:32px;border:1px solid rgba(0,0,0,.12);border-radius:14px;background:#fff;color:inherit;text-decoration:none;transition:border-color .2s,box-shadow .2s}
 .path:hover{border-color:rgba(0,0,0,.35);box-shadow:0 10px 30px rgba(0,0,0,.06)}
 .path .k{font-size:13px;letter-spacing:.08em;text-transform:uppercase;opacity:.6}
@@ -130,20 +130,32 @@
       </div>
     </section>
 
-    <section class="paths" aria-label="Creators or businesses">
+    <section class="paths" aria-label="Who it is for">
       <div class="wrap">
         <div class="path-grid">
+          <a class="path" href="/businesses">
+            <span class="k">For businesses</span>
+            <h3>A site and brand that look like the work.</h3>
+            <p>I design it, build it, and keep it running.</p>
+            <span class="go">The business site</span>
+          </a>
           <a class="path" href="/creators">
             <span class="k">For creators</span>
             <h3>One home for everything you post.</h3>
             <p>Looks, finds and a weekly email.</p>
             <span class="go">The creator site</span>
           </a>
-          <a class="path" href="/businesses">
-            <span class="k">For businesses</span>
-            <h3>A site and brand that look like the work.</h3>
-            <p>I design it, build it, and keep it running.</p>
-            <span class="go">The business site</span>
+          <a class="path" href="/athletes">
+            <span class="k">For athletes</span>
+            <h3>A site that looks like the career.</h3>
+            <p>Highlights, partners and brand inquiries.</p>
+            <span class="go">The athlete site</span>
+          </a>
+          <a class="path" href="/musicians">
+            <span class="k">For musicians</span>
+            <h3>A site that holds the music.</h3>
+            <p>Music, shows and press.</p>
+            <span class="go">The musician site</span>
           </a>
         </div>
       </div>
